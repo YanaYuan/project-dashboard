@@ -67,10 +67,36 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--i
 .dec-q{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:6px}
 .dec-ctx{font-size:11px;color:var(--dim);margin-bottom:8px}
 .dec-opts{display:flex;gap:6px;flex-wrap:wrap}
-.dec-opt{font-size:10px;font-weight:600;padding:3px 10px;border-radius:5px;border:1px solid var(--line);color:var(--slate);background:var(--white);cursor:pointer;transition:all .15s;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
-.dec-opt:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-l);text-decoration:none}
+.dec-opt{font-size:10px;font-weight:600;padding:4px 12px;border-radius:5px;border:1px solid var(--line);color:var(--slate);background:var(--white);cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:4px;user-select:none}
+.dec-opt:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-l)}
 .dec-opt.rec{border-color:var(--blue);color:var(--blue);background:var(--blue-l)}
-.dec-opt i{font-size:9px;opacity:.5}
+.dec-opt.selected{border-color:var(--green);color:var(--green);background:var(--green-l)}
+.dec-opt.selected::before{content:'\f00c';font-family:'Font Awesome 6 Free';font-weight:900;font-size:9px;margin-right:2px}
+.dec-discuss{font-size:10px;font-weight:600;padding:4px 12px;border-radius:5px;border:1px solid var(--line);color:var(--dim);background:var(--wash);cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:4px;margin-left:4px}
+.dec-discuss:hover{border-color:var(--slate);color:var(--slate)}
+.dec-sent{font-size:11px;color:var(--green);margin-top:8px;display:none;align-items:center;gap:6px}
+.dec-sent i{font-size:12px}
+.dec-sent.show{display:flex}
+
+/* Side panel */
+.panel-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(15,23,42,.4);z-index:100;opacity:0;pointer-events:none;transition:opacity .25s}
+.panel-overlay.open{opacity:1;pointer-events:auto}
+.panel{position:fixed;top:0;right:-420px;width:420px;height:100%;background:var(--white);z-index:101;box-shadow:-4px 0 24px rgba(0,0,0,.12);transition:right .3s ease;display:flex;flex-direction:column}
+.panel.open{right:0}
+.panel-head{padding:20px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
+.panel-head h3{font-size:15px;font-weight:700}
+.panel-close{width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--white);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:14px;transition:all .15s}
+.panel-close:hover{background:var(--wash);color:var(--ink)}
+.panel-msgs{flex:1;overflow-y:auto;padding:20px 24px}
+.msg{margin-bottom:16px}
+.msg-ai{background:var(--wash);border-radius:12px 12px 12px 2px;padding:14px 16px;font-size:13px;color:var(--slate);line-height:1.6;max-width:92%}
+.msg-user{background:var(--blue);color:var(--white);border-radius:12px 12px 2px 12px;padding:12px 16px;font-size:13px;line-height:1.5;max-width:80%;margin-left:auto}
+.msg-time{font-size:10px;color:var(--faint);margin-top:4px}
+.panel-input{padding:16px 24px;border-top:1px solid var(--line);display:flex;gap:8px;flex-shrink:0}
+.panel-input input{flex:1;padding:10px 14px;border:1px solid var(--line);border-radius:8px;font-size:13px;font-family:inherit;outline:none}
+.panel-input input:focus{border-color:var(--blue)}
+.panel-input button{padding:10px 16px;background:var(--blue);color:var(--white);border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .15s}
+.panel-input button:hover{background:#1e40af}
 
 /* Global section */
 .global{margin-top:36px}
@@ -140,10 +166,12 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--i
 <div class="dec-q">Copilot Facilitator 已 GA，陪参会 L2 如何应对？</div>
 <div class="dec-ctx">L2 差异化受到直接威胁。是重新定义 L2，还是将资源集中到 L3 代参会？</div>
 <div class="dec-opts">
-<a class="dec-opt" href="https://teams.microsoft.com/l/chat/0/0?users=28:0b068191-d25d-431c-9f42-2fd1ee45693c&message=%E5%85%B3%E4%BA%8E%E9%99%AA%E5%8F%82%E4%BC%9A+L2+vs+L3+%E7%9A%84%E5%86%B3%E7%AD%96%EF%BC%8C%E6%88%91%E9%80%89%E6%8B%A9%EF%BC%9A%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89+L2+%E5%B7%AE%E5%BC%82%E5%8C%96" target="_blank"><i class="fa-brands fa-microsoft"></i> 重新定义 L2 差异化</a>
-<a class="dec-opt rec" href="https://teams.microsoft.com/l/chat/0/0?users=28:0b068191-d25d-431c-9f42-2fd1ee45693c&message=%E5%85%B3%E4%BA%8E%E9%99%AA%E5%8F%82%E4%BC%9A+L2+vs+L3+%E7%9A%84%E5%86%B3%E7%AD%96%EF%BC%8C%E6%88%91%E9%80%89%E6%8B%A9%EF%BC%9A%E5%8A%A0%E9%80%9F+L3%EF%BC%8CL2+%E4%BD%9C%E4%B8%BA%E8%BF%87%E6%B8%A1" target="_blank"><i class="fa-brands fa-microsoft"></i> 加速 L3，L2 作为过渡</a>
-<a class="dec-opt" href="https://teams.microsoft.com/l/chat/0/0?users=28:0b068191-d25d-431c-9f42-2fd1ee45693c&message=%E5%85%B3%E4%BA%8E%E9%99%AA%E5%8F%82%E4%BC%9A+L2+vs+L3+%E7%9A%84%E5%86%B3%E7%AD%96%EF%BC%8C%E6%88%91%E9%80%89%E6%8B%A9%EF%BC%9A%E4%B8%A4%E6%9D%A1%E7%BA%BF%E5%B9%B6%E8%A1%8C" target="_blank"><i class="fa-brands fa-microsoft"></i> 两条线并行</a>
+<span class="dec-opt" onclick="selectOpt(this)">重新定义 L2 差异化</span>
+<span class="dec-opt rec" onclick="selectOpt(this)">加速 L3，L2 作为过渡</span>
+<span class="dec-opt" onclick="selectOpt(this)">两条线并行</span>
+<span class="dec-discuss" onclick="openPanel('陪参会 L2 vs L3 策略','Copilot Facilitator 已 GA，直接竞争陪参会 L2。你想讨论一下如何应对吗？')"><i class="fa-regular fa-comment"></i> 讨论</span>
 </div>
+<div class="dec-sent"><i class="fa-solid fa-circle-check"></i> 已提交</div>
 </div>
 </div>
 
@@ -188,18 +216,22 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--i
 <div class="dec-q">Dongyang 任务集中度过高（7/10），是否调配资源？</div>
 <div class="dec-ctx">Jian Liu 当前无活跃任务，可分担 2-3 项研发工作。</div>
 <div class="dec-opts">
-<a class="dec-opt rec" href="https://teams.microsoft.com/l/chat/0/0?users=28:0b068191-d25d-431c-9f42-2fd1ee45693c&message=%E5%85%B3%E4%BA%8E+Dongyang+%E4%BB%BB%E5%8A%A1%E9%9B%86%E4%B8%AD%E5%BA%A6%E7%9A%84%E5%86%B3%E7%AD%96%EF%BC%8C%E6%88%91%E9%80%89%E6%8B%A9%EF%BC%9A%E5%88%86%E9%85%8D+2-3+%E4%B8%AA%E4%BB%BB%E5%8A%A1%E7%BB%99+Jian+Liu" target="_blank"><i class="fa-brands fa-microsoft"></i> 分配给 Jian Liu</a>
-<a class="dec-opt" href="https://teams.microsoft.com/l/chat/0/0?users=28:0b068191-d25d-431c-9f42-2fd1ee45693c&message=%E5%85%B3%E4%BA%8E+Dongyang+%E4%BB%BB%E5%8A%A1%E9%9B%86%E4%B8%AD%E5%BA%A6%E7%9A%84%E5%86%B3%E7%AD%96%EF%BC%8C%E6%88%91%E9%80%89%E6%8B%A9%EF%BC%9A%E7%BB%B4%E6%8C%81%E7%8E%B0%E7%8A%B6%EF%BC%8C%E8%A7%82%E5%AF%9F" target="_blank"><i class="fa-brands fa-microsoft"></i> 维持现状</a>
-<a class="dec-opt" href="https://teams.microsoft.com/l/chat/0/0?users=28:0b068191-d25d-431c-9f42-2fd1ee45693c&message=%E5%85%B3%E4%BA%8E+Dongyang+%E4%BB%BB%E5%8A%A1%E9%9B%86%E4%B8%AD%E5%BA%A6%E7%9A%84%E5%86%B3%E7%AD%96%EF%BC%8C%E6%88%91%E9%80%89%E6%8B%A9%EF%BC%9A%E6%8B%9B%E4%BA%BA%E8%A1%A5%E5%85%85" target="_blank"><i class="fa-brands fa-microsoft"></i> 招人补充</a>
+<span class="dec-opt rec" onclick="selectOpt(this)">分配给 Jian Liu</span>
+<span class="dec-opt" onclick="selectOpt(this)">维持现状</span>
+<span class="dec-opt" onclick="selectOpt(this)">招人补充</span>
+<span class="dec-discuss" onclick="openPanel('Dongyang 任务分配','Dongyang 承担 7/10 任务，存在单点风险。你想讨论一下如何调配资源吗？')"><i class="fa-regular fa-comment"></i> 讨论</span>
 </div>
+<div class="dec-sent"><i class="fa-solid fa-circle-check"></i> 已提交</div>
 </div>
 <div class="dec" style="margin-top:10px">
 <div class="dec-q">Pitch Deck 截止日期？</div>
 <div class="dec-ctx">6/18 Weekly Review 是否需要初版？还是另找时间专门汇报？</div>
 <div class="dec-opts">
-<a class="dec-opt rec" href="https://teams.microsoft.com/l/chat/0/0?users=28:0b068191-d25d-431c-9f42-2fd1ee45693c&message=%E5%85%B3%E4%BA%8E+Pitch+Deck+%E6%88%AA%E6%AD%A2%E6%97%A5%E6%9C%9F%E7%9A%84%E5%86%B3%E7%AD%96%EF%BC%8C%E6%88%91%E9%80%89%E6%8B%A9%EF%BC%9A6%2F18+Review+%E5%89%8D%E5%AE%8C%E6%88%90%E5%88%9D%E7%89%88" target="_blank"><i class="fa-brands fa-microsoft"></i> 6/18 前初版</a>
-<a class="dec-opt" href="https://teams.microsoft.com/l/chat/0/0?users=28:0b068191-d25d-431c-9f42-2fd1ee45693c&message=%E5%85%B3%E4%BA%8E+Pitch+Deck+%E6%88%AA%E6%AD%A2%E6%97%A5%E6%9C%9F%E7%9A%84%E5%86%B3%E7%AD%96%EF%BC%8C%E6%88%91%E9%80%89%E6%8B%A9%EF%BC%9A%E4%B8%8D%E6%80%A5%EF%BC%8C%E6%9C%88%E5%BA%95%E5%89%8D" target="_blank"><i class="fa-brands fa-microsoft"></i> 月底前</a>
+<span class="dec-opt rec" onclick="selectOpt(this)">6/18 前初版</span>
+<span class="dec-opt" onclick="selectOpt(this)">月底前</span>
+<span class="dec-discuss" onclick="openPanel('Pitch Deck 时间线','Pitch Deck 截止日期还没确定。你想讨论一下最佳时机和内容框架吗？')"><i class="fa-regular fa-comment"></i> 讨论</span>
 </div>
+<div class="dec-sent"><i class="fa-solid fa-circle-check"></i> 已提交</div>
 </div>
 </div>
 
@@ -257,6 +289,87 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--i
 <div class="foot">
 Concordia Program Dashboard &middot; 数据来源：143 封邮件 / 155+ Teams 消息 / 40 日历事件 / 17 份会议纪要 &middot; 2026-06-14
 </div>
+
+<div class="panel-overlay" id="overlay" onclick="closePanel()"></div>
+<div class="panel" id="panel">
+<div class="panel-head">
+<h3 id="panel-title">讨论</h3>
+<button class="panel-close" onclick="closePanel()"><i class="fa-solid fa-xmark"></i></button>
+</div>
+<div class="panel-msgs" id="panel-msgs"></div>
+<div class="panel-input">
+<input type="text" id="panel-input" placeholder="输入你的想法..." onkeydown="if(event.key==='Enter')sendMsg()">
+<button onclick="sendMsg()">发送</button>
+</div>
+</div>
+
+<script>
+function selectOpt(el){
+  const container=el.closest('.dec');
+  const opts=container.querySelectorAll('.dec-opt');
+  opts.forEach(o=>{o.classList.remove('selected','rec')});
+  el.classList.add('selected');
+  const sent=container.querySelector('.dec-sent');
+  if(sent){sent.classList.add('show')}
+  setTimeout(()=>{if(sent)sent.style.opacity='0.6'},2000);
+}
+
+const aiResponses={
+  '陪参会 L2 vs L3 策略':[
+    '从数据看，Copilot Facilitator 覆盖了 L2 的核心能力（实时笔记+决策摘要）。我们在 L2 上的差异化只剩 Brain Memory 和 MICE 合规。',
+    '如果选择加速 L3，好处是全球无竞品，壁垒高。风险是 L3 技术复杂度高（Bot Detection 已生效），7 月底 MVP 时间紧。',
+    '建议：L2 维持现状不再投入新功能，资源集中到 L3。L2 作为用户入口，引导用户升级到 L3 体验。'
+  ],
+  'Dongyang 任务分配':[
+    '当前 Dongyang 的 7 个任务中，3 个是核心路径（引擎开发、转录、摘要），4 个是支撑性的（退出策略、连接问题、提测反馈、Dogfood）。',
+    'Jian Liu 已完成了自主入会架构和自动安装方案，对技术栈熟悉。建议把退出策略优化和 Jing 连接问题排查转给他。',
+    '这样 Dongyang 专注核心路径（引擎+转录+摘要），Jian Liu 负责支撑任务，风险降低且不影响关键路径进度。'
+  ],
+  'Pitch Deck 时间线':[
+    '6/18 的 Weekly Review 是张琪主持的例行会议，议题可能不是专门讲 Pitch Deck。但可以在 Review 中用 2-3 分钟预告代参会方向。',
+    '如果要做正式的 CVP/EVP Pitch，建议单独安排 30 分钟专项会议。Deck 内容需要覆盖 6 大场景，每个场景有 demo 或 mockup。',
+    '推荐时间线：6/20 前完成 Deck 初稿 → Yana review → 6/25 前定稿 → 找合适的 slot 给高管讲。'
+  ]
+};
+
+let currentTopic='';
+let responseIdx=0;
+
+function openPanel(topic,greeting){
+  currentTopic=topic;
+  responseIdx=0;
+  document.getElementById('panel-title').textContent=topic;
+  const msgs=document.getElementById('panel-msgs');
+  msgs.innerHTML='<div class="msg"><div class="msg-ai">'+greeting+'</div><div class="msg-time">Concordia AI &middot; 刚刚</div></div>';
+  document.getElementById('overlay').classList.add('open');
+  document.getElementById('panel').classList.add('open');
+  document.getElementById('panel-input').focus();
+}
+
+function closePanel(){
+  document.getElementById('overlay').classList.remove('open');
+  document.getElementById('panel').classList.remove('open');
+}
+
+function sendMsg(){
+  const input=document.getElementById('panel-input');
+  const text=input.value.trim();
+  if(!text)return;
+  input.value='';
+  const msgs=document.getElementById('panel-msgs');
+
+  msgs.innerHTML+='<div class="msg"><div class="msg-user">'+text+'</div><div class="msg-time" style="text-align:right">你 &middot; 刚刚</div></div>';
+  msgs.scrollTop=msgs.scrollHeight;
+
+  setTimeout(()=>{
+    const responses=aiResponses[currentTopic]||['收到你的意见，我会记录并在下次心跳中跟进。'];
+    const reply=responses[responseIdx%responses.length];
+    responseIdx++;
+    msgs.innerHTML+='<div class="msg"><div class="msg-ai">'+reply+'</div><div class="msg-time">Concordia AI &middot; 刚刚</div></div>';
+    msgs.scrollTop=msgs.scrollHeight;
+  },800);
+}
+</script>
 
 </body>
 </html>
