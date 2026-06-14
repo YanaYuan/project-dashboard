@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Concordia Review Deck</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f172a;--surface:#1e293b;--card:#0f172a;--border:#334155;--text:#f1f5f9;--dim:#94a3b8;--faint:#64748b;--accent:#60a5fa;--green:#34d399;--amber:#fbbf24;--red:#f87171;--white:#fff}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;overflow:hidden;height:100vh}
+
+/* Slide container */
+.deck{height:100vh;overflow:hidden;position:relative}
+.slides{display:flex;height:100%;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.slide{min-width:100vw;height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 10vw;position:relative}
+
+/* Navigation */
+.nav{position:fixed;bottom:32px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--faint);cursor:pointer;transition:all .2s}
+.dot.active{background:var(--accent);width:24px;border-radius:4px}
+.arrows{position:fixed;top:50%;z-index:10;cursor:pointer;color:var(--faint);font-size:20px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:all .2s;border:1px solid var(--border)}
+.arrows:hover{color:var(--text);background:var(--surface);border-color:var(--faint)}
+.arrow-l{left:24px;transform:translateY(-50%)}
+.arrow-r{right:24px;transform:translateY(-50%)}
+.slide-num{position:fixed;top:24px;right:32px;font-size:11px;color:var(--faint);z-index:10;font-weight:600;letter-spacing:1px}
+.brand{position:fixed;top:24px;left:32px;font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--faint);z-index:10}
+.brand span{color:var(--amber)}
+
+/* Slide: Cover */
+.cover-eyebrow{font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:16px}
+.cover h1{font-size:52px;font-weight:900;letter-spacing:-1px;line-height:1.1;margin-bottom:12px}
+.cover .sub{font-size:18px;color:var(--dim);font-weight:300;margin-bottom:32px}
+.cover-meta{display:flex;gap:32px;font-size:12px;color:var(--faint)}
+.cover-meta i{margin-right:6px}
+
+/* Slide: Branch */
+.branch-slide .eyebrow{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.branch-slide h2{font-size:36px;font-weight:800;letter-spacing:-.3px;margin-bottom:4px}
+.branch-slide .status-line{font-size:14px;color:var(--dim);margin-bottom:28px;display:flex;align-items:center;gap:8px}
+.status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+.branch-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px 40px}
+.branch-section h3{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--faint);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.branch-section h3 i{font-size:12px}
+
+.item{padding:6px 0;font-size:13px;color:var(--dim);line-height:1.5;display:flex;gap:8px}
+.item i{margin-top:4px;font-size:10px;flex-shrink:0}
+.item.check i{color:var(--green)}
+.item.risk i{color:var(--red)}
+.item.star i{color:var(--amber)}
+.item.arrow i{color:var(--accent)}
+.item strong{color:var(--text)}
+
+/* Roadmap bar */
+.roadmap{margin-top:20px;grid-column:1/-1}
+.roadmap h3{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--faint);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.roadmap h3 i{font-size:12px}
+.rm-bar{display:flex;height:36px;border-radius:8px;overflow:hidden;background:var(--surface);position:relative}
+.rm-seg{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;letter-spacing:.3px;color:var(--bg);position:relative}
+.rm-seg.done{background:var(--green)}
+.rm-seg.now{background:var(--accent);animation:segPulse 2s infinite}
+.rm-seg.todo{background:var(--surface);color:var(--faint);border-right:1px solid var(--border)}
+@keyframes segPulse{0%,100%{opacity:1}50%{opacity:.7}}
+.rm-marker{position:absolute;top:-8px;font-size:8px;color:var(--accent)}
+.rm-labels{display:flex;margin-top:6px}
+.rm-label{font-size:9px;color:var(--faint);text-align:center}
+
+/* Slide: Decisions */
+.dec-slide h2{font-size:36px;font-weight:800;margin-bottom:28px}
+.dec-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:16px}
+.dec-card .q{font-size:15px;font-weight:600;margin-bottom:4px}
+.dec-card .ctx{font-size:12px;color:var(--dim);margin-bottom:12px}
+.dec-card .tag{font-size:9px;font-weight:700;padding:2px 8px;border-radius:4px;margin-left:8px}
+.tag-c{background:rgba(251,191,36,.12);color:var(--amber)}
+.tag-d{background:rgba(96,165,250,.12);color:var(--accent)}
+.dec-opts{display:flex;gap:8px;flex-wrap:wrap}
+.dec-opt{font-size:11px;font-weight:600;padding:6px 14px;border-radius:6px;border:1px solid var(--border);color:var(--dim);background:transparent;cursor:pointer;transition:all .15s}
+.dec-opt:hover{border-color:var(--accent);color:var(--accent)}
+.dec-opt.rec{border-color:var(--accent);color:var(--accent);background:rgba(96,165,250,.08)}
+
+/* Keyboard hint */
+.kb-hint{position:fixed;bottom:32px;right:32px;font-size:10px;color:var(--faint);z-index:10}
+.kb-hint kbd{background:var(--surface);border:1px solid var(--border);padding:2px 6px;border-radius:3px;font-family:inherit;margin:0 2px}
+
+@media(max-width:768px){.slide{padding:0 6vw}.cover h1{font-size:32px}.branch-grid{grid-template-columns:1fr}.branch-slide h2{font-size:28px}}
+</style>
+</head>
+<body>
+
+<div class="brand">Concordia <span>Review Deck</span></div>
+<div class="slide-num" id="slideNum">1 / 5</div>
+<div class="arrows arrow-l" onclick="go(-1)"><i class="fa-solid fa-chevron-left"></i></div>
+<div class="arrows arrow-r" onclick="go(1)"><i class="fa-solid fa-chevron-right"></i></div>
+<div class="nav" id="nav"></div>
+<div class="kb-hint"><kbd>&larr;</kbd> <kbd>&rarr;</kbd> 翻页</div>
+
+<div class="deck">
+<div class="slides" id="slides">
+
+<!-- ===== SLIDE 1: COVER ===== -->
+<div class="slide cover">
+<div class="cover-eyebrow">Program Status Review</div>
+<h1>Concordia<br>产品线总览</h1>
+<div class="sub">三大功能分支 &middot; 截至 2026-06-14</div>
+<div class="cover-meta">
+<span><i class="fa-solid fa-code-branch"></i>3 个活跃分支</span>
+<span><i class="fa-solid fa-circle-check" style="color:var(--green)"></i>1 个正常推进</span>
+<span><i class="fa-solid fa-triangle-exclamation" style="color:var(--amber)"></i>2 个需要关注</span>
+<span><i class="fa-solid fa-hand" style="color:var(--red)"></i>3 个待决策</span>
+</div>
+</div>
+
+<!-- ===== SLIDE 2: 陪参会 ===== -->
+<div class="slide branch-slide">
+<div class="eyebrow" style="color:var(--amber)">Branch 01</div>
+<h2>陪参会</h2>
+<div class="status-line"><div class="status-dot" style="background:var(--amber)"></div>测试中，有风险 &middot; L2 &middot; 目标版本 1.0.5</div>
+
+<div class="branch-grid">
+<div class="branch-section">
+<h3><i class="fa-solid fa-check-double"></i> 本周进展</h3>
+<div class="item check"><i class="fa-solid fa-check"></i><div><strong>提测 review 完成</strong> — 26 个 bug，已修 5 个</div></div>
+<div class="item check"><i class="fa-solid fa-check"></i><div><strong>方案文档 + 操作手册</strong> — Danxia 产出</div></div>
+<div class="item check"><i class="fa-solid fa-check"></i><div><strong>Prompt 设计分享</strong> — Yuecong 完成</div></div>
+</div>
+<div class="branch-section">
+<h3><i class="fa-solid fa-star"></i> 亮点</h3>
+<div class="item star"><i class="fa-solid fa-star"></i><div><strong>用户已在使用</strong> — 150 MICE 用户可体验</div></div>
+<div class="item star"><i class="fa-solid fa-star"></i><div><strong>测试覆盖 5 个版本</strong> — 质量把控严格</div></div>
+</div>
+<div class="branch-section">
+<h3><i class="fa-solid fa-triangle-exclamation"></i> 风险</h3>
+<div class="item risk"><i class="fa-solid fa-circle-exclamation"></i><div><strong>Copilot Facilitator 已 GA</strong> — 直接竞争 L2 差异化</div></div>
+<div class="item risk"><i class="fa-solid fa-circle-exclamation"></i><div><strong>21 个 bug 待修复</strong> — 影响 Dogfood 质量</div></div>
+</div>
+<div class="branch-section">
+<h3><i class="fa-solid fa-arrow-right"></i> 下一步</h3>
+<div class="item arrow"><i class="fa-solid fa-arrow-right"></i><div><strong>6/18 Weekly Review</strong> 汇报测试结果</div></div>
+<div class="item arrow"><i class="fa-solid fa-arrow-right"></i><div>修复剩余 bug，准备扩大 Dogfood</div></div>
+</div>
+<div class="roadmap">
+<h3><i class="fa-solid fa-route"></i> Where We Are</h3>
+<div class="rm-bar">
+<div class="rm-seg done" style="width:25%">POC</div>
+<div class="rm-seg done" style="width:25%">开发</div>
+<div class="rm-seg now" style="width:25%">测试 <i class="fa-solid fa-location-dot rm-marker"></i></div>
+<div class="rm-seg todo" style="width:25%">发布</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ===== SLIDE 3: 代参会 ===== -->
+<div class="slide branch-slide">
+<div class="eyebrow" style="color:var(--green)">Branch 02</div>
+<h2>代参会</h2>
+<div class="status-line"><div class="status-dot" style="background:var(--green)"></div>产品化开发中 &middot; L3 &middot; 目标 7 月底 MVP</div>
+
+<div class="branch-grid">
+<div class="branch-section">
+<h3><i class="fa-solid fa-check-double"></i> 本周进展</h3>
+<div class="item check"><i class="fa-solid fa-check"></i><div><strong>PRD v3.3 定稿</strong> — 用户旅程视角，6 版迭代</div></div>
+<div class="item check"><i class="fa-solid fa-check"></i><div><strong>Dongyang 接手研发</strong> — 引擎+转录+摘要</div></div>
+<div class="item check"><i class="fa-solid fa-check"></i><div><strong>LiveDemo for G Review</strong> — 高管演示准备</div></div>
+<div class="item check"><i class="fa-solid fa-check"></i><div><strong>竞品情报更新</strong> — Bot Detection 已生效</div></div>
+</div>
+<div class="branch-section">
+<h3><i class="fa-solid fa-star"></i> 亮点</h3>
+<div class="item star"><i class="fa-solid fa-star"></i><div><strong>全球无直接竞品</strong> — L3 代参会独占蓝海</div></div>
+<div class="item star"><i class="fa-solid fa-star"></i><div><strong>13 份交付物完成</strong> — PRD/竞品/Eval/Deck 全就绪</div></div>
+<div class="item star"><i class="fa-solid fa-star"></i><div><strong>张琪背书</strong> — "I can take on 3 more jobs"</div></div>
+</div>
+<div class="branch-section">
+<h3><i class="fa-solid fa-triangle-exclamation"></i> 风险</h3>
+<div class="item risk"><i class="fa-solid fa-circle-exclamation"></i><div><strong>Dongyang 单点风险</strong> — 7/10 任务在一人</div></div>
+<div class="item risk"><i class="fa-solid fa-circle-exclamation"></i><div><strong>Bot Detection 已生效</strong> — 入会架构需评估</div></div>
+<div class="item risk"><i class="fa-solid fa-circle-exclamation"></i><div><strong>Teams Interactive Agents 9 月 GA</strong> — 可能替代技术路线</div></div>
+</div>
+<div class="branch-section">
+<h3><i class="fa-solid fa-arrow-right"></i> 下一步</h3>
+<div class="item arrow"><i class="fa-solid fa-arrow-right"></i><div><strong>Pitch Deck</strong> — CVP/EVP 级别</div></div>
+<div class="item arrow"><i class="fa-solid fa-arrow-right"></i><div><strong>7 月 W1 Dogfood Alpha</strong> — 5 人内测</div></div>
+<div class="item arrow"><i class="fa-solid fa-arrow-right"></i><div>身份卡 UX 设计（Jing Zhang）</div></div>
+</div>
+<div class="roadmap">
+<h3><i class="fa-solid fa-route"></i> Where We Are</h3>
+<div class="rm-bar">
+<div class="rm-seg done" style="width:20%">POC</div>
+<div class="rm-seg done" style="width:20%">PRD</div>
+<div class="rm-seg now" style="width:20%">开发 <i class="fa-solid fa-location-dot rm-marker"></i></div>
+<div class="rm-seg todo" style="width:20%">测试</div>
+<div class="rm-seg todo" style="width:20%">发布</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ===== SLIDE 4: 多碳多硅 ===== -->
+<div class="slide branch-slide">
+<div class="eyebrow" style="color:var(--amber)">Branch 03</div>
+<h2>多碳多硅</h2>
+<div class="status-line"><div class="status-dot" style="background:var(--amber)"></div>方向已定，Demo 受阻 &middot; 早期阶段</div>
+
+<div class="branch-grid">
+<div class="branch-section">
+<h3><i class="fa-solid fa-check-double"></i> 本周进展</h3>
+<div class="item check"><i class="fa-solid fa-check"></i><div><strong>完整 Dogfood 会议</strong> — Yuecong 组织全员</div></div>
+<div class="item check"><i class="fa-solid fa-check"></i><div><strong>问题列表 + 产品分工对齐</strong> — Danxia 组织</div></div>
+</div>
+<div class="branch-section">
+<h3><i class="fa-solid fa-star"></i> 亮点</h3>
+<div class="item star"><i class="fa-solid fa-star"></i><div><strong>张琪三层路线图之一</strong> — 个人体验 → Brain Fusion → 多碳多硅</div></div>
+<div class="item star"><i class="fa-solid fa-star"></i><div><strong>千人千面的核心体现</strong> — 多 Agent + 多人类协作</div></div>
+</div>
+<div class="branch-section">
+<h3><i class="fa-solid fa-triangle-exclamation"></i> 风险</h3>
+<div class="item risk"><i class="fa-solid fa-circle-exclamation"></i><div><strong>Demo 被 heartbeat 阻塞</strong> — 技术问题待解</div></div>
+<div class="item risk"><i class="fa-solid fa-circle-exclamation"></i><div><strong>Case 太宽泛</strong> — Yuecong 要求收窄</div></div>
+<div class="item risk"><i class="fa-solid fa-circle-exclamation"></i><div><strong>资源争夺</strong> — 与代参会/陪参会冲突</div></div>
+</div>
+<div class="branch-section">
+<h3><i class="fa-solid fa-arrow-right"></i> 下一步</h3>
+<div class="item arrow"><i class="fa-solid fa-arrow-right"></i><div><strong>修复 heartbeat 阻塞</strong> — Danny 跟进</div></div>
+<div class="item arrow"><i class="fa-solid fa-arrow-right"></i><div><strong>Ruiling Case 收窄</strong> — 具体到功能模块</div></div>
+</div>
+<div class="roadmap">
+<h3><i class="fa-solid fa-route"></i> Where We Are</h3>
+<div class="rm-bar">
+<div class="rm-seg done" style="width:20%">方向</div>
+<div class="rm-seg now" style="width:20%">定义 <i class="fa-solid fa-location-dot rm-marker"></i></div>
+<div class="rm-seg todo" style="width:20%">POC</div>
+<div class="rm-seg todo" style="width:20%">开发</div>
+<div class="rm-seg todo" style="width:20%">发布</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ===== SLIDE 5: DECISIONS ===== -->
+<div class="slide dec-slide">
+<div class="eyebrow" style="color:var(--red)">Action Required</div>
+<h2>需要你的决策</h2>
+
+<div class="dec-card">
+<div class="q">L2 陪参会 vs L3 代参会：资源怎么分？<span class="tag tag-c">陪参会</span></div>
+<div class="ctx">Copilot Facilitator 已 GA，L2 差异化受威胁。是继续投入 L2 还是 all-in L3？</div>
+<div class="dec-opts">
+<span class="dec-opt">重新定义 L2</span>
+<span class="dec-opt rec">加速 L3，L2 过渡</span>
+<span class="dec-opt">并行</span>
+</div>
+</div>
+
+<div class="dec-card">
+<div class="q">Dongyang 任务过载（7/10），是否调配？<span class="tag tag-d">代参会</span></div>
+<div class="ctx">Jian Liu 当前空闲，可分担退出策略、连接问题等支撑任务。</div>
+<div class="dec-opts">
+<span class="dec-opt rec">分给 Jian Liu</span>
+<span class="dec-opt">维持</span>
+<span class="dec-opt">招人</span>
+</div>
+</div>
+
+<div class="dec-card">
+<div class="q">Pitch Deck 什么时候要？<span class="tag tag-d">代参会</span></div>
+<div class="ctx">6/18 Weekly Review 需要初版吗？还是单独找时间讲？</div>
+<div class="dec-opts">
+<span class="dec-opt rec">6/18 前</span>
+<span class="dec-opt">月底</span>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<script>
+let current=0;
+const total=document.querySelectorAll('.slide').length;
+const slides=document.getElementById('slides');
+const nav=document.getElementById('nav');
+const numEl=document.getElementById('slideNum');
+
+for(let i=0;i<total;i++){const d=document.createElement('div');d.className='dot'+(i===0?' active':'');d.onclick=()=>goTo(i);nav.appendChild(d);}
+
+function goTo(n){
+  if(n<0)n=0;if(n>=total)n=total-1;
+  current=n;
+  slides.style.transform=`translateX(-${current*100}vw)`;
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===current));
+  numEl.textContent=`${current+1} / ${total}`;
+}
+function go(dir){goTo(current+dir)}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')go(1);if(e.key==='ArrowLeft')go(-1);});
+
+let touchX=0;
+document.addEventListener('touchstart',e=>touchX=e.touches[0].clientX);
+document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-touchX;if(Math.abs(dx)>50){dx<0?go(1):go(-1)}});
+</script>
+
+</body>
+</html>
