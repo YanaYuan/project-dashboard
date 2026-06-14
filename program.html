@@ -77,6 +77,9 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--i
 .dec-sent{font-size:11px;color:var(--green);margin-top:8px;display:none;align-items:center;gap:6px}
 .dec-sent i{font-size:12px}
 .dec-sent.show{display:flex}
+.dec-submit{font-size:10px;font-weight:600;padding:4px 14px;border-radius:5px;border:none;background:var(--ink);color:var(--white);cursor:pointer;transition:all .15s;display:none;margin-left:4px}
+.dec-submit.show{display:inline-flex}
+.dec-submit:hover{background:#1e293b}
 
 /* Side panel */
 .panel-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(15,23,42,.4);z-index:100;opacity:0;pointer-events:none;transition:opacity .25s}
@@ -169,7 +172,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--i
 <span class="dec-opt" onclick="selectOpt(this)">重新定义 L2 差异化</span>
 <span class="dec-opt rec" onclick="selectOpt(this)">加速 L3，L2 作为过渡</span>
 <span class="dec-opt" onclick="selectOpt(this)">两条线并行</span>
-<span class="dec-discuss" onclick="openPanel('陪参会 L2 vs L3 策略','Copilot Facilitator 已 GA，直接竞争陪参会 L2。你想讨论一下如何应对吗？')"><i class="fa-regular fa-comment"></i> 讨论</span>
+<button class="dec-submit" onclick="submitDec(this)">提交</button> <span class="dec-discuss" onclick="openPanel('陪参会 L2 vs L3 策略','Copilot Facilitator 已 GA，直接竞争陪参会 L2。你想讨论一下如何应对吗？')"><i class="fa-regular fa-comment"></i> 讨论</span>
 </div>
 <div class="dec-sent"><i class="fa-solid fa-circle-check"></i> 已提交</div>
 </div>
@@ -219,7 +222,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--i
 <span class="dec-opt rec" onclick="selectOpt(this)">分配给 Jian Liu</span>
 <span class="dec-opt" onclick="selectOpt(this)">维持现状</span>
 <span class="dec-opt" onclick="selectOpt(this)">招人补充</span>
-<span class="dec-discuss" onclick="openPanel('Dongyang 任务分配','Dongyang 承担 7/10 任务，存在单点风险。你想讨论一下如何调配资源吗？')"><i class="fa-regular fa-comment"></i> 讨论</span>
+<button class="dec-submit" onclick="submitDec(this)">提交</button> <span class="dec-discuss" onclick="openPanel('Dongyang 任务分配','Dongyang 承担 7/10 任务，存在单点风险。你想讨论一下如何调配资源吗？')"><i class="fa-regular fa-comment"></i> 讨论</span>
 </div>
 <div class="dec-sent"><i class="fa-solid fa-circle-check"></i> 已提交</div>
 </div>
@@ -229,7 +232,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--i
 <div class="dec-opts">
 <span class="dec-opt rec" onclick="selectOpt(this)">6/18 前初版</span>
 <span class="dec-opt" onclick="selectOpt(this)">月底前</span>
-<span class="dec-discuss" onclick="openPanel('Pitch Deck 时间线','Pitch Deck 截止日期还没确定。你想讨论一下最佳时机和内容框架吗？')"><i class="fa-regular fa-comment"></i> 讨论</span>
+<button class="dec-submit" onclick="submitDec(this)">提交</button> <span class="dec-discuss" onclick="openPanel('Pitch Deck 时间线','Pitch Deck 截止日期还没确定。你想讨论一下最佳时机和内容框架吗？')"><i class="fa-regular fa-comment"></i> 讨论</span>
 </div>
 <div class="dec-sent"><i class="fa-solid fa-circle-check"></i> 已提交</div>
 </div>
@@ -309,9 +312,22 @@ function selectOpt(el){
   const opts=container.querySelectorAll('.dec-opt');
   opts.forEach(o=>{o.classList.remove('selected','rec')});
   el.classList.add('selected');
+  const btn=container.querySelector('.dec-submit');
+  if(btn)btn.classList.add('show');
   const sent=container.querySelector('.dec-sent');
-  if(sent){sent.classList.add('show')}
-  setTimeout(()=>{if(sent)sent.style.opacity='0.6'},2000);
+  if(sent)sent.classList.remove('show');
+}
+
+function submitDec(btn){
+  const container=btn.closest('.dec');
+  const selected=container.querySelector('.dec-opt.selected');
+  if(!selected)return;
+  const opts=container.querySelectorAll('.dec-opt');
+  opts.forEach(o=>{o.style.pointerEvents='none';o.style.opacity='0.5'});
+  selected.style.opacity='1';
+  btn.classList.remove('show');
+  const sent=container.querySelector('.dec-sent');
+  if(sent)sent.classList.add('show');
 }
 
 const aiResponses={
