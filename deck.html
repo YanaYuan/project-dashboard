@@ -53,6 +53,10 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .item.arrow i{color:var(--accent)}
 .item strong{color:var(--text)}
 
+.detail-btn{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;padding:10px 0;border-radius:8px;border:1px solid var(--border);color:var(--accent);font-size:12px;font-weight:600;text-decoration:none;transition:all .2s;cursor:pointer}
+.detail-btn:hover{background:rgba(96,165,250,.08);border-color:var(--accent)}
+.detail-btn i{font-size:11px}
+
 /* Roadmap bar */
 .roadmap{margin-top:20px;grid-column:1/-1}
 .roadmap h3{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--faint);margin-bottom:10px;display:flex;align-items:center;gap:6px}
@@ -115,7 +119,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 <!-- ===== SLIDE 2: 陪参会 ===== -->
 <div class="slide branch-slide">
 <div class="eyebrow" style="color:var(--amber)">Branch 01</div>
-<h2>陪参会</h2><a href="branch-companion.html" style="position:absolute;top:28px;right:60px;font-size:11px;color:var(--accent);text-decoration:none;display:flex;align-items:center;gap:4px"><i class="fa-solid fa-expand"></i> 完整报告</a>
+<h2>陪参会</h2>
 <div class="status-line"><div class="status-dot" style="background:var(--amber)"></div>测试中，有风险 &middot; L2 &middot; 目标版本 1.0.5</div>
 
 <div class="branch-grid">
@@ -148,6 +152,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 <div class="rm-seg now" style="width:25%">测试 <i class="fa-solid fa-location-dot rm-marker"></i></div>
 <div class="rm-seg todo" style="width:25%">发布</div>
 </div>
+<a href="branch-companion.html" class="detail-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i> 查看陪参会完整报告</a>
 </div>
 </div>
 </div>
@@ -155,7 +160,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 <!-- ===== SLIDE 3: 代参会 ===== -->
 <div class="slide branch-slide">
 <div class="eyebrow" style="color:var(--green)">Branch 02</div>
-<h2>代参会</h2><a href="branch-delegate.html" style="position:absolute;top:28px;right:60px;font-size:11px;color:var(--accent);text-decoration:none;display:flex;align-items:center;gap:4px"><i class="fa-solid fa-expand"></i> 完整报告</a>
+<h2>代参会</h2>
 <div class="status-line"><div class="status-dot" style="background:var(--green)"></div>产品化开发中 &middot; L3 &middot; 目标 7 月底 MVP</div>
 
 <div class="branch-grid">
@@ -193,6 +198,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 <div class="rm-seg todo" style="width:20%">测试</div>
 <div class="rm-seg todo" style="width:20%">发布</div>
 </div>
+<a href="branch-delegate.html" class="detail-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i> 查看代参会完整报告</a>
 </div>
 </div>
 </div>
@@ -200,7 +206,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 <!-- ===== SLIDE 4: 多碳多硅 ===== -->
 <div class="slide branch-slide">
 <div class="eyebrow" style="color:var(--amber)">Branch 03</div>
-<h2>多碳多硅</h2><a href="branch-mcnsi.html" style="position:absolute;top:28px;right:60px;font-size:11px;color:var(--accent);text-decoration:none;display:flex;align-items:center;gap:4px"><i class="fa-solid fa-expand"></i> 完整报告</a>
+<h2>多碳多硅</h2>
 <div class="status-line"><div class="status-dot" style="background:var(--amber)"></div>方向已定，Demo 受阻 &middot; 早期阶段</div>
 
 <div class="branch-grid">
@@ -234,6 +240,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 <div class="rm-seg todo" style="width:20%">开发</div>
 <div class="rm-seg todo" style="width:20%">发布</div>
 </div>
+<a href="branch-mcnsi.html" class="detail-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i> 查看多碳多硅完整报告</a>
 </div>
 </div>
 </div>
