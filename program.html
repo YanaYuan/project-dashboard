@@ -10,12 +10,11 @@
 :root{--ink:#0f172a;--slate:#334155;--dim:#64748b;--faint:#94a3b8;--line:#e2e8f0;--wash:#f1f5f9;--bg:#f8fafc;--white:#fff;--blue:#1d4ed8;--blue-l:#eff6ff;--green:#047857;--green-l:#ecfdf5;--amber:#b45309;--amber-l:#fffbeb;--red:#b91c1c;--red-l:#fef2f2}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.55}
-a{color:var(--blue);text-decoration:none}
 
-.bar{background:var(--ink);padding:10px 0;font-size:11px;color:var(--faint);letter-spacing:.5px}
+.bar{background:var(--ink);padding:10px 0;font-size:11px;color:var(--faint)}
 .bar .inner{display:flex;justify-content:space-between;align-items:center}
 .bar .brand{font-weight:700;color:var(--white);font-size:12px;letter-spacing:1.5px;text-transform:uppercase}
-.inner{max-width:960px;margin:0 auto;padding:0 40px}
+.inner{max-width:920px;margin:0 auto;padding:0 40px}
 
 .hero{background:var(--ink);color:var(--white);padding:40px 0 36px}
 .hero h1{font-size:28px;font-weight:800;letter-spacing:-.3px;margin-bottom:4px}
@@ -25,61 +24,67 @@ a{color:var(--blue);text-decoration:none}
 
 .body{padding:32px 0 60px}
 
-/* Section */
-.sec{margin-bottom:36px}
-.sec-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--dim);margin-bottom:8px}
-.sec h2{font-size:20px;font-weight:800;letter-spacing:-.2px;margin-bottom:16px}
+/* Branch Block */
+.branch{background:var(--white);border:1px solid var(--line);border-radius:12px;margin-bottom:24px;overflow:hidden}
+.branch-header{padding:20px 28px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;position:relative}
+.branch-header::before{content:'';position:absolute;top:0;left:0;bottom:0;width:4px}
+.branch.green .branch-header::before{background:var(--green)}
+.branch.amber .branch-header::before{background:var(--amber)}
+.branch.red .branch-header::before{background:var(--red)}
+.bh-left{display:flex;align-items:center;gap:14px}
+.bh-name{font-size:18px;font-weight:700}
+.bh-badge{font-size:10px;font-weight:700;padding:3px 10px;border-radius:6px}
+.bh-badge.g{background:var(--green-l);color:var(--green)}
+.bh-badge.a{background:var(--amber-l);color:var(--amber)}
+.bh-badge.r{background:var(--red-l);color:var(--red)}
+.bh-right{font-size:12px;color:var(--dim)}
 
-/* Branch Cards */
-.branches{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:8px}
-.bc{background:var(--white);border:1px solid var(--line);border-radius:10px;padding:22px;position:relative;overflow:hidden}
-.bc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
-.bc.g::before{background:var(--green)}.bc.a::before{background:var(--amber)}.bc.r::before{background:var(--red)}
-.bc-name{font-size:16px;font-weight:700;margin-bottom:2px}
-.bc-status{font-size:12px;margin-bottom:12px}
-.bc-highlight{font-size:12px;color:var(--slate);margin-bottom:10px;line-height:1.5}
-.bc-highlight strong{color:var(--ink)}
-.bc-risk{font-size:11px;color:var(--red);display:flex;align-items:flex-start;gap:6px;margin-top:8px;padding-top:8px;border-top:1px solid var(--wash)}
-.bc-risk i{margin-top:2px;flex-shrink:0;font-size:10px}
-.dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px}
-.dot-g{background:var(--green)}.dot-a{background:var(--amber)}.dot-r{background:var(--red)}
+.branch-body{padding:24px 28px}
 
-/* Highlights */
-.hl-list{list-style:none}
-.hl-item{display:grid;grid-template-columns:72px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:13px}
-.hl-item:last-child{border-bottom:none}
-.hl-date{font-size:11px;font-weight:600;color:var(--dim);text-align:right;padding-top:1px}
-.hl-text{color:var(--slate)}
-.hl-text strong{color:var(--ink)}
-.hl-tag{font-size:10px;font-weight:700;padding:1px 6px;border-radius:4px;margin-left:6px}
-.hl-tag.t1{background:var(--green-l);color:var(--green)}
-.hl-tag.t2{background:var(--blue-l);color:var(--blue)}
-.hl-tag.t3{background:var(--amber-l);color:var(--amber)}
+.b-section{margin-bottom:20px}
+.b-section:last-child{margin-bottom:0}
+.b-section-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--dim);margin-bottom:8px}
 
-/* Timeline */
-.tl{list-style:none}
-.tl-row{display:grid;grid-template-columns:72px 10px 1fr;gap:0 12px;padding:10px 0}
-.tl-d{font-size:11px;font-weight:600;color:var(--dim);text-align:right;padding-top:2px}
-.tl-dot-col{display:flex;flex-direction:column;align-items:center}
-.tl-dot{width:8px;height:8px;border-radius:50%;background:var(--blue);flex-shrink:0}
-.tl-dot.red{background:var(--red)}.tl-dot.amber{background:var(--amber)}.tl-dot.green{background:var(--green)}
-.tl-ln{width:1px;background:var(--line);flex:1;margin-top:4px}
-.tl-row:last-child .tl-ln{display:none}
-.tl-c{font-size:13px;color:var(--slate);padding-top:1px}
-.tl-c strong{color:var(--ink)}
-.tl-you{font-size:10px;font-weight:700;color:var(--red);margin-left:6px}
+/* Progress items */
+.prog-item{display:flex;gap:10px;padding:7px 0;font-size:13px;color:var(--slate);border-bottom:1px solid var(--wash)}
+.prog-item:last-child{border-bottom:none}
+.prog-item i{color:var(--green);margin-top:3px;font-size:11px;flex-shrink:0}
+.prog-item strong{color:var(--ink)}
 
-/* Decisions */
-.dec-card{background:var(--white);border:1px solid var(--line);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;padding:16px 20px;margin-bottom:12px}
-.dec-q{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:6px}
-.dec-ctx{font-size:12px;color:var(--dim);margin-bottom:10px}
-.dec-opts{display:flex;gap:8px;flex-wrap:wrap}
-.dec-opt{font-size:11px;font-weight:600;padding:4px 12px;border-radius:6px;border:1px solid var(--line);color:var(--slate);background:var(--wash)}
+/* Risk item */
+.risk-row{display:flex;gap:10px;padding:7px 0;font-size:13px;color:var(--slate)}
+.risk-row i{color:var(--red);margin-top:3px;font-size:11px;flex-shrink:0}
+
+/* Next items */
+.next-item{display:flex;gap:10px;padding:7px 0;font-size:13px;color:var(--slate);border-bottom:1px solid var(--wash)}
+.next-item:last-child{border-bottom:none}
+.next-item .nd{font-size:11px;font-weight:600;color:var(--dim);min-width:56px;padding-top:1px}
+.next-item strong{color:var(--ink)}
+.you-tag{font-size:9px;font-weight:700;color:var(--red);background:var(--red-l);padding:1px 5px;border-radius:3px;margin-left:4px}
+
+/* Decision */
+.dec{background:var(--wash);border-radius:8px;padding:14px 18px;margin-top:4px}
+.dec-q{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:6px}
+.dec-ctx{font-size:11px;color:var(--dim);margin-bottom:8px}
+.dec-opts{display:flex;gap:6px;flex-wrap:wrap}
+.dec-opt{font-size:10px;font-weight:600;padding:3px 10px;border-radius:5px;border:1px solid var(--line);color:var(--slate);background:var(--white)}
 .dec-opt.rec{border-color:var(--blue);color:var(--blue);background:var(--blue-l)}
 
-.foot{text-align:center;padding:24px 40px;font-size:10px;color:var(--faint);border-top:1px solid var(--line)}
+/* Global section */
+.global{margin-top:36px}
+.global-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--dim);margin-bottom:8px}
+.global h2{font-size:20px;font-weight:800;margin-bottom:16px}
+.global-risks{list-style:none}
+.global-risks li{display:flex;gap:10px;padding:8px 0;font-size:13px;color:var(--slate);border-bottom:1px solid var(--line)}
+.global-risks li:last-child{border-bottom:none}
+.global-risks li i{color:var(--red);margin-top:3px;font-size:11px;flex-shrink:0}
+.global-risks strong{color:var(--ink)}
+.sev{font-size:10px;font-weight:700;padding:1px 6px;border-radius:4px;margin-left:4px}
+.sev-h{background:var(--red-l);color:var(--red)}.sev-m{background:var(--amber-l);color:var(--amber)}
 
-@media(max-width:768px){.branches{grid-template-columns:1fr}.inner{padding:0 20px}}
+.foot{text-align:center;padding:24px 40px;font-size:10px;color:var(--faint);border-top:1px solid var(--line);margin-top:20px}
+
+@media(max-width:768px){.inner{padding:0 20px}.branch-header{flex-direction:column;align-items:flex-start;gap:8px}}
 </style>
 </head>
 <body>
@@ -92,132 +97,163 @@ a{color:var(--blue);text-decoration:none}
 <div class="hero-row">
 <span><i class="fa-regular fa-clock"></i>2026-06-14 更新</span>
 <span><i class="fa-solid fa-code-branch"></i>3 个分支</span>
-<span><i class="fa-solid fa-triangle-exclamation"></i>2 个需要关注</span>
+<span><i class="fa-solid fa-triangle-exclamation"></i>2 个需关注</span>
 </div>
 </div></div>
 
 <div class="body"><div class="inner">
 
-<!-- ==================== 1. 出事了吗 ==================== -->
-<div class="sec">
-<div class="sec-label">Section 01</div>
-<h2>分支健康度</h2>
-
-<div class="branches">
-
-<div class="bc a">
-<div class="bc-name">陪参会</div>
-<div class="bc-status"><span class="dot dot-a"></span>测试中，有风险</div>
-<div class="bc-highlight">
-L2 功能已上线，本周完成提测 review。<strong>26 个 bug 中仍有 21 个待修复。</strong>
+<!-- ========== 陪参会 ========== -->
+<div class="branch amber">
+<div class="branch-header">
+<div class="bh-left">
+<div class="bh-name">陪参会</div>
+<span class="bh-badge a">测试中 &middot; 有风险</span>
 </div>
-<div class="bc-risk"><i class="fa-solid fa-triangle-exclamation"></i>Copilot Facilitator 已 GA，直接竞争 L2 差异化定位</div>
+<div class="bh-right">L2 &middot; 目标版本 1.0.5</div>
 </div>
+<div class="branch-body">
 
-<div class="bc g">
-<div class="bc-name">代参会</div>
-<div class="bc-status"><span class="dot dot-g"></span>产品化开发中，按计划推进</div>
-<div class="bc-highlight">
-PRD v3.3 定稿，<strong>全球无直接竞品（L3 级）。</strong>目标 7 月底 MVP 发布。
-</div>
-<div class="bc-risk"><i class="fa-solid fa-triangle-exclamation"></i>Dongyang Cui 承担 7/10 研发任务，单点风险</div>
+<div class="b-section">
+<div class="b-section-title">本周进展</div>
+<div class="prog-item"><i class="fa-solid fa-check"></i><div><strong>提测 review 完成</strong> &mdash; Yunfei Wei 组织 6/11 review 会议，确认基线质量</div></div>
+<div class="prog-item"><i class="fa-solid fa-check"></i><div><strong>测试包覆盖 5 个版本</strong> &mdash; Zhiwei 发出 253485~254147 测试包，发现 26 个 bug，已关 5 个</div></div>
+<div class="prog-item"><i class="fa-solid fa-check"></i><div><strong>方案文档 + 操作手册</strong> &mdash; Danxia 6/11 发出给 Yuecong 和 Yana</div></div>
 </div>
 
-<div class="bc a">
-<div class="bc-name">多碳多硅</div>
-<div class="bc-status"><span class="dot dot-a"></span>方向已定，Demo 受阻</div>
-<div class="bc-highlight">
-多 Agent + 多人类协作模式。<strong>Demo 被 heartbeat 机制阻塞</strong>，Case 被评价太宽泛。
-</div>
-<div class="bc-risk"><i class="fa-solid fa-triangle-exclamation"></i>资源与代参会/陪参会存在冲突</div>
+<div class="b-section">
+<div class="b-section-title">风险</div>
+<div class="risk-row"><i class="fa-solid fa-triangle-exclamation"></i><div><strong>Copilot Facilitator 已 GA</strong> &mdash; 实时 AI 笔记 + 决策摘要，直接竞争 L2 差异化定位</div></div>
+<div class="risk-row"><i class="fa-solid fa-triangle-exclamation"></i><div><strong>21 个 bug 待修复</strong> &mdash; 影响 Dogfood 质量和用户信心</div></div>
 </div>
 
-</div>
-</div>
-
-<!-- ==================== 2. 这周干了啥 ==================== -->
-<div class="sec">
-<div class="sec-label">Section 02</div>
-<h2>本周 Highlights</h2>
-
-<ul class="hl-list">
-<li class="hl-item">
-<div class="hl-date">6/12</div>
-<div class="hl-text"><strong>代参会 PRD 定稿 v3.3</strong> &mdash; 从功能列表重构为用户旅程视角，经过 6 版迭代。Yana 主导，Aibo 审批。<span class="hl-tag t2">代参会</span></div>
-</li>
-<li class="hl-item">
-<div class="hl-date">6/11</div>
-<div class="hl-text"><strong>产品架构方向达成共识</strong> &mdash; Meeting Companion（入口）&rarr; Project Workspace（执行）&rarr; Wiki/Memory（持久化）&rarr; Multi-agent（引擎）。Weekly Review 确认。<span class="hl-tag t1">全局</span></div>
-</li>
-<li class="hl-item">
-<div class="hl-date">6/11</div>
-<div class="hl-text"><strong>Concordia LiveDemo for G Review</strong> &mdash; Aibo 组织，Shan Peng/Yuecong/Yana/Jian Liu 参加。为高管演示准备。<span class="hl-tag t1">全局</span></div>
-</li>
-<li class="hl-item">
-<div class="hl-date">6/11</div>
-<div class="hl-text"><strong>Dongyang Cui 接替 Zhiwei</strong> &mdash; 代参会研发任务整体转交，Aibo 也加入项目。<span class="hl-tag t2">代参会</span></div>
-</li>
-<li class="hl-item">
-<div class="hl-date">6/8</div>
-<div class="hl-text"><strong>陪参会提测</strong> &mdash; Zhiwei 提交测试包（5 个版本），Yunfei Wei 组织 review。发现 26 个 bug。<span class="hl-tag t3">陪参会</span></div>
-</li>
-</ul>
+<div class="b-section">
+<div class="b-section-title">下一步</div>
+<div class="next-item"><div class="nd">6/18</div><div><strong>Weekly Review</strong> &mdash; 需汇报陪参会测试结果和 bug 修复进展<span class="you-tag">需要你参加</span></div></div>
 </div>
 
-<!-- ==================== 3. 下周注意啥 ==================== -->
-<div class="sec">
-<div class="sec-label">Section 03</div>
-<h2>未来 7 天</h2>
-
-<ul class="tl">
-<li class="tl-row"><div class="tl-d">6/16 周一</div><div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-ln"></div></div><div class="tl-c"><strong>Concordia Daily Sync</strong> 09:30</div></li>
-<li class="tl-row"><div class="tl-d">6/17 周二</div><div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-ln"></div></div><div class="tl-c"><strong>VSWork Weekly Sync</strong> 14:30</div></li>
-<li class="tl-row"><div class="tl-d">6/18 周三</div><div class="tl-dot-col"><div class="tl-dot red"></div><div class="tl-ln"></div></div><div class="tl-c"><strong>Weekly Review on Concordia</strong> 13:35 &mdash; 张琪主持<span class="tl-you">需要你参加</span></div></li>
-<li class="tl-row"><div class="tl-d">待定</div><div class="tl-dot-col"><div class="tl-dot amber"></div><div class="tl-ln"></div></div><div class="tl-c"><strong>Pitch Deck 交付</strong> &mdash; CVP/EVP 级别，6 大场景<span class="tl-you">需要你审批</span></div></li>
-<li class="tl-row"><div class="tl-d">7 月 W1</div><div class="tl-dot-col"><div class="tl-dot green"></div></div><div class="tl-c"><strong>代参会 Dogfood Alpha</strong> &mdash; 5 人内测启动</div></li>
-</ul>
-</div>
-
-<!-- ==================== 4. 要我拍板啥 ==================== -->
-<div class="sec">
-<div class="sec-label">Section 04</div>
-<h2>等待你的决策</h2>
-
-<div class="dec-card">
-<div class="dec-q">Dongyang Cui 任务集中度过高（7/10），是否调配资源？</div>
-<div class="dec-ctx">代参会 10 个研发任务中 7 个在 Dongyang 一人身上。Jian Liu 当前无活跃任务，可分担。</div>
-<div class="dec-opts">
-<span class="dec-opt rec">分配 2-3 个任务给 Jian Liu</span>
-<span class="dec-opt">维持现状，观察</span>
-<span class="dec-opt">招人补充</span>
-</div>
-</div>
-
-<div class="dec-card">
-<div class="dec-q">Pitch Deck 截止日期？</div>
-<div class="dec-ctx">你要求准备 CVP/EVP 级别 Deck。Yana 已分配任务给你，但截止日期未定。6/18 Weekly Review 是否需要初版？</div>
-<div class="dec-opts">
-<span class="dec-opt rec">6/18 Review 前完成初版</span>
-<span class="dec-opt">不急，月底前</span>
-</div>
-</div>
-
-<div class="dec-card">
-<div class="dec-q">陪参会 L2 差异化策略：Copilot Facilitator 已 GA，怎么应对？</div>
-<div class="dec-ctx">微软 Copilot Facilitator 已 GA，功能覆盖实时 AI 笔记 + 决策摘要。陪参会 L2 需要重新定义差异化，还是加速转向 L3 代参会？</div>
+<div class="b-section">
+<div class="b-section-title">待决策</div>
+<div class="dec">
+<div class="dec-q">Copilot Facilitator 已 GA，陪参会 L2 如何应对？</div>
+<div class="dec-ctx">L2 差异化受到直接威胁。是重新定义 L2，还是将资源集中到 L3 代参会？</div>
 <div class="dec-opts">
 <span class="dec-opt">重新定义 L2 差异化</span>
 <span class="dec-opt rec">加速 L3，L2 作为过渡</span>
 <span class="dec-opt">两条线并行</span>
 </div>
 </div>
+</div>
 
+</div>
+</div>
+
+<!-- ========== 代参会 ========== -->
+<div class="branch green">
+<div class="branch-header">
+<div class="bh-left">
+<div class="bh-name">代参会</div>
+<span class="bh-badge g">产品化开发中</span>
+</div>
+<div class="bh-right">L3 &middot; 目标 7 月底 MVP</div>
+</div>
+<div class="branch-body">
+
+<div class="b-section">
+<div class="b-section-title">本周进展</div>
+<div class="prog-item"><i class="fa-solid fa-check"></i><div><strong>PRD v3.3 定稿</strong> &mdash; 用户旅程视角，经 6 版迭代，Aibo 审批通过</div></div>
+<div class="prog-item"><i class="fa-solid fa-check"></i><div><strong>Dongyang 接手研发</strong> &mdash; 替代 Zhiwei，承担引擎开发 + 转录 + 摘要 + 退出策略等 7 项任务</div></div>
+<div class="prog-item"><i class="fa-solid fa-check"></i><div><strong>LiveDemo for G Review</strong> &mdash; 6/11 Aibo 组织，为高管演示准备材料</div></div>
+<div class="prog-item"><i class="fa-solid fa-check"></i><div><strong>竞品情报更新</strong> &mdash; teams-attendant 开源项目分析完成；Bot Detection Policy 确认已生效</div></div>
+</div>
+
+<div class="b-section">
+<div class="b-section-title">风险</div>
+<div class="risk-row"><i class="fa-solid fa-triangle-exclamation"></i><div><strong>Dongyang Cui 单点风险</strong> &mdash; 10 项任务中承担 7 项，病假或离职将导致停滞</div></div>
+<div class="risk-row"><i class="fa-solid fa-triangle-exclamation"></i><div><strong>Bot Detection Policy 已生效</strong> &mdash; 外部 bot 入会被标记，可能需要调整技术路线</div></div>
+</div>
+
+<div class="b-section">
+<div class="b-section-title">下一步</div>
+<div class="next-item"><div class="nd">6/18</div><div><strong>Weekly Review</strong> &mdash; 代参会进展汇报<span class="you-tag">需要你参加</span></div></div>
+<div class="next-item"><div class="nd">待定</div><div><strong>Pitch Deck 交付</strong> &mdash; CVP/EVP 级别 Deck<span class="you-tag">需要你审批</span></div></div>
+<div class="next-item"><div class="nd">7 月 W1</div><div><strong>Dogfood Alpha</strong> &mdash; 5 人内测启动</div></div>
+</div>
+
+<div class="b-section">
+<div class="b-section-title">待决策</div>
+<div class="dec">
+<div class="dec-q">Dongyang 任务集中度过高（7/10），是否调配资源？</div>
+<div class="dec-ctx">Jian Liu 当前无活跃任务，可分担 2-3 项研发工作。</div>
+<div class="dec-opts">
+<span class="dec-opt rec">分配给 Jian Liu</span>
+<span class="dec-opt">维持现状</span>
+<span class="dec-opt">招人补充</span>
+</div>
+</div>
+<div class="dec" style="margin-top:10px">
+<div class="dec-q">Pitch Deck 截止日期？</div>
+<div class="dec-ctx">6/18 Weekly Review 是否需要初版？还是另找时间专门汇报？</div>
+<div class="dec-opts">
+<span class="dec-opt rec">6/18 前初版</span>
+<span class="dec-opt">月底前</span>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- ========== 多碳多硅 ========== -->
+<div class="branch amber">
+<div class="branch-header">
+<div class="bh-left">
+<div class="bh-name">多碳多硅</div>
+<span class="bh-badge a">方向已定 &middot; Demo 受阻</span>
+</div>
+<div class="bh-right">早期 &middot; 目标版本待定</div>
+</div>
+<div class="branch-body">
+
+<div class="b-section">
+<div class="b-section-title">本周进展</div>
+<div class="prog-item"><i class="fa-solid fa-check"></i><div><strong>完整 Dogfood 会议</strong> &mdash; 6/12 Yuecong 组织全员参加（Aibo/Danxia/Danny/Jian/Dongyang/Jing）</div></div>
+<div class="prog-item"><i class="fa-solid fa-check"></i><div><strong>问题列表对齐</strong> &mdash; 6/11 Danxia 组织，与 Danny/Yuecong/Yana 对齐待解决问题</div></div>
+<div class="prog-item"><i class="fa-solid fa-check"></i><div><strong>产品分工对齐</strong> &mdash; 6/11 Danxia 组织，与 Yuecong/Yana 明确各自职责</div></div>
+</div>
+
+<div class="b-section">
+<div class="b-section-title">风险</div>
+<div class="risk-row"><i class="fa-solid fa-triangle-exclamation"></i><div><strong>Demo 被 heartbeat 机制阻塞</strong> &mdash; 多碳多硅场景依赖 proactive 能力，heartbeat 有问题导致无法展示</div></div>
+<div class="risk-row"><i class="fa-solid fa-triangle-exclamation"></i><div><strong>Case 质量</strong> &mdash; Ruiling 编写的 Case 被 Yuecong 评价"太宽泛"，需收窄到具体功能模块</div></div>
+</div>
+
+<div class="b-section">
+<div class="b-section-title">下一步</div>
+<div class="next-item"><div class="nd">持续</div><div><strong>heartbeat 阻塞修复</strong> &mdash; Danny 跟进技术问题</div></div>
+<div class="next-item"><div class="nd">待定</div><div><strong>Ruiling Case 收窄</strong> &mdash; Yuecong 要求重新定义 Case 范围</div></div>
+</div>
+
+</div>
+</div>
+
+<!-- ========== 全局 ========== -->
+<div class="global">
+<div class="global-title">跨分支</div>
+<h2>全局风险 &amp; 关键决策</h2>
+
+<ul class="global-risks">
+<li><i class="fa-solid fa-triangle-exclamation"></i><div><strong>张琪可能调 STCA，Dawei 可能跟随</strong> &mdash; 影响 Concordia 整体方向和资源支持<span class="sev sev-h">高</span></div></li>
+<li><i class="fa-solid fa-triangle-exclamation"></i><div><strong>内部发布策略逾期</strong> &mdash; 原 6/8 截止，影响整体推广节奏<span class="sev sev-m">中</span></div></li>
+<li><i class="fa-solid fa-triangle-exclamation"></i><div><strong>Purview DLP 安全告警</strong> &mdash; 8 封 GitHub PAT 泄露告警，涉及 OneDrive 文件<span class="sev sev-m">中</span></div></li>
+<li><i class="fa-solid fa-triangle-exclamation"></i><div><strong>产品架构方向已定</strong> &mdash; Meeting Companion &rarr; Workspace &rarr; Wiki/Memory &rarr; Multi-agent，6/11 Weekly Review 共识<span class="sev sev-m">信息</span></div></li>
+</ul>
 </div>
 
 </div></div>
 
 <div class="foot">
-Concordia Program Dashboard &middot; 采集自 143 封邮件 / 155+ Teams 消息 / 40 日历事件 / 17 份会议纪要 &middot; 2026-06-14
+Concordia Program Dashboard &middot; 数据来源：143 封邮件 / 155+ Teams 消息 / 40 日历事件 / 17 份会议纪要 &middot; 2026-06-14
 </div>
 
 </body>
