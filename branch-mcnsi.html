@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>多碳多硅 — 完整报告</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f172a;--surface:#1e293b;--card:#0f172a;--border:#334155;--text:#f1f5f9;--dim:#94a3b8;--faint:#64748b;--accent:#60a5fa;--green:#34d399;--amber:#fbbf24;--red:#f87171;--white:#fff}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;overflow:hidden;height:100vh}
+.deck{height:100vh;overflow:hidden;position:relative}
+.slides{display:flex;height:100%;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.slide{min-width:100vw;height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 10vw;position:relative}
+.nav{position:fixed;bottom:32px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--faint);cursor:pointer;transition:all .2s}
+.dot.active{background:var(--accent);width:24px;border-radius:4px}
+.arrows{position:fixed;top:50%;z-index:10;cursor:pointer;color:var(--faint);font-size:20px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:all .2s;border:1px solid var(--border)}
+.arrows:hover{color:var(--text);background:var(--surface);border-color:var(--faint)}
+.arrow-l{left:24px;transform:translateY(-50%)}
+.arrow-r{right:24px;transform:translateY(-50%)}
+.slide-num{position:fixed;top:24px;right:32px;font-size:11px;color:var(--faint);z-index:10;font-weight:600;letter-spacing:1px}
+.back-link{position:fixed;top:24px;left:32px;font-size:11px;color:var(--accent);text-decoration:none;z-index:20;display:flex;align-items:center;gap:6px;font-weight:600}
+.back-link:hover{color:var(--text)}
+.cover-eyebrow{font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:16px}
+.cover h1{font-size:52px;font-weight:900;letter-spacing:-1px;line-height:1.1;margin-bottom:12px}
+.cover .sub{font-size:18px;color:var(--dim);font-weight:300;margin-bottom:32px}
+.cover-meta{display:flex;gap:32px;font-size:12px;color:var(--faint)}
+.cover-meta i{margin-right:6px}
+.branch-slide .eyebrow{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.branch-slide h2{font-size:36px;font-weight:800;letter-spacing:-.3px;margin-bottom:4px}
+.branch-slide .status-line{font-size:14px;color:var(--dim);margin-bottom:28px;display:flex;align-items:center;gap:8px}
+.status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.branch-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px 40px}
+.branch-section h3{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--faint);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.branch-section h3 i{font-size:12px}
+.item{padding:6px 0;font-size:13px;color:var(--dim);line-height:1.5;display:flex;gap:8px}
+.item i{margin-top:4px;font-size:10px;flex-shrink:0}
+.item.check i{color:var(--green)}
+.item.risk i{color:var(--red)}
+.item.star i{color:var(--amber)}
+.item.arrow i{color:var(--accent)}
+.item strong{color:var(--text)}
+.roadmap{margin-top:20px;grid-column:1/-1}
+.roadmap h3{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--faint);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.roadmap h3 i{font-size:12px}
+.rm-bar{display:flex;height:36px;border-radius:8px;overflow:hidden;background:var(--surface);position:relative}
+.rm-seg{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;letter-spacing:.3px;color:var(--bg);position:relative}
+.rm-seg.done{background:var(--green)}
+.rm-seg.now{background:var(--accent);animation:segPulse 2s infinite}
+.rm-seg.todo{background:var(--surface);color:var(--faint);border-right:1px solid var(--border)}
+@keyframes segPulse{0%,100%{opacity:1}50%{opacity:.7}}
+.rm-marker{position:absolute;top:-8px;font-size:8px;color:var(--accent)}
+.dec-slide h2{font-size:36px;font-weight:800;margin-bottom:28px}
+.dec-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:16px}
+.dec-card .q{font-size:15px;font-weight:600;margin-bottom:4px}
+.dec-card .ctx{font-size:12px;color:var(--dim);margin-bottom:12px}
+.dec-opts{display:flex;gap:8px;flex-wrap:wrap}
+.dec-opt{font-size:11px;font-weight:600;padding:6px 14px;border-radius:6px;border:1px solid var(--border);color:var(--dim);background:transparent;cursor:pointer;transition:all .15s}
+.dec-opt:hover{border-color:var(--accent);color:var(--accent)}
+.dec-opt.rec{border-color:var(--accent);color:var(--accent);background:rgba(96,165,250,.08)}
+.tag{font-size:9px;font-weight:700;padding:2px 8px;border-radius:4px;margin-left:8px}
+.tag-c{background:rgba(251,191,36,.12);color:var(--amber)}
+.tag-d{background:rgba(96,165,250,.12);color:var(--accent)}
+.kb-hint{position:fixed;bottom:32px;right:32px;font-size:10px;color:var(--faint);z-index:10}
+.kb-hint kbd{background:var(--surface);border:1px solid var(--border);padding:2px 6px;border-radius:3px;font-family:inherit;margin:0 2px}
+.team-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}
+.team-table th{text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--faint);padding:6px 12px;border-bottom:1px solid var(--border)}
+.team-table td{padding:6px 12px;color:var(--dim);border-bottom:1px solid rgba(51,65,85,.4)}
+.team-table td:first-child{color:var(--text);font-weight:600}
+.section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--faint);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.section-title i{font-size:13px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px 40px}
+.full-width{grid-column:1/-1}
+/* Vision layers */
+.vision-layers{display:flex;flex-direction:column;gap:8px;margin:12px 0}
+.v-layer{padding:10px 16px;border-radius:8px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:10px;border:1px solid var(--border)}
+.v-layer i{font-size:14px;width:20px;text-align:center}
+.v-layer.current{background:rgba(96,165,250,.1);border-color:var(--accent);color:var(--accent)}
+.v-layer.done{background:rgba(52,211,153,.06);border-color:rgba(52,211,153,.3);color:var(--dim)}
+.v-layer.future{background:var(--surface);color:var(--faint)}
+@media(max-width:768px){.slide{padding:0 6vw}.cover h1{font-size:32px}.branch-grid{grid-template-columns:1fr}.branch-slide h2{font-size:28px}.two-col{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<a href="deck.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> 返回总览</a>
+<div class="slide-num" id="slideNum">1 / 6</div>
+<div class="arrows arrow-l" onclick="go(-1)"><i class="fa-solid fa-chevron-left"></i></div>
+<div class="arrows arrow-r" onclick="go(1)"><i class="fa-solid fa-chevron-right"></i></div>
+<div class="nav" id="nav"></div>
+<div class="kb-hint"><kbd>&larr;</kbd> <kbd>&rarr;</kbd> 翻页</div>
+
+<div class="deck">
+<div class="slides" id="slides">
+
+<!-- SLIDE 1: Cover -->
+<div class="slide cover">
+<div class="cover-eyebrow">Branch Report &middot; 早期阶段</div>
+<h1>多碳多硅<br><span style="font-size:28px;font-weight:300;color:var(--dim)">mC + nSi</span></h1>
+<div class="sub">方向已定，Demo 受阻 &middot; 定义阶段</div>
+<div class="cover-meta">
+<span><i class="fa-solid fa-calendar"></i>2026-06-14</span>
+<span><i class="fa-solid fa-seedling"></i>早期探索</span>
+<span><div class="status-dot" style="background:var(--amber);display:inline-block;margin-right:4px"></div>需要关注</span>
+<span><i class="fa-solid fa-users-gear"></i>多 Agent + 多人类</span>
+</div>
+</div>
+
+<!-- SLIDE 2: 目标与定位 -->
+<div class="slide branch-slide">
+<div class="eyebrow" style="color:var(--amber)">目标与定位</div>
+<h2>什么是多碳多硅</h2>
+<div class="status-line">多个 AI Agent（硅基）与多个人类（碳基）协作的新型工作模式</div>
+<div class="branch-grid">
+<div class="branch-section">
+<h3><i class="fa-solid fa-atom"></i> 核心定义</h3>
+<div class="item star"><i class="fa-solid fa-star"></i><div><strong>mC + nSi</strong> — m 个碳基（人类）+ n 个硅基（AI Agent）协同工作</div></div>
+<div class="item star"><i class="fa-solid fa-star"></i><div><strong>千人千面的核心体现</strong> — 每个人都有自己的 AI 分身参与协作</div></div>
+<div class="item star"><i class="fa-solid fa-star"></i><div><strong>Brain Fusion 延伸</strong> — 从个人智能融合到组织级智能协作</div></div>
+</div>
+<div class="branch-section">
+<h3><i class="fa-solid fa-layer-group"></i> 张琪三层路线图</h3>
+<div class="vision-layers">
+<div class="v-layer done"><i class="fa-solid fa-user"></i><span>第一层：个人体验</span><span style="margin-left:auto;font-size:10px;color:var(--green)">已实现</span></div>
+<div class="v-layer done"><i class="fa-solid fa-brain"></i><span>第二层：Brain Fusion</span><span style="margin-left:auto;font-size:10px;color:var(--green)">推进中</span></div>
+<div class="v-layer current"><i class="fa-solid fa-users-gear"></i><span>第三层：多碳多硅</span><span style="margin-left:auto;font-size:10px;color:var(--accent)">当前</span></div>
+</div>
+</div>
+<div class="branch-section">
+<h3><i class="fa-solid fa-bullseye"></i> 目标场景</h3>
+<div class="item arrow"><i class="fa-solid fa-arrow-right"></i><div>团队会议中多个 Agent 同时参与</div></div>
+<div class="item arrow"><i class="fa-solid fa-arrow-right"></i><div>跨团队项目中 Agent 代理成员协作</div></div>
+<div class="item arrow"><i class="fa-solid fa-arrow-right"></i><div>Workflow + Proactive 驱动的自主协作</div></div>
+</div>
+<div class="branch-section">
+<h3><i class="fa-solid fa-book"></i> 理论参考</h3>
+<div class="item check"><i class="fa-solid fa-check"></i><div><strong>吴明辉 MOE 架构文章</strong> — Dawei 推荐，多碳多硅理论基础</div></div>
+<div class="item check"><i class="fa-solid fa-check"></i><div><strong>Feature 方向确定</strong> — Workflow + Proactive + 多碳多硅</div></div>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 3: 团队与分工 -->
+<div class="slide branch-slide">
+<div class="eyebrow" style="color:var(--amber)">团队与分工</div>
+<h2>核心团队</h2>
+<div class="status-line">6 人团队，含外包协作</div>
+<div class="two-col">
+<div class="full-width">
+<table class="team-table">
+<tr><th>角色</th><th>成员</th><th>职责</th></tr>
+<tr><td>方向 Owner</td><td>Aibo Liu</td><td>战略方向、功能规划</td></tr>
+<tr><td>PM</td><td>Yana Yuan</td><td>场景讨论、需求定义</td></tr>
+<tr><td>PM</td><td>Yuecong Yang</td><td>Case 评审、质量把关</td></tr>
+<tr><td>Dev</td><td>Danny Gu (Dawei)</td><td>技术实现、Wiki 架构</td></tr>
+<tr><td>Vendor</td><td>Ruiling Zhang (Wicresoft)</td><td>Case 编写（需收窄）</td></tr>
+<tr><td>Vendor PM</td><td>Vivian Liang (Wicresoft)</td><td>测试协调、R3 版本</td></tr>
+</table>
+</div>
+<div class="roadmap full-width">
+<h3><i class="fa-solid fa-route"></i> Where We Are</h3>
+<div class="rm-bar">
+<div class="rm-seg done" style="width:20%">方向</div>
+<div class="rm-seg now" style="width:20%">定义 <i class="fa-solid fa-location-dot rm-marker"></i></div>
+<div class="rm-seg todo" style="width:20%">POC</div>
+<div class="rm-seg todo" style="width:20%">开发</div>
+<div class="rm-seg todo" style="width:20%">发布</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 4: 本周进展 -->
+<div class="slide branch-slide">
+<div class="eyebrow" style="color:var(--amber)">本周进展</div>
+<h2>6/8 — 6/14 关键动态</h2>
+<div class="status-line"><div class="status-dot" style="background:var(--amber)"></div>Dogfood 组织 + 问题对齐 + 分工梳理</div>
+<div class="branch-grid">
+<div class="branch-section">
+<h3><i class="fa-solid fa-check-double"></i> 会议与对齐</h3>
+<div class="item check"><i class="fa-solid fa-check"></i><div><strong>Dogfood 全员会议</strong> — Yuecong 组织，全员参加，验证多碳多硅场景</div></div>
+<div class="item check"><i class="fa-solid fa-check"></i><div><strong>问题列表对齐</strong> — Danxia 组织，梳理待解决问题清单</div></div>
+<div class="item check"><i class="fa-solid fa-check"></i><div><strong>产品分工对齐</strong> — Danxia 组织，明确各角色职责边界</div></div>
+</div>
+<div class="branch-section">
+<h3><i class="fa-solid fa-clipboard-list"></i> Case 与反馈</h3>
+<div class="item star"><i class="fa-solid fa-star"></i><div><strong>Ruiling Case 反馈</strong> — Yuecong 评审，反馈 Case 太宽泛需收窄</div></div>
+<div class="item arrow"><i class="fa-solid fa-arrow-right"></i><div><strong>Danny 跟进技术实现</strong> — Wiki 架构和 Proactive 相关</div></div>
+</div>
+<div class="branch-section">
+<h3><i class="fa-solid fa-flask"></i> 测试</h3>
+<div class="item check"><i class="fa-solid fa-check"></i><div><strong>R3 版 WIC 测试</strong> — Vivian 组织上午/下午两场</div></div>
+<div class="item check"><i class="fa-solid fa-check"></i><div><strong>Concordia 大群活跃</strong> — 104 条消息/周，int 环境讨论</div></div>
+</div>
+<div class="branch-section">
+<h3><i class="fa-solid fa-lightbulb"></i> 方向确认</h3>
+<div class="item star"><i class="fa-solid fa-star"></i><div><strong>张琪三层路线图第三层</strong> — 多碳多硅是最高层愿景</div></div>
+<div class="item star"><i class="fa-solid fa-star"></i><div><strong>Feature 方向已定</strong> — Workflow + Proactive + 多碳多硅</div></div>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 5: 风险 -->
+<div class="slide branch-slide">
+<div class="eyebrow" style="color:var(--red)">风险评估</div>
+<h2>当前风险与阻塞</h2>
+<div class="status-line"><div class="status-dot" style="background:var(--red)"></div>Demo 受阻，多项风险待解</div>
+<div class="branch-grid">
+<div class="branch-section">
+<h3><i class="fa-solid fa-ban"></i> 技术阻塞</h3>
+<div class="item risk"><i class="fa-solid fa-circle-exclamation"></i><div><strong>Demo 被 heartbeat 阻塞</strong> — 多碳多硅场景依赖 Proactive 能力，但 heartbeat 机制有技术问题，Demo 无法正常展示</div></div>
+</div>
+<div class="branch-section">
+<h3><i class="fa-solid fa-file-circle-xmark"></i> 内容质量</h3>
+<div class="item risk"><i class="fa-solid fa-circle-exclamation"></i><div><strong>Case 太宽泛</strong> — Ruiling 编写的 Case 被 Yuecong 评价为"太宽泛"，需要重新收窄到具体功能模块</div></div>
+</div>
+<div class="branch-section">
+<h3><i class="fa-solid fa-people-arrows"></i> 资源冲突</h3>
+<div class="item risk"><i class="fa-solid fa-circle-exclamation"></i><div><strong>与代参会/陪参会资源争夺</strong> — 团队有限，多碳多硅可能被压后，需要明确优先级</div></div>
+</div>
+<div class="branch-section">
+<h3><i class="fa-solid fa-compass"></i> 方向与优先级</h3>
+<div class="item risk"><i class="fa-solid fa-circle-exclamation"></i><div><strong>方向宏大但落地路径不清</strong> — 作为张琪路线图最高层，需要更具体的 POC 和 Demo 来验证方向</div></div>
+<div class="item risk"><i class="fa-solid fa-circle-exclamation"></i><div><strong>组织变动信号</strong> — 张琪可能调 STCA，Dawei 可能跟随，影响方向支持力度</div></div>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 6: 下一步 -->
+<div class="slide dec-slide">
+<div class="eyebrow" style="color:var(--accent)">下一步</div>
+<h2>行动计划</h2>
+
+<div class="dec-card">
+<div class="q"><i class="fa-solid fa-wrench" style="color:var(--accent);margin-right:8px"></i>修复 heartbeat 阻塞<span class="tag tag-c">行动</span></div>
+<div class="ctx">Danny Gu 跟进，解决 Proactive 能力的技术问题，解除 Demo 阻塞</div>
+</div>
+
+<div class="dec-card">
+<div class="q"><i class="fa-solid fa-compress" style="color:var(--accent);margin-right:8px"></i>Ruiling Case 收窄<span class="tag tag-c">行动</span></div>
+<div class="ctx">按 Yuecong 要求，将宽泛的 Case 收窄到具体功能模块，提供可执行的测试场景</div>
+</div>
+
+<div class="dec-card">
+<div class="q"><i class="fa-solid fa-bullseye" style="color:var(--accent);margin-right:8px"></i>确定 Demo Target<span class="tag tag-c">行动</span></div>
+<div class="ctx">在 heartbeat 修复后，明确第一个可展示的多碳多硅 Demo 场景和目标时间</div>
+</div>
+
+<div class="dec-card" style="border-color:var(--amber)">
+<div class="q"><i class="fa-solid fa-scale-balanced" style="color:var(--amber);margin-right:8px"></i>资源优先级如何排序？<span class="tag tag-d">待讨论</span></div>
+<div class="ctx">多碳多硅 vs 代参会 vs 陪参会，在有限资源下如何分配注意力和人力</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<script>
+let current=0;
+const total=document.querySelectorAll('.slide').length;
+const slides=document.getElementById('slides');
+const nav=document.getElementById('nav');
+const numEl=document.getElementById('slideNum');
+for(let i=0;i<total;i++){const d=document.createElement('div');d.className='dot'+(i===0?' active':'');d.onclick=()=>goTo(i);nav.appendChild(d);}
+function goTo(n){if(n<0)n=0;if(n>=total)n=total-1;current=n;slides.style.transform=`translateX(-${current*100}vw)`;document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===current));numEl.textContent=`${current+1} / ${total}`;}
+function go(dir){goTo(current+dir)}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')go(1);if(e.key==='ArrowLeft')go(-1);});
+let touchX=0;
+document.addEventListener('touchstart',e=>touchX=e.touches[0].clientX);
+document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-touchX;if(Math.abs(dx)>50){dx<0?go(1):go(-1)}});
+</script>
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>陪参会 — 完整报告</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f172a;--surface:#1e293b;--card:#0f172a;--border:#334155;--text:#f1f5f9;--dim:#94a3b8;--faint:#64748b;--accent:#60a5fa;--green:#34d399;--amber:#fbbf24;--red:#f87171;--white:#fff}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;overflow:hidden;height:100vh}
+.deck{height:100vh;overflow:hidden;position:relative}
+.slides{display:flex;height:100%;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.slide{min-width:100vw;height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 10vw;position:relative}
+.nav{position:fixed;bottom:32px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--faint);cursor:pointer;transition:all .2s}
+.dot.active{background:var(--accent);width:24px;border-radius:4px}
+.arrows{position:fixed;top:50%;z-index:10;cursor:pointer;color:var(--faint);font-size:20px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:all .2s;border:1px solid var(--border)}
+.arrows:hover{color:var(--text);background:var(--surface);border-color:var(--faint)}
+.arrow-l{left:24px;transform:translateY(-50%)}
+.arrow-r{right:24px;transform:translateY(-50%)}
+.slide-num{position:fixed;top:24px;right:32px;font-size:11px;color:var(--faint);z-index:10;font-weight:600;letter-spacing:1px}
+.brand{position:fixed;top:24px;left:32px;font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--faint);z-index:10}
+.brand span{color:var(--amber)}
+.back-link{position:fixed;top:24px;left:32px;font-size:11px;color:var(--accent);text-decoration:none;z-index:20;display:flex;align-items:center;gap:6px;font-weight:600}
+.back-link:hover{color:var(--text)}
+.cover-eyebrow{font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:16px}
+.cover h1{font-size:52px;font-weight:900;letter-spacing:-1px;line-height:1.1;margin-bottom:12px}
+.cover .sub{font-size:18px;color:var(--dim);font-weight:300;margin-bottom:32px}
+.cover-meta{display:flex;gap:32px;font-size:12px;color:var(--faint)}
+.cover-meta i{margin-right:6px}
+.branch-slide .eyebrow{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.branch-slide h2{font-size:36px;font-weight:800;letter-spacing:-.3px;margin-bottom:4px}
+.branch-slide .status-line{font-size:14px;color:var(--dim);margin-bottom:28px;display:flex;align-items:center;gap:8px}
+.status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.branch-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px 40px}
+.branch-section h3{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--faint);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.branch-section h3 i{font-size:12px}
+.item{padding:6px 0;font-size:13px;color:var(--dim);line-height:1.5;display:flex;gap:8px}
+.item i{margin-top:4px;font-size:10px;flex-shrink:0}
+.item.check i{color:var(--green)}
+.item.risk i{color:var(--red)}
+.item.star i{color:var(--amber)}
+.item.arrow i{color:var(--accent)}
+.item strong{color:var(--text)}
+.roadmap{margin-top:20px;grid-column:1/-1}
+.roadmap h3{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--faint);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.roadmap h3 i{font-size:12px}
+.rm-bar{display:flex;height:36px;border-radius:8px;overflow:hidden;background:var(--surface);position:relative}
+.rm-seg{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;letter-spacing:.3px;color:var(--bg);position:relative}
+.rm-seg.done{background:var(--green)}
+.rm-seg.now{background:var(--accent);animation:segPulse 2s infinite}
+.rm-seg.todo{background:var(--surface);color:var(--faint);border-right:1px solid var(--border)}
+@keyframes segPulse{0%,100%{opacity:1}50%{opacity:.7}}
+.rm-marker{position:absolute;top:-8px;font-size:8px;color:var(--accent)}
+.dec-slide h2{font-size:36px;font-weight:800;margin-bottom:28px}
+.dec-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:16px}
+.dec-card .q{font-size:15px;font-weight:600;margin-bottom:4px}
+.dec-card .ctx{font-size:12px;color:var(--dim);margin-bottom:12px}
+.dec-opts{display:flex;gap:8px;flex-wrap:wrap}
+.dec-opt{font-size:11px;font-weight:600;padding:6px 14px;border-radius:6px;border:1px solid var(--border);color:var(--dim);background:transparent;cursor:pointer;transition:all .15s}
+.dec-opt:hover{border-color:var(--accent);color:var(--accent)}
+.dec-opt.rec{border-color:var(--accent);color:var(--accent);background:rgba(96,165,250,.08)}
+.tag{font-size:9px;font-weight:700;padding:2px 8px;border-radius:4px;margin-left:8px}
+.tag-c{background:rgba(251,191,36,.12);color:var(--amber)}
+.tag-d{background:rgba(96,165,250,.12);color:var(--accent)}
+.kb-hint{position:fixed;bottom:32px;right:32px;font-size:10px;color:var(--faint);z-index:10}
+.kb-hint kbd{background:var(--surface);border:1px solid var(--border);padding:2px 6px;border-radius:3px;font-family:inherit;margin:0 2px}
+/* Team table */
+.team-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}
+.team-table th{text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--faint);padding:6px 12px;border-bottom:1px solid var(--border)}
+.team-table td{padding:6px 12px;color:var(--dim);border-bottom:1px solid rgba(51,65,85,.4)}
+.team-table td:first-child{color:var(--text);font-weight:600}
+.team-table tr:hover td{background:rgba(96,165,250,.04)}
+/* Competitive table */
+.comp-table{width:100%;border-collapse:collapse;font-size:11px;margin-top:8px}
+.comp-table th{text-align:left;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--faint);padding:6px 10px;border-bottom:1px solid var(--border)}
+.comp-table td{padding:6px 10px;color:var(--dim);border-bottom:1px solid rgba(51,65,85,.4)}
+.comp-table td:first-child{color:var(--text);font-weight:600}
+/* Section title for full-width */
+.section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--faint);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.section-title i{font-size:13px}
+/* Two-col layout */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px 40px}
+.full-width{grid-column:1/-1}
+@media(max-width:768px){.slide{padding:0 6vw}.cover h1{font-size:32px}.branch-grid{grid-template-columns:1fr}.branch-slide h2{font-size:28px}.two-col{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<a href="deck.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> 返回总览</a>
+<div class="slide-num" id="slideNum">1 / 6</div>
+<div class="arrows arrow-l" onclick="go(-1)"><i class="fa-solid fa-chevron-left"></i></div>
+<div class="arrows arrow-r" onclick="go(1)"><i class="fa-solid fa-chevron-right"></i></div>
+<div class="nav" id="nav"></div>
+<div class="kb-hint"><kbd>&larr;</kbd> <kbd>&rarr;</kbd> 翻页</div>
+
+<div class="deck">
+<div class="slides" id="slides">
+
+<!-- SLIDE 1: Cover -->
+<div class="slide cover">
+<div class="cover-eyebrow">Branch Report &middot; L2</div>
+<h1>陪参会<br><span style="font-size:28px;font-weight:300;color:var(--dim)">Meeting Companion</span></h1>
+<div class="sub">测试中，有风险 &middot; 目标版本 1.0.5</div>
+<div class="cover-meta">
+<span><i class="fa-solid fa-calendar"></i>2026-06-14</span>
+<span><i class="fa-solid fa-layer-group"></i>L2 陪伴参会</span>
+<span><div class="status-dot" style="background:var(--amber);display:inline-block;margin-right:4px"></div>测试阶段</span>
+<span><i class="fa-solid fa-bug" style="color:var(--red)"></i>21 个待修 Bug</span>
+</div>
+</div>
+
+<!-- SLIDE 2: 目标与定位 -->
+<div class="slide branch-slide">
+<div class="eyebrow" style="color:var(--amber)">目标与定位</div>
+<h2>什么是陪参会</h2>
+<div class="status-line">L2 陪伴参会 — Concordia 会议能力的主力功能</div>
+<div class="branch-grid">
+<div class="branch-section">
+<h3><i class="fa-solid fa-bullseye"></i> 定义</h3>
+<div class="item star"><i class="fa-solid fa-star"></i><div><strong>L2 级别能力</strong> — 用户参会时，Concordia 实时陪伴，提供 AI 辅助笔记、摘要和建议</div></div>
+<div class="item star"><i class="fa-solid fa-star"></i><div><strong>目标用户</strong> — 150 MICE 用户可体验，面向频繁参会的知识工作者</div></div>
+<div class="item star"><i class="fa-solid fa-star"></i><div><strong>核心价值</strong> — 会中实时辅助 + 会后自动摘要，降低会议认知负荷</div></div>
+</div>
+<div class="branch-section">
+<h3><i class="fa-solid fa-sitemap"></i> 产品体系关系</h3>
+<div class="item arrow"><i class="fa-solid fa-arrow-right"></i><div><strong>L1 基础会议</strong> — 会议纪要、基本转录（已完成）</div></div>
+<div class="item arrow"><i class="fa-solid fa-arrow-right"></i><div><strong>L2 陪参会</strong> — 实时陪伴 + 智能笔记 + Prompt 驱动（当前）</div></div>
+<div class="item arrow"><i class="fa-solid fa-arrow-right"></i><div><strong>L3 代参会</strong> — AI 自主参会、代表用户（下一阶段）</div></div>
+</div>
+<div class="branch-section">
+<h3><i class="fa-solid fa-diagram-project"></i> 架构定位</h3>
+<div class="item check"><i class="fa-solid fa-check"></i><div>Meeting Companion（入口） <i class="fa-solid fa-arrow-right" style="color:var(--faint);margin:0 4px"></i> Project Workspace（执行）</div></div>
+<div class="item check"><i class="fa-solid fa-check"></i><div>Wiki/Memory（持久化） <i class="fa-solid fa-arrow-right" style="color:var(--faint);margin:0 4px"></i> Multi-agent 编排（核心引擎）</div></div>
+</div>
+<div class="branch-section">
+<h3><i class="fa-solid fa-trophy"></i> 已有成果</h3>
+<div class="item check"><i class="fa-solid fa-check"></i><div><strong>随 1.0.4 发布上线</strong></div></div>
+<div class="item check"><i class="fa-solid fa-check"></i><div><strong>Prompt 设计完成</strong> — Yuecong 主导</div></div>
+<div class="item check"><i class="fa-solid fa-check"></i><div><strong>方案文档 + 操作手册</strong> — Danxia 产出</div></div>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 3: 团队与分工 -->
+<div class="slide branch-slide">
+<div class="eyebrow" style="color:var(--amber)">团队与分工</div>
+<h2>核心团队</h2>
+<div class="status-line">7 人团队，覆盖 PM / Dev / Test / 外包</div>
+<div class="two-col">
+<div class="full-width">
+<table class="team-table">
+<tr><th>角色</th><th>成员</th><th>职责</th></tr>
+<tr><td>PM</td><td>Yana Yuan</td><td>产品定义、Dogfood 组织、质量把关</td></tr>
+<tr><td>PM</td><td>Yuecong Yang</td><td>Prompt 设计、Dogfood 执行、方案设计</td></tr>
+<tr><td>Dev</td><td>Dongyang Cui</td><td>引擎开发、基线质量确认</td></tr>
+<tr><td>Arch</td><td>Jian Liu</td><td>架构设计、Teams app 集成</td></tr>
+<tr><td>Test</td><td>Zhiwei Gao</td><td>测试执行、Bug 跟踪（26 bug / 5 版本）</td></tr>
+<tr><td>Test/PM</td><td>Danxia Wen</td><td>方案文档、操作手册、Project Agent 培训</td></tr>
+<tr><td>Test Lead</td><td>Yunfei Wei (iSoftStone)</td><td>测试需求讲解、提测 review 组织</td></tr>
+</table>
+</div>
+<div class="roadmap full-width">
+<h3><i class="fa-solid fa-route"></i> Where We Are</h3>
+<div class="rm-bar">
+<div class="rm-seg done" style="width:25%">POC</div>
+<div class="rm-seg done" style="width:25%">开发</div>
+<div class="rm-seg now" style="width:25%">测试 <i class="fa-solid fa-location-dot rm-marker"></i></div>
+<div class="rm-seg todo" style="width:25%">发布</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 4: 本周进展 -->
+<div class="slide branch-slide">
+<div class="eyebrow" style="color:var(--amber)">本周进展</div>
+<h2>6/8 — 6/14 关键动态</h2>
+<div class="status-line"><div class="status-dot" style="background:var(--amber)"></div>26 个 Bug 发现，5 个已修复</div>
+<div class="branch-grid">
+<div class="branch-section">
+<h3><i class="fa-solid fa-vial"></i> 测试与质量</h3>
+<div class="item check"><i class="fa-solid fa-check"></i><div><strong>6/8 1.0.5 测试需求讲解</strong> — Yunfei Wei 组织，Yuecong/Jian/Zhiwei/Yana 参加</div></div>
+<div class="item check"><i class="fa-solid fa-check"></i><div><strong>6/8 测试包发出</strong> — Zhiwei Gao 覆盖 5 个版本（253485~254147）</div></div>
+<div class="item check"><i class="fa-solid fa-check"></i><div><strong>6/11 提测 review 完成</strong> — Yunfei Wei 组织，确认基线质量</div></div>
+<div class="item risk"><i class="fa-solid fa-circle-exclamation"></i><div><strong>发现 26 个 Bug</strong> — 已关闭 5 个，剩余 21 个待修复</div></div>
+</div>
+<div class="branch-section">
+<h3><i class="fa-solid fa-file-lines"></i> 文档与设计</h3>
+<div class="item check"><i class="fa-solid fa-check"></i><div><strong>6/11 Prompt 设计分享</strong> — Yuecong 分享 Meeting Companion 核心 Prompt</div></div>
+<div class="item check"><i class="fa-solid fa-check"></i><div><strong>6/11 方案文档发出</strong> — Danxia Wen 发出陪参会方案文档</div></div>
+<div class="item check"><i class="fa-solid fa-check"></i><div><strong>6/11 操作手册发出</strong> — Danxia Wen 发出陪参会操作手册</div></div>
+</div>
+<div class="branch-section">
+<h3><i class="fa-solid fa-users"></i> Dogfood</h3>
+<div class="item check"><i class="fa-solid fa-check"></i><div><strong>6/12 Dogfood 全员会议</strong> — Yuecong 组织，含 Dongyang/Jing/Hanqi 等</div></div>
+<div class="item star"><i class="fa-solid fa-star"></i><div><strong>150 MICE 用户可体验</strong> — 已有真实用户在使用</div></div>
+</div>
+<div class="branch-section">
+<h3><i class="fa-solid fa-clipboard-list"></i> Planner 任务</h3>
+<div class="item arrow"><i class="fa-solid fa-arrow-right"></i><div><strong>整理陪伴参会提测反馈</strong> — Dongyang Cui, in_progress</div></div>
+<div class="item arrow"><i class="fa-solid fa-arrow-right"></i><div><strong>确认基线质量</strong> — 测试反馈 review 已完成</div></div>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 5: 风险与竞品 -->
+<div class="slide branch-slide">
+<div class="eyebrow" style="color:var(--red)">风险与竞品</div>
+<h2>竞争态势与风险</h2>
+<div class="status-line"><div class="status-dot" style="background:var(--red)"></div>Copilot Facilitator 已 GA，直接竞争 L2</div>
+<div class="two-col">
+<div>
+<div class="section-title"><i class="fa-solid fa-triangle-exclamation"></i> 风险清单</div>
+<div class="item risk"><i class="fa-solid fa-circle-exclamation"></i><div><strong>Copilot Facilitator 已 GA</strong> — 实时 AI 笔记 + 决策摘要 + 开放问题汇总，直接竞争 L2 差异化</div></div>
+<div class="item risk"><i class="fa-solid fa-circle-exclamation"></i><div><strong>21 个 Bug 待修复</strong> — 26 个发现，仅关闭 5 个，影响 Dogfood 质量</div></div>
+<div class="item risk"><i class="fa-solid fa-circle-exclamation"></i><div><strong>转录质量不稳定</strong> — 中文被识别为英文乱码（5/7-5/8），根因未彻底定位</div></div>
+<div class="item risk"><i class="fa-solid fa-circle-exclamation"></i><div><strong>可能与 Teams 字幕语言设置有关</strong> — 5/11 恢复但缺乏根本修复</div></div>
+</div>
+<div>
+<div class="section-title"><i class="fa-solid fa-chess"></i> 竞品格局</div>
+<table class="comp-table">
+<tr><th>竞品</th><th>状态</th><th>能力</th></tr>
+<tr><td>Copilot Facilitator</td><td style="color:var(--red)">已 GA</td><td>实时 AI 笔记、决策摘要、开放问题</td></tr>
+<tr><td>Teams Interactive Agents</td><td style="color:var(--amber)">9月 GA</td><td>会议治理、Session Memory</td></tr>
+<tr><td>Otter.ai</td><td style="color:var(--green)">活跃</td><td>会议转录 + 摘要</td></tr>
+<tr><td>Fireflies</td><td style="color:var(--green)">活跃</td><td>会议转录 + 摘要</td></tr>
+<tr><td>腾讯会议 AI</td><td style="color:var(--green)">已上线</td><td>元宝替你听会 + AI 纪要</td></tr>
+</table>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 6: 下一步与待决策 -->
+<div class="slide dec-slide">
+<div class="eyebrow" style="color:var(--accent)">下一步与待决策</div>
+<h2>行动计划与关键决策</h2>
+
+<div class="dec-card">
+<div class="q"><i class="fa-solid fa-arrow-right" style="color:var(--accent);margin-right:8px"></i>6/18 Weekly Review 汇报测试结果<span class="tag tag-c">行动</span></div>
+<div class="ctx">张琪主持的本周最重要会议，需准备陪参会进展和 Bug 修复状态汇报</div>
+</div>
+
+<div class="dec-card">
+<div class="q"><i class="fa-solid fa-arrow-right" style="color:var(--accent);margin-right:8px"></i>修复剩余 21 个 Bug<span class="tag tag-c">行动</span></div>
+<div class="ctx">当前 26 个 Bug 仅关闭 5 个，需在扩大 Dogfood 前完成关键 Bug 修复</div>
+</div>
+
+<div class="dec-card">
+<div class="q"><i class="fa-solid fa-arrow-right" style="color:var(--accent);margin-right:8px"></i>准备扩大 Dogfood 范围<span class="tag tag-c">行动</span></div>
+<div class="ctx">当前 150 MICE 用户，需评估是否扩大测试范围和条件</div>
+</div>
+
+<div class="dec-card" style="border-color:var(--red)">
+<div class="q"><i class="fa-solid fa-hand" style="color:var(--red);margin-right:8px"></i>L2 陪参会 vs L3 代参会：资源怎么分？<span class="tag tag-d">决策</span></div>
+<div class="ctx">Copilot Facilitator 已 GA，L2 差异化受威胁。是继续投入 L2 还是 all-in L3？</div>
+<div class="dec-opts">
+<span class="dec-opt">重新定义 L2 差异化</span>
+<span class="dec-opt rec">加速 L3，L2 过渡</span>
+<span class="dec-opt">并行投入</span>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<script>
+let current=0;
+const total=document.querySelectorAll('.slide').length;
+const slides=document.getElementById('slides');
+const nav=document.getElementById('nav');
+const numEl=document.getElementById('slideNum');
+for(let i=0;i<total;i++){const d=document.createElement('div');d.className='dot'+(i===0?' active':'');d.onclick=()=>goTo(i);nav.appendChild(d);}
+function goTo(n){if(n<0)n=0;if(n>=total)n=total-1;current=n;slides.style.transform=`translateX(-${current*100}vw)`;document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===current));numEl.textContent=`${current+1} / ${total}`;}
+function go(dir){goTo(current+dir)}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')go(1);if(e.key==='ArrowLeft')go(-1);});
+let touchX=0;
+document.addEventListener('touchstart',e=>touchX=e.touches[0].clientX);
+document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-touchX;if(Math.abs(dx)>50){dx<0?go(1):go(-1)}});
+</script>
+</body>
+</html>
