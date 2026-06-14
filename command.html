@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Concordia Command Center</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0e1a;--surface:#111827;--card:#1a2035;--border:#1e293b;--text:#e2e8f0;--dim:#64748b;--faint:#475569;--accent:#3b82f6;--green:#10b981;--amber:#f59e0b;--red:#ef4444;--gold:#d4a537}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden}
+
+.top{padding:16px 48px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border)}
+.logo{font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--gold)}
+.top-right{display:flex;gap:20px;font-size:11px;color:var(--dim)}
+.top-right i{margin-right:4px}
+.pulse{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);margin-right:6px;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+.main{max-width:1200px;margin:0 auto;padding:32px 48px}
+
+.header{margin-bottom:32px}
+.header h1{font-size:36px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px}
+.header .sub{font-size:14px;color:var(--dim);font-weight:300}
+
+/* KPI Strip */
+.kpi-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);border-radius:12px;overflow:hidden;margin-bottom:32px}
+.kpi{background:var(--card);padding:20px;text-align:center}
+.kpi .n{font-size:32px;font-weight:900;letter-spacing:-1px}
+.kpi .l{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--dim);margin-top:2px}
+
+/* Branch Cards */
+.branches{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:32px}
+.bc{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;text-decoration:none;color:var(--text);display:block}
+.bc:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 32px rgba(59,130,246,.12)}
+.bc::after{content:'\f054';font-family:'Font Awesome 6 Free';font-weight:900;position:absolute;right:20px;top:28px;font-size:14px;color:var(--faint);opacity:0;transition:opacity .2s}
+.bc:hover::after{opacity:1}
+.bc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
+.bc-name{font-size:20px;font-weight:800}
+.bc-badge{font-size:9px;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px}
+.badge-green{background:rgba(16,185,129,.15);color:var(--green)}
+.badge-amber{background:rgba(245,158,11,.15);color:var(--amber)}
+.badge-red{background:rgba(239,68,68,.15);color:var(--red)}
+
+/* Progress Ring */
+.ring-wrap{display:flex;align-items:center;gap:16px;margin-bottom:16px}
+.ring{position:relative;width:56px;height:56px;flex-shrink:0}
+.ring svg{transform:rotate(-90deg)}
+.ring-bg{fill:none;stroke:var(--border);stroke-width:4}
+.ring-fill{fill:none;stroke-width:4;stroke-linecap:round;transition:stroke-dashoffset .8s ease}
+.ring-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:14px;font-weight:800}
+.ring-label{font-size:12px;color:var(--dim)}
+.ring-detail{font-size:11px;color:var(--faint);margin-top:2px}
+
+.bc-highlight{font-size:12px;color:var(--dim);line-height:1.6;margin-bottom:12px;border-top:1px solid var(--border);padding-top:12px}
+.bc-highlight strong{color:var(--text)}
+
+.bc-risk{display:flex;align-items:flex-start;gap:6px;font-size:11px;color:var(--red);background:rgba(239,68,68,.08);padding:8px 12px;border-radius:8px}
+.bc-risk i{margin-top:2px;flex-shrink:0;font-size:10px}
+
+/* Alerts */
+.alerts{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px}
+.alert-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;gap:14px;align-items:flex-start}
+.alert-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.alert-icon.red{background:rgba(239,68,68,.12);color:var(--red)}
+.alert-icon.amber{background:rgba(245,158,11,.12);color:var(--amber)}
+.alert-body h4{font-size:13px;font-weight:700;margin-bottom:3px}
+.alert-body p{font-size:11px;color:var(--dim);line-height:1.5}
+
+/* Timeline */
+.timeline-sec{margin-bottom:32px}
+.timeline-sec h2{font-size:18px;font-weight:800;margin-bottom:16px}
+.tl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.tl-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;position:relative;overflow:hidden}
+.tl-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.tl-card.blue::before{background:var(--accent)}.tl-card.red::before{background:var(--red)}.tl-card.amber::before{background:var(--amber)}.tl-card.green::before{background:var(--green)}
+.tl-date{font-size:10px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.tl-title{font-size:13px;font-weight:600;margin-bottom:3px}
+.tl-desc{font-size:11px;color:var(--dim)}
+.tl-you{font-size:9px;font-weight:700;color:var(--red);background:rgba(239,68,68,.12);padding:2px 6px;border-radius:3px;margin-top:6px;display:inline-block}
+
+/* Decisions strip */
+.dec-strip{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:32px}
+.dec-strip h2{font-size:18px;font-weight:800;margin-bottom:16px}
+.dec-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);font-size:13px}
+.dec-row:last-child{border-bottom:none}
+.dec-row .q{font-weight:600;flex:1}
+.dec-row .tag{font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;margin-left:12px}
+.tag-陪参会{background:rgba(245,158,11,.12);color:var(--amber)}
+.tag-代参会{background:rgba(59,130,246,.12);color:var(--accent)}
+.dec-row a{font-size:11px;color:var(--accent);margin-left:12px;white-space:nowrap;text-decoration:none}
+.dec-row a:hover{text-decoration:underline}
+
+.foot{text-align:center;padding:20px;font-size:10px;color:var(--faint);border-top:1px solid var(--border)}
+
+@media(max-width:900px){.branches,.alerts{grid-template-columns:1fr}.kpi-strip{grid-template-columns:repeat(3,1fr)}.main{padding:20px}.tl-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="top">
+<div class="logo">Concordia</div>
+<div class="top-right">
+<span><span class="pulse"></span>Command Center</span>
+<span><i class="fa-regular fa-clock"></i> 2026-06-14 更新</span>
+<span><i class="fa-solid fa-shield-halved"></i> Confidential</span>
+</div>
+</div>
+
+<div class="main">
+
+<div class="header">
+<h1>产品线中控台</h1>
+<div class="sub">3 个功能分支 &middot; 管理者视图</div>
+</div>
+
+<!-- KPI Strip -->
+<div class="kpi-strip">
+<div class="kpi"><div class="n" style="color:var(--text)">3</div><div class="l">活跃分支</div></div>
+<div class="kpi"><div class="n" style="color:var(--green)">1</div><div class="l">正常</div></div>
+<div class="kpi"><div class="n" style="color:var(--amber)">2</div><div class="l">需关注</div></div>
+<div class="kpi"><div class="n" style="color:var(--red)">3</div><div class="l">待决策</div></div>
+<div class="kpi"><div class="n" style="color:var(--accent)">6/18</div><div class="l">下次 Review</div></div>
+</div>
+
+<!-- Branch Cards -->
+<div class="branches">
+
+<a class="bc" href="program.html" target="_self">
+<div class="bc-top">
+<div class="bc-name">陪参会</div>
+<span class="bc-badge badge-amber">需关注</span>
+</div>
+<div class="ring-wrap">
+<div class="ring">
+<svg viewBox="0 0 56 56"><circle class="ring-bg" cx="28" cy="28" r="24"/><circle class="ring-fill" cx="28" cy="28" r="24" stroke="var(--amber)" stroke-dasharray="150.8" stroke-dashoffset="52.8"/></svg>
+<div class="ring-text" style="color:var(--amber)">65%</div>
+</div>
+<div><div class="ring-label">测试完成度</div><div class="ring-detail">26 bug / 5 已修</div></div>
+</div>
+<div class="bc-highlight"><strong>L2 已上线</strong>，提测 review 完成。Copilot Facilitator 已 GA，差异化受威胁。</div>
+<div class="bc-risk"><i class="fa-solid fa-triangle-exclamation"></i> 21 个 bug 待修复 &middot; 竞品直接竞争</div>
+</a>
+
+<a class="bc" href="program.html" target="_self">
+<div class="bc-top">
+<div class="bc-name">代参会</div>
+<span class="bc-badge badge-green">正常推进</span>
+</div>
+<div class="ring-wrap">
+<div class="ring">
+<svg viewBox="0 0 56 56"><circle class="ring-bg" cx="28" cy="28" r="24"/><circle class="ring-fill" cx="28" cy="28" r="24" stroke="var(--green)" stroke-dasharray="150.8" stroke-dashoffset="75.4"/></svg>
+<div class="ring-text" style="color:var(--green)">50%</div>
+</div>
+<div><div class="ring-label">产品化进度</div><div class="ring-detail">PRD 定稿 / 开发中</div></div>
+</div>
+<div class="bc-highlight"><strong>全球无直接竞品</strong>（L3 级）。PRD v3.3 定稿，目标 7 月底 MVP。</div>
+<div class="bc-risk"><i class="fa-solid fa-triangle-exclamation"></i> Dongyang 单点风险 (7/10 任务)</div>
+</a>
+
+<a class="bc" href="program.html" target="_self">
+<div class="bc-top">
+<div class="bc-name">多碳多硅</div>
+<span class="bc-badge badge-amber">需关注</span>
+</div>
+<div class="ring-wrap">
+<div class="ring">
+<svg viewBox="0 0 56 56"><circle class="ring-bg" cx="28" cy="28" r="24"/><circle class="ring-fill" cx="28" cy="28" r="24" stroke="var(--amber)" stroke-dasharray="150.8" stroke-dashoffset="120.6"/></svg>
+<div class="ring-text" style="color:var(--amber)">20%</div>
+</div>
+<div><div class="ring-label">方向定义</div><div class="ring-detail">Demo 受阻</div></div>
+</div>
+<div class="bc-highlight"><strong>方向已定</strong>，多 Agent + 多人类协作。Demo 被 heartbeat 阻塞。</div>
+<div class="bc-risk"><i class="fa-solid fa-triangle-exclamation"></i> Demo 阻塞 &middot; Case 质量不足</div>
+</a>
+
+</div>
+
+<!-- Alerts -->
+<div class="alerts">
+<div class="alert-card">
+<div class="alert-icon red"><i class="fa-solid fa-user-slash"></i></div>
+<div class="alert-body"><h4>单点风险</h4><p>Dongyang Cui 承担代参会 7/10 研发任务。Jian Liu 当前空闲，建议分担。</p></div>
+</div>
+<div class="alert-card">
+<div class="alert-icon red"><i class="fa-solid fa-shield-halved"></i></div>
+<div class="alert-body"><h4>竞品威胁</h4><p>Copilot Facilitator 已 GA，直接竞争陪参会 L2 的实时笔记 + 决策摘要能力。</p></div>
+</div>
+<div class="alert-card">
+<div class="alert-icon amber"><i class="fa-solid fa-building"></i></div>
+<div class="alert-body"><h4>组织变动</h4><p>张琪可能调 STCA，Dawei 可能跟随。影响 Concordia 整体方向和资源。</p></div>
+</div>
+<div class="alert-card">
+<div class="alert-icon amber"><i class="fa-solid fa-robot"></i></div>
+<div class="alert-body"><h4>Bot Detection</h4><p>Teams Bot Detection Policy 已生效，代参会入会架构可能需要调整。</p></div>
+</div>
+</div>
+
+<!-- Timeline -->
+<div class="timeline-sec">
+<h2>未来 7 天</h2>
+<div class="tl-grid">
+<div class="tl-card blue"><div class="tl-date">6/16 周一</div><div class="tl-title">Daily Sync</div><div class="tl-desc">09:30 全分支同步</div></div>
+<div class="tl-card blue"><div class="tl-date">6/17 周二</div><div class="tl-title">VSWork Sync</div><div class="tl-desc">14:30 跨团队</div></div>
+<div class="tl-card red"><div class="tl-date">6/18 周三</div><div class="tl-title">Weekly Review</div><div class="tl-desc">13:35 张琪主持</div><div class="tl-you">需要你参加</div></div>
+<div class="tl-card amber"><div class="tl-date">待定</div><div class="tl-title">Pitch Deck</div><div class="tl-desc">CVP/EVP 级别</div><div class="tl-you">需要你审批</div></div>
+<div class="tl-card green"><div class="tl-date">7 月 W1</div><div class="tl-title">Dogfood Alpha</div><div class="tl-desc">代参会 5 人内测</div></div>
+</div>
+</div>
+
+<!-- Decisions -->
+<div class="dec-strip">
+<h2>等待决策</h2>
+<div class="dec-row"><span class="q">L2 陪参会 vs L3 代参会资源分配</span><span class="tag tag-陪参会">陪参会</span><a href="program.html">查看详情 <i class="fa-solid fa-arrow-right" style="font-size:10px"></i></a></div>
+<div class="dec-row"><span class="q">Dongyang 任务集中度过高，是否分配给 Jian Liu</span><span class="tag tag-代参会">代参会</span><a href="program.html">查看详情 <i class="fa-solid fa-arrow-right" style="font-size:10px"></i></a></div>
+<div class="dec-row"><span class="q">Pitch Deck 截止日期确认</span><span class="tag tag-代参会">代参会</span><a href="program.html">查看详情 <i class="fa-solid fa-arrow-right" style="font-size:10px"></i></a></div>
+</div>
+
+</div>
+
+<div class="foot">Concordia Command Center &middot; 2026-06-14 &middot; Confidential</div>
+
+</body>
+</html>
