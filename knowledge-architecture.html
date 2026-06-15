@@ -77,6 +77,50 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--i
 
 <!-- ===== OVERVIEW ===== -->
 <div class="overview">
+<h2>How It Works</h2>
+<p>一个项目的知识从采集到沉淀，经过五个阶段：</p>
+
+<div style="background:var(--white);border:1px solid var(--line);border-radius:10px;padding:28px 32px;margin:20px 0">
+<div style="display:flex;align-items:center;gap:0;justify-content:center;flex-wrap:wrap">
+<div style="text-align:center;padding:12px 16px">
+<div style="font-size:20px;font-weight:800;color:var(--blue)">Sources</div>
+<div style="font-size:10px;color:var(--dim);margin-top:2px">采集原始信息</div>
+<div style="font-size:10px;color:var(--faint);margin-top:4px">每个成员的 Agent<br>自动收集邮件/Teams/<br>日历/会议/文档/Web</div>
+</div>
+<div style="font-size:18px;color:var(--faint);padding:0 4px">&rarr;</div>
+<div style="text-align:center;padding:12px 16px">
+<div style="font-size:20px;font-weight:800;color:var(--green)">Deliverables</div>
+<div style="font-size:10px;color:var(--dim);margin-top:2px">产出交付物</div>
+<div style="font-size:10px;color:var(--faint);margin-top:4px">成员基于 Sources<br>产出 PRD/方案/分析<br>经 Owner review 归档</div>
+</div>
+<div style="font-size:18px;color:var(--faint);padding:0 4px">&rarr;</div>
+<div style="text-align:center;padding:12px 16px">
+<div style="font-size:20px;font-weight:800;color:var(--purple)">Learnings</div>
+<div style="font-size:10px;color:var(--dim);margin-top:2px">沉淀经验</div>
+<div style="font-size:10px;color:var(--faint);margin-top:4px">执行和发现过程中<br>学到的可复用教训<br>反哺下次执行质量</div>
+</div>
+</div>
+<div style="text-align:center;margin-top:16px;padding-top:16px;border-top:1px solid var(--line)">
+<div style="display:inline-flex;gap:32px">
+<div style="text-align:center">
+<div style="font-size:16px;font-weight:800;color:var(--amber)">State</div>
+<div style="font-size:10px;color:var(--dim)">项目现在怎样</div>
+<div style="font-size:10px;color:var(--faint);margin-top:2px">PROJECT.md / TODO / Dashboard<br>实时覆盖更新</div>
+</div>
+<div style="text-align:center">
+<div style="font-size:16px;font-weight:800;color:var(--gray)">Logs</div>
+<div style="font-size:10px;color:var(--dim)">过去发生了什么</div>
+<div style="font-size:10px;color:var(--faint);margin-top:2px">Reviews / Decisions / Heartbeats<br>只追加不修改</div>
+</div>
+</div>
+</div>
+</div>
+
+<p style="font-size:13px;color:var(--slate)"><strong>前三个模块是项目的知识流</strong>：信息进来（Sources）→ 被加工成产出（Deliverables）→ 过程中学到的经验沉淀下来（Learnings），反哺下一轮的执行质量。<strong>后两个模块是项目的运行基础设施</strong>：State 回答"现在怎样"，Logs 回答"过去发生了什么"。</p>
+</div>
+
+<!-- ===== DESIGN PRINCIPLES ===== -->
+<div class="overview">
 <h2>设计原则</h2>
 <p>每个 Concordia 项目的知识库由 <strong>5 个顶级模块</strong> 组成。前三个描述项目的内容（输入什么、产出什么、学到什么），后两个描述项目的状态（现在怎样、过去发生了什么）。</p>
 <p>所有文件存储在项目的 SharePoint 站点上，团队成员共享。按成员分文件夹的模块（Sources / Deliverables / Learnings）由各成员的 Agent 负责写入，Project Agent 负责去重和索引。</p>
