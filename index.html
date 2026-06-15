@@ -26,6 +26,7 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
 .body{padding:36px 0 64px}
 .alert{display:flex;align-items:center;gap:14px;padding:14px 20px;border-radius:8px;margin-bottom:32px;font-size:13px;font-weight:500}
 .alert-g{background:var(--green-l);border:1px solid #a7f3d0;color:#065f46}
+.alert-b{background:var(--blue-l);border:1px solid #bfdbfe;color:#1e40af}
 .alert i{font-size:16px;flex-shrink:0}
 .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border-radius:12px;overflow:hidden;margin-bottom:36px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
 .kpi{background:var(--white);padding:24px 20px;text-align:center}
@@ -73,7 +74,7 @@ tbody tr:hover{background:var(--wash)}
 <div class="item"><div class="label">负责人</div><div class="val">Yana Yuan</div></div>
 <div class="item"><div class="label">创建日期</div><div class="val">2026-06-10</div></div>
 <div class="item"><div class="label">截止日期</div><div class="val">待定</div></div>
-<div class="item"><div class="label">更新时间</div><div class="val">2026-06-12 11:43</div></div>
+<div class="item"><div class="label">更新时间</div><div class="val">2026-06-15 09:00</div></div>
 </div>
 </div>
 </div>
@@ -81,57 +82,73 @@ tbody tr:hover{background:var(--wash)}
 <div class="body">
 <div class="inner">
 
-<div class="alert alert-g">
+<div class="alert alert-b">
 <i class="fa-solid fa-circle-info"></i>
-<span><strong>进展更新</strong> &mdash; Zhiwei 的 6 项研发任务已转交 Dongyang Cui。Jian Liu 完成了自主入会架构 + 自动安装方案。Yuecong 完成了竞品分析 + Skill 整合方案。</span>
+<span><strong>本周进展</strong> &mdash; Aibo 完成 Pitch Deck（面向 CVP/EVP），Yuecong 完成 PRD v3.3 Review。新增代参会引擎产品化开发（Dongyang）、AI 身份卡头像设计（Jing Zhang）两项进行中任务。10 项任务并行推进中。</span>
 </div>
 
 <div class="kpis">
-<div class="kpi"><div class="kpi-n" style="color:var(--ink)">27</div><div class="kpi-l">总任务数</div></div>
-<div class="kpi"><div class="kpi-n" style="color:var(--green)">19</div><div class="kpi-l">已完成</div></div>
-<div class="kpi"><div class="kpi-n" style="color:var(--blue)">8</div><div class="kpi-l">进行中</div></div>
-<div class="kpi"><div class="kpi-n" style="color:var(--green)">70%</div><div class="kpi-l">完成率</div></div>
+<div class="kpi"><div class="kpi-n" style="color:var(--ink)">31</div><div class="kpi-l">总任务数</div></div>
+<div class="kpi"><div class="kpi-n" style="color:var(--green)">21</div><div class="kpi-l">已完成</div></div>
+<div class="kpi"><div class="kpi-n" style="color:var(--blue)">10</div><div class="kpi-l">进行中</div></div>
+<div class="kpi"><div class="kpi-n" style="color:var(--green)">68%</div><div class="kpi-l">完成率</div></div>
 </div>
 
 <div class="prog-wrap">
-<div class="prog-bar"><div class="prog-fill" style="width:70%"></div></div>
-<div class="prog-labels"><span>第一阶段 定义对齐</span><span>第二阶段 核心研发</span><span>第三阶段 发布验证</span></div>
+<div class="prog-bar"><div class="prog-fill" style="width:68%"></div></div>
+<div class="prog-labels"><span>第一阶段 定义对齐 ✅</span><span>第二阶段 核心研发</span><span>第三阶段 发布验证</span></div>
 </div>
 
 <div class="sec">
 <div class="sec-hd"><h2>团队任务分布</h2></div>
 <table>
-<thead><tr><th>成员</th><th>角色</th><th>已完成</th><th>进行中</th><th>邀请状态</th></tr></thead>
+<thead><tr><th>成员</th><th>角色</th><th>已完成</th><th>进行中</th><th>状态</th></tr></thead>
 <tbody>
 <tr><td><strong>Yana Yuan</strong></td><td>PM / 产品设计</td><td><span class="b bg">9</span></td><td>0</td><td><span class="b bg">已接受</span></td></tr>
+<tr><td><strong>Aibo Liu</strong></td><td>方向把控 / Pitch Deck</td><td><span class="b bg">1</span></td><td>0</td><td><span class="b bg">已接受</span></td></tr>
 <tr><td><strong>Jian Liu</strong></td><td>技术负责人</td><td><span class="b bg">2</span></td><td>0</td><td><span class="b bg">已接受</span></td></tr>
-<tr><td><strong>Yuecong Yang</strong></td><td>方向把控</td><td><span class="b bg">2</span></td><td>0</td><td><span class="b bg">已接受</span></td></tr>
-<tr><td><strong>Dongyang Cui</strong></td><td>研发（接替 Zhiwei）</td><td>0</td><td><span class="b bb">6</span></td><td><span class="b by">待接受</span></td></tr>
-<tr><td><strong>Jing Zhang</strong></td><td>设计</td><td>0</td><td><span class="b bb">2 (Figma 已分享)</span></td><td><span class="b by">待接受</span></td></tr>
+<tr><td><strong>Yuecong Yang</strong></td><td>方向把控 / Review</td><td><span class="b bg">3</span></td><td>0</td><td><span class="b bg">已接受</span></td></tr>
+<tr><td><strong>Dongyang Cui</strong></td><td>研发（接替 Zhiwei）</td><td>0</td><td><span class="b bb">7</span></td><td><span class="b bb">活跃</span></td></tr>
+<tr><td><strong>Jing Zhang</strong></td><td>设计</td><td>0</td><td><span class="b bb">3</span></td><td><span class="b bb">活跃</span></td></tr>
 <tr><td><strong>Zhiwei Gao</strong></td><td>研发（已归档）</td><td><span class="b by">6 已归档</span></td><td>0</td><td><span class="b by">已转交</span></td></tr>
 </tbody>
 </table>
 </div>
 
 <div class="sec">
-<div class="sec-hd"><h2>进行中的任务</h2><span class="cnt">8</span></div>
+<div class="sec-hd"><h2>进行中的任务</h2><span class="cnt">10</span></div>
 <table>
 <thead><tr><th>任务</th><th>负责人</th><th>优先级</th><th>状态</th></tr></thead>
 <tbody>
-<tr><td>陪伴参会提测反馈确认基线质量</td><td>Dongyang Cui</td><td><span class="b ba">高</span></td><td><span class="b bb">进行中</span></td></tr>
-<tr><td>实时转录 + Speaker ID</td><td>Dongyang Cui</td><td><span class="b ba">高</span></td><td><span class="b bb">进行中</span></td></tr>
-<tr><td>会后摘要 + Action Items 自动提取</td><td>Dongyang Cui</td><td><span class="b ba">高</span></td><td><span class="b bb">进行中</span></td></tr>
-<tr><td>退出策略优化和异常处理</td><td>Dongyang Cui</td><td><span class="b bb">中</span></td><td><span class="b bb">进行中</span></td></tr>
+<tr><td>代参会引擎产品化开发</td><td>Dongyang Cui</td><td><span class="b br">关键</span></td><td><span class="b bb">进行中</span></td></tr>
+<tr><td>研发实时转录 + Speaker ID</td><td>Dongyang Cui</td><td><span class="b ba">高</span></td><td><span class="b bb">进行中</span></td></tr>
+<tr><td>研发会后摘要 + Action Items 自动提取</td><td>Dongyang Cui</td><td><span class="b ba">高</span></td><td><span class="b bb">进行中</span></td></tr>
+<tr><td>整理陪伴参会提测反馈确认基线质量</td><td>Dongyang Cui</td><td><span class="b ba">高</span></td><td><span class="b bb">进行中</span></td></tr>
 <tr><td>Jing Zhang 连接问题排查</td><td>Dongyang Cui</td><td><span class="b ba">高</span></td><td><span class="b bb">进行中</span></td></tr>
+<tr><td>退出策略优化和异常处理</td><td>Dongyang Cui</td><td><span class="b bb">中</span></td><td><span class="b bb">进行中</span></td></tr>
 <tr><td>Dogfood 执行 + Bug 修复</td><td>Dongyang Cui</td><td><span class="b bb">中</span></td><td><span class="b bb">进行中</span></td></tr>
-<tr><td>UX 设计 — 代参会发起入口</td><td>Jing Zhang</td><td><span class="b ba">高</span></td><td><span class="b bb">Figma 已分享</span></td></tr>
-<tr><td>UX 设计 — 会中状态 + 会后报告</td><td>Jing Zhang</td><td><span class="b ba">高</span></td><td><span class="b bb">Figma 已分享</span></td></tr>
+<tr><td>AI 代参会身份卡头像设计</td><td>Jing Zhang</td><td><span class="b ba">高</span></td><td><span class="b bb">进行中 🆕</span></td></tr>
+<tr><td>UX 设计 — 代参会发起入口</td><td>Jing Zhang</td><td><span class="b ba">高</span></td><td><span class="b bb">进行中</span></td></tr>
+<tr><td>UX 设计 — 会中状态 + 会后报告</td><td>Jing Zhang</td><td><span class="b ba">高</span></td><td><span class="b bb">进行中</span></td></tr>
 </tbody>
 </table>
 </div>
 
 <div class="sec">
-<div class="sec-hd"><h2>已完成的交付物</h2><span class="cnt">13</span></div>
+<div class="sec-hd"><h2>近期完成</h2><span class="cnt">4 (本周期新增)</span></div>
+<table>
+<thead><tr><th>交付物</th><th>负责人</th><th>核心产出</th></tr></thead>
+<tbody>
+<tr><td>🆕 代参会 Pitch Deck（面向 CVP/EVP）</td><td>Aibo Liu</td><td>高管汇报材料</td></tr>
+<tr><td>🆕 Review 代参会 MVP PRD v3.3</td><td>Yuecong Yang</td><td>PRD 方向审核完成</td></tr>
+<tr><td>张琪 Review Demo 方案</td><td>Yana</td><td><a href="https://microsoftapc.sharepoint.com/:t:/t/TeamsMeeting/IQBAJwAIDca3QJyDXWZaF6oDAePZa_WBxzpaX9_zrUrGjlA" target="_blank">15 分钟故事线</a></td></tr>
+<tr><td>发布执行方案</td><td>Yana</td><td><a href="https://microsoftapc.sharepoint.com/:t:/t/TeamsMeeting/IQDYcypL8tG9Qr35-UPUsGM_AZNbk55kBCPseQyUmpetGvM" target="_blank">5 波分级推广</a></td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="sec">
+<div class="sec-hd"><h2>全部已完成交付物</h2><span class="cnt">15</span></div>
 <table>
 <thead><tr><th>交付物</th><th>负责人</th><th>核心产出</th></tr></thead>
 <tbody>
@@ -148,6 +165,8 @@ tbody tr:hover{background:var(--wash)}
 <tr><td>Teams App 自动安装方案</td><td>Jian Liu</td><td><a href="https://microsoftapc.sharepoint.com/:t:/t/TeamsMeeting/IQB6wCX08dkFTLehMXoVbv3IAYOGX5Q2QCXkGA_uWwJKQr4" target="_blank">A+C 组合策略</a></td></tr>
 <tr><td>teams-attendant 竞品分析</td><td>Yuecong</td><td><a href="https://microsoftapc.sharepoint.com/:t:/t/TeamsMeeting/IQCi1Tmjau27R5lLhu2xF9gGAdf7WjmSGsTVfZLYgZTnijI" target="_blank">技术路径对比、差异化</a></td></tr>
 <tr><td>Skill 整合封装方案</td><td>Yuecong</td><td><a href="https://microsoftapc.sharepoint.com/:t:/t/TeamsMeeting/IQA8rSWtsLFMS4tlsot0lqd9AVPmHEinflnj0scIxO1cgWQ" target="_blank">6 组件、三模式映射</a></td></tr>
+<tr><td>代参会 Pitch Deck</td><td>Aibo Liu</td><td>面向 CVP/EVP 高管汇报</td></tr>
+<tr><td>Review 代参会 MVP PRD v3.3</td><td>Yuecong Yang</td><td>PRD 方向审核通过</td></tr>
 </tbody>
 </table>
 </div>
@@ -155,22 +174,23 @@ tbody tr:hover{background:var(--wash)}
 <div class="two">
 <div class="card">
 <h3><i class="fa-solid fa-circle-question" style="color:var(--gold);margin-right:6px"></i>待解决问题</h3>
-<div class="qi"><span class="qt">Q1</span><span>陪伴参会 26 个 bug（5 个待修复）— QA 测试结果如何影响代参会进度？</span></div>
+<div class="qi"><span class="qt">Q1</span><span>Dongyang 承接 7 项并行任务，工作负载是否可持续？需关注交付节奏。</span></div>
 <div class="qi"><span class="qt">Q2</span><span>Teams Bot Detection Policy（6 月生效）对 AI 自主入会的影响？</span></div>
 <div class="qi"><span class="qt">Q3</span><span>项目截止日期未设定，时间线缺少锚点。</span></div>
+<div class="qi"><span class="qt">Q4</span><span>代参会引擎产品化开发为关键路径，需优先保障资源。</span></div>
 </div>
 <div class="card">
 <h3><i class="fa-solid fa-route" style="color:var(--blue);margin-right:6px"></i>关键路径</h3>
 <div style="font-size:13px;color:var(--slate);line-height:2;margin-bottom:10px">
 <span style="font-weight:700;color:var(--green)">PRD</span> <i class="fa-solid fa-arrow-right" style="font-size:9px;color:var(--faint)"></i>
 <span style="font-weight:700;color:var(--green)">架构</span> <i class="fa-solid fa-arrow-right" style="font-size:9px;color:var(--faint)"></i>
+<span style="font-weight:700;color:var(--blue)">引擎产品化</span> <i class="fa-solid fa-arrow-right" style="font-size:9px;color:var(--faint)"></i>
 <span style="font-weight:700;color:var(--blue)">转录</span> <i class="fa-solid fa-arrow-right" style="font-size:9px;color:var(--faint)"></i>
 <span style="font-weight:700;color:var(--blue)">摘要</span> <i class="fa-solid fa-arrow-right" style="font-size:9px;color:var(--faint)"></i>
-<span style="font-weight:700;color:var(--green)">测试计划</span> <i class="fa-solid fa-arrow-right" style="font-size:9px;color:var(--faint)"></i>
 <span style="font-weight:700;color:var(--blue)">Dogfood</span> <i class="fa-solid fa-arrow-right" style="font-size:9px;color:var(--faint)"></i>
-<span style="font-weight:700;color:var(--green)">发布</span>
+<span style="font-weight:700;color:var(--faint)">发布</span>
 </div>
-<div style="font-size:12px;color:var(--dim)"><span style="color:var(--green)">绿色 = 已完成</span> &nbsp;|&nbsp; <span style="color:var(--blue)">蓝色 = 进行中</span></div>
+<div style="font-size:12px;color:var(--dim)"><span style="color:var(--green)">绿色 = 已完成</span> &nbsp;|&nbsp; <span style="color:var(--blue)">蓝色 = 进行中</span> &nbsp;|&nbsp; <span style="color:var(--faint)">灰色 = 待启动</span></div>
 </div>
 </div>
 
@@ -182,13 +202,14 @@ tbody tr:hover{background:var(--wash)}
 <a class="lk" href="https://microsoftapc.sharepoint.com/:t:/t/TeamsMeeting/IQCwYfW01VjGSqZ9sNkzP-KYAZtqtXwOklMwF-oZsnhbFfM" target="_blank"><i class="fa-solid fa-route"></i>执行计划</a>
 <a class="lk" href="https://teams.cloud.microsoft/l/channel/19%3A6lGtaxNi8jNnS-Vsn0Pv0q7a_Sl8SjuuApcuolBa1Kg1%40thread.tacv2/Teams%20Meeting%20%E4%BB%A3%E5%8F%82%E4%BC%9A?groupId=ae453e87-b139-4816-8711-4ffb613db153" target="_blank"><i class="fa-brands fa-microsoft"></i>Teams 频道</a>
 <a class="lk" href="https://microsoftapc.sharepoint.com/teams/TeamsMeeting" target="_blank"><i class="fa-solid fa-folder-open"></i>SharePoint</a>
+<a class="lk" href="https://yanayuan.github.io/project-dashboard/" target="_blank"><i class="fa-solid fa-gauge-high"></i>在线 Dashboard</a>
 </div>
 </div>
 
 </div>
 </div>
 
-<div class="foot">Teams Meeting 代参会 &middot; Project Dashboard &middot; 更新于 2026-06-12 11:43 CST &middot; Concordia</div>
+<div class="foot">Teams Meeting 代参会 &middot; Project Dashboard &middot; 更新于 2026-06-15 09:00 CST &middot; Concordia</div>
 
 </body>
 </html>
