@@ -6,56 +6,63 @@
 <title>Project Knowledge Architecture</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#1a1a2e;--slate:#334155;--dim:#64748b;--faint:#94a3b8;--line:#e2e8f0;--wash:#f1f5f9;--bg:#fafbfc;--white:#fff;--blue:#1e40af;--blue-l:#eff6ff;--green:#065f46;--green-l:#ecfdf5;--amber:#92400e;--amber-l:#fffbeb;--purple:#5b21b6;--purple-l:#f5f3ff;--red:#991b1b;--red-l:#fef2f2}
+:root{--ink:#1a1a2e;--slate:#334155;--dim:#64748b;--faint:#94a3b8;--line:#e2e8f0;--wash:#f1f5f9;--bg:#fafbfc;--white:#fff;--blue:#1e40af;--green:#065f46;--amber:#92400e;--purple:#5b21b6;--gray:#475569}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.6;padding:60px 0}
-.inner{max-width:900px;margin:0 auto;padding:0 40px}
+.inner{max-width:860px;margin:0 auto;padding:0 40px}
 
 .header{margin-bottom:48px}
 .eyebrow{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
-.header h1{font-size:28px;font-weight:800;letter-spacing:-.3px;color:var(--ink);margin-bottom:6px}
-.header .sub{font-size:14px;color:var(--dim);font-weight:400}
+.header h1{font-size:28px;font-weight:800;letter-spacing:-.3px;margin-bottom:6px}
+.header .sub{font-size:14px;color:var(--dim)}
 .header .meta{display:flex;gap:24px;margin-top:16px;font-size:11px;color:var(--faint);border-top:1px solid var(--line);padding-top:12px}
 
-.pillar{margin-bottom:40px}
-.pillar-head{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid var(--ink)}
-.pillar-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--white);flex-shrink:0}
-.pillar-icon.src{background:var(--blue)}.pillar-icon.del{background:var(--green)}.pillar-icon.lrn{background:var(--purple)}.pillar-icon.sta{background:var(--amber)}.pillar-icon.log{background:var(--slate)}
-.pillar-title{font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:.8px}
-.pillar-desc{font-size:12px;color:var(--dim);font-weight:400;margin-left:auto}
+/* Overview */
+.overview{margin-bottom:48px}
+.overview h2{font-size:18px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--ink)}
+.overview p{font-size:13px;color:var(--slate);margin-bottom:16px}
 
-.folder{background:var(--white);border:1px solid var(--line);border-radius:10px;margin-bottom:12px;overflow:hidden}
-.folder-head{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--wash);cursor:default}
-.folder-name{font-size:13px;font-weight:600;color:var(--ink);font-family:'SF Mono','Fira Code',monospace}
-.folder-badge{font-size:9px;font-weight:700;padding:2px 8px;border-radius:4px;margin-left:8px;letter-spacing:.3px}
-.badge-src{background:var(--blue-l);color:var(--blue)}.badge-del{background:var(--green-l);color:var(--green)}.badge-lrn{background:var(--purple-l);color:var(--purple)}.badge-sta{background:var(--amber-l);color:var(--amber)}.badge-log{background:var(--wash);color:var(--slate)}
-.folder-desc{font-size:11px;color:var(--dim);margin-left:auto}
+/* Architecture diagram */
+.arch{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:24px}
+.arch-box{border-radius:10px;padding:20px 14px;text-align:center;border:1px solid var(--line);position:relative}
+.arch-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:10px 10px 0 0}
+.arch-box.b-src::before{background:var(--blue)}.arch-box.b-del::before{background:var(--green)}.arch-box.b-lrn::before{background:var(--purple)}.arch-box.b-sta::before{background:var(--amber)}.arch-box.b-log::before{background:var(--gray)}
+.arch-letter{font-size:24px;font-weight:800;margin-bottom:4px}
+.arch-box.b-src .arch-letter{color:var(--blue)}.arch-box.b-del .arch-letter{color:var(--green)}.arch-box.b-lrn .arch-letter{color:var(--purple)}.arch-box.b-sta .arch-letter{color:var(--amber)}.arch-box.b-log .arch-letter{color:var(--gray)}
+.arch-name{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.arch-desc{font-size:10px;color:var(--dim);line-height:1.4}
 
-.file-list{padding:10px 18px 14px 48px}
-.file{display:flex;align-items:baseline;gap:10px;padding:5px 0;font-size:12px;border-bottom:1px solid var(--wash)}
-.file:last-child{border-bottom:none}
-.file-name{font-family:'SF Mono','Fira Code',monospace;color:var(--slate);min-width:200px;font-weight:500;white-space:nowrap}
-.file-example{color:var(--faint);font-style:italic}
-.file-icon{color:var(--dim);font-size:11px;width:14px;flex-shrink:0}
+.flow-arrow{text-align:center;font-size:11px;color:var(--faint);margin-bottom:24px;letter-spacing:1px}
 
-.subfolder{margin-left:20px;border-left:2px solid var(--wash);padding-left:16px;margin-bottom:8px}
-.subfolder-label{font-size:11px;font-weight:600;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;padding:6px 0 4px}
+/* Tree */
+.tree{font-family:'SF Mono','Fira Code','Cascadia Code',monospace;font-size:12px;background:var(--ink);color:#e2e8f0;border-radius:10px;padding:28px 32px;margin-bottom:32px;line-height:1.8;overflow-x:auto;white-space:pre}
+.tree .t-folder{color:#60a5fa;font-weight:600}
+.tree .t-file{color:#94a3b8}
+.tree .t-comment{color:#475569;font-style:italic}
+.tree .t-src{color:#60a5fa}.tree .t-del{color:#34d399}.tree .t-lrn{color:#a78bfa}.tree .t-sta{color:#fbbf24}.tree .t-log{color:#94a3b8}
 
-.note{background:var(--wash);border-radius:8px;padding:14px 18px;font-size:12px;color:var(--slate);margin-top:8px;line-height:1.6}
-.note strong{color:var(--ink)}
+/* Detail sections */
+.detail{margin-bottom:36px}
+.detail-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.detail-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.dot-src{background:var(--blue)}.dot-del{background:var(--green)}.dot-lrn{background:var(--purple)}.dot-sta{background:var(--amber)}.dot-log{background:var(--gray)}
+.detail-title{font-size:14px;font-weight:700}
+.detail-sub{font-size:11px;color:var(--dim);margin-left:auto}
 
-.legend{margin-top:48px;padding-top:24px;border-top:2px solid var(--ink)}
-.legend h3{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:16px}
-.legend-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
-.legend-item{text-align:center;padding:16px 12px;border-radius:8px;border:1px solid var(--line)}
-.legend-item .l-icon{font-size:20px;margin-bottom:6px}
-.legend-item .l-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}
-.legend-item .l-desc{font-size:10px;color:var(--dim)}
-.legend-item.l-src{border-color:var(--blue);border-top:3px solid var(--blue)}.legend-item.l-del{border-color:var(--green);border-top:3px solid var(--green)}.legend-item.l-lrn{border-color:var(--purple);border-top:3px solid var(--purple)}.legend-item.l-sta{border-color:var(--amber);border-top:3px solid var(--amber)}.legend-item.l-log{border-color:var(--slate);border-top:3px solid var(--slate)}
+.detail-body{font-size:13px;color:var(--slate);margin-bottom:12px}
+.detail-body p{margin-bottom:8px}
+
+.detail-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}
+.detail-table th{text-align:left;padding:8px 12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--dim);border-bottom:2px solid var(--line);background:var(--white)}
+.detail-table td{padding:8px 12px;border-bottom:1px solid var(--wash);vertical-align:top}
+.detail-table tr:last-child td{border-bottom:none}
+.detail-table code{font-family:'SF Mono','Fira Code',monospace;font-size:11px;background:var(--wash);padding:1px 5px;border-radius:3px}
+
+.rule{background:var(--wash);border-radius:8px;padding:12px 16px;font-size:12px;color:var(--slate);margin-top:8px}
+.rule strong{color:var(--ink)}
 
 .foot{text-align:center;margin-top:48px;padding-top:20px;border-top:1px solid var(--line);font-size:10px;color:var(--faint)}
-
-@media(max-width:768px){.inner{padding:0 20px}.legend-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){.inner{padding:0 20px}.arch{grid-template-columns:repeat(3,1fr)}}
 </style>
 </head>
 <body>
@@ -64,168 +71,133 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--i
 <div class="header">
 <div class="eyebrow">Reference Architecture</div>
 <h1>Project Knowledge Architecture</h1>
-<div class="sub">Concordia 项目知识库标准结构</div>
-<div class="meta">
-<span>Version 1.0</span>
-<span>2026-06-15</span>
-<span>适用于所有 Concordia PMO 项目</span>
-</div>
+<div class="sub">Concordia 项目知识库的标准结构设计</div>
+<div class="meta"><span>Version 1.0</span><span>2026-06-15</span><span>适用于所有 Concordia PMO 项目</span></div>
 </div>
 
-<!-- ===== SOURCES ===== -->
-<div class="pillar">
-<div class="pillar-head">
-<div class="pillar-icon src">S</div>
-<div class="pillar-title">Sources</div>
-<div class="pillar-desc">输入 — 项目相关的所有原始信息</div>
+<!-- ===== OVERVIEW ===== -->
+<div class="overview">
+<h2>设计原则</h2>
+<p>每个 Concordia 项目的知识库由 <strong>5 个顶级模块</strong> 组成。前三个描述项目的内容（输入什么、产出什么、学到什么），后两个描述项目的状态（现在怎样、过去发生了什么）。</p>
+<p>所有文件存储在项目的 SharePoint 站点上，团队成员共享。按成员分文件夹的模块（Sources / Deliverables / Learnings）由各成员的 Agent 负责写入，Project Agent 负责去重和索引。</p>
+
+<div class="arch">
+<div class="arch-box b-src"><div class="arch-letter">S</div><div class="arch-name">Sources</div><div class="arch-desc">输入<br>原始信息</div></div>
+<div class="arch-box b-del"><div class="arch-letter">D</div><div class="arch-name">Deliverables</div><div class="arch-desc">产出<br>交付物</div></div>
+<div class="arch-box b-lrn"><div class="arch-letter">L</div><div class="arch-name">Learnings</div><div class="arch-desc">经验<br>可复用教训</div></div>
+<div class="arch-box b-sta"><div class="arch-letter">T</div><div class="arch-name">State</div><div class="arch-desc">当前状态<br>会被覆盖</div></div>
+<div class="arch-box b-log"><div class="arch-letter">G</div><div class="arch-name">Logs</div><div class="arch-desc">历史记录<br>只追加</div></div>
 </div>
 
-<div class="folder">
-<div class="folder-head"><span class="folder-name">sources/owner-global/{member}/</span><span class="folder-badge badge-src">按成员</span><span class="folder-desc">邮件 / Teams / 日历 / 会议纪要</span></div>
-<div class="file-list">
-<div class="subfolder-label">yinyuan/</div>
-<div class="subfolder">
-<div class="file"><span class="file-icon">&#9654;</span><span class="file-name">emails_2026-06-10.md</span><span class="file-example">Zhiwei 提测邮件、Teams app 安装对齐</span></div>
-<div class="file"><span class="file-icon">&#9654;</span><span class="file-name">teams-chats_yuecong.md</span><span class="file-example">与 Yuecong 的 1:1 关于 Prompt 设计</span></div>
-<div class="file"><span class="file-icon">&#9654;</span><span class="file-name">calendar_2026-06-10.md</span><span class="file-example">UI 对齐会、Dogfood 会议</span></div>
-<div class="file"><span class="file-icon">&#9654;</span><span class="file-name">meeting-recap_qa-review.md</span><span class="file-example">QA 测试结果 Review 会议纪要</span></div>
-</div>
-<div class="subfolder-label">dongyangcui/</div>
-<div class="subfolder">
-<div class="file"><span class="file-icon">&#9654;</span><span class="file-name">emails_2026-06-12.md</span><span class="file-example">代参会讨论会议邀请</span></div>
-</div>
-</div>
-<div class="note"><strong>去重规则：</strong>跨成员的重复内容（如同一封邮件的收/发双方），保留第一份完整内容，其余替换为 placeholder 标注 "duplicate of yinyuan/emails_2026-06-10.md#L42"。Project Agent 负责去重。</div>
+<div class="flow-arrow">Sources &rarr; Deliverables &rarr; Learnings &nbsp;&nbsp;|&nbsp;&nbsp; State (now) &nbsp;&nbsp; Logs (past)</div>
 </div>
 
-<div class="folder">
-<div class="folder-head"><span class="folder-name">sources/sharepoint/{member}/</span><span class="folder-badge badge-src">按成员</span><span class="folder-desc">SharePoint / OneDrive 上的文档</span></div>
-<div class="file-list">
-<div class="subfolder-label">aiboliu/</div>
-<div class="subfolder">
-<div class="file"><span class="file-icon">&#9654;</span><span class="file-name">Pitch-Deck.pptx</span><span class="file-example">代参会 CVP/EVP 级别 Pitch Deck</span></div>
-</div>
-<div class="subfolder-label">yinyuan/</div>
-<div class="subfolder">
-<div class="file"><span class="file-icon">&#9654;</span><span class="file-name">meeting-proxy-demo.mp4.summary.md</span><span class="file-example">陪参会集成 Demo 视频摘要</span></div>
-</div>
-</div>
+<!-- ===== TREE ===== -->
+<div class="overview">
+<h2>完整目录结构</h2>
 </div>
 
-<div class="folder">
-<div class="folder-head"><span class="folder-name">sources/web/</span><span class="folder-badge badge-src">Project Agent</span><span class="folder-desc">公开网络信息、竞品调研</span></div>
-<div class="file-list">
-<div class="file"><span class="file-icon">&#9654;</span><span class="file-name">teams-attendant.md</span><span class="file-example">GitHub 开源竞品：浏览器自动化代参会</span></div>
-<div class="file"><span class="file-icon">&#9654;</span><span class="file-name">tencent-meeting-ai-proxy.md</span><span class="file-example">腾讯会议 AI 托管功能分析</span></div>
-<div class="file"><span class="file-icon">&#9654;</span><span class="file-name">ambient-meeting-assistant.md</span><span class="file-example">Ambient：Zoom/Teams/Meet 自动参会</span></div>
+<div class="tree"><span class="t-folder">Project Agent/</span>
+│
+├── <span class="t-src">sources/</span>                          <span class="t-comment">── 输入：项目相关的所有原始信息</span>
+│   ├── <span class="t-src">owner-global/</span>                 <span class="t-comment">── 邮件 / Teams / 日历 / 会议纪要</span>
+│   │   ├── <span class="t-src">{member-alias}/</span>           <span class="t-comment">── 按成员分文件夹</span>
+│   │   └── ...
+│   ├── <span class="t-src">sharepoint/</span>                   <span class="t-comment">── SharePoint / OneDrive 文档</span>
+│   │   ├── <span class="t-src">{member-alias}/</span>           <span class="t-comment">── 按成员分文件夹</span>
+│   │   └── ...
+│   ├── <span class="t-src">web/</span>                          <span class="t-comment">── 公开网络信息（Project Agent 管理）</span>
+│   └── <span class="t-file">_index.md</span>                    <span class="t-comment">── 全部 sources 的索引</span>
+│
+├── <span class="t-del">deliverables/</span>                     <span class="t-comment">── 产出：成员交付的文档和工件</span>
+│   ├── <span class="t-del">{member-alias}/</span>               <span class="t-comment">── 按成员分文件夹</span>
+│   └── ...
+│
+├── <span class="t-lrn">learnings/</span>                        <span class="t-comment">── 经验：执行和发现中的可复用教训</span>
+│   ├── <span class="t-lrn">execution-{member}.md</span>        <span class="t-comment">── 怎么做才对（E 系列）</span>
+│   └── <span class="t-lrn">discovery-{member}.md</span>        <span class="t-comment">── 什么值得做（D 系列）</span>
+│
+├── <span class="t-sta">state/</span>                            <span class="t-comment">── 当前状态（实时覆盖更新）</span>
+│   ├── <span class="t-sta">PROJECT.md</span>                   <span class="t-comment">── 项目定义</span>
+│   ├── <span class="t-sta">todo-list.md</span>                 <span class="t-comment">── 候选任务池</span>
+│   ├── <span class="t-sta">dashboard.md</span>                 <span class="t-comment">── 项目状态快照</span>
+│   └── <span class="t-sta">planning/</span>                    <span class="t-comment">── 执行计划 / 时间线</span>
+│
+└── <span class="t-log">logs/</span>                             <span class="t-comment">── 历史记录（只追加，不修改）</span>
+    ├── <span class="t-log">reviews/</span>                     <span class="t-comment">── 每日战略碰撞日志</span>
+    ├── <span class="t-log">decisions/</span>                   <span class="t-comment">── 关键决策记录</span>
+    └── <span class="t-log">heartbeats/</span>                  <span class="t-comment">── 每小时巡检日志</span></div>
+
+<!-- ===== DETAIL: SOURCES ===== -->
+<div class="detail">
+<div class="detail-head"><div class="detail-dot dot-src"></div><div class="detail-title">Sources</div><div class="detail-sub">输入 — 项目相关的所有原始信息</div></div>
+<div class="detail-body">
+<p>三个子文件夹，前两个按成员分文件夹（每个成员的 Agent 贡献自己看到的信息），第三个由 Project Agent 统一管理。</p>
 </div>
-</div>
+<table class="detail-table">
+<tr><th>子文件夹</th><th>内容</th><th>写入者</th></tr>
+<tr><td><code>owner-global/{member}/</code></td><td>邮件、Teams 聊天、日历事件、会议纪要</td><td>各成员 Agent</td></tr>
+<tr><td><code>sharepoint/{member}/</code></td><td>SharePoint / OneDrive 上的文档（PPT、文档等）</td><td>各成员 Agent</td></tr>
+<tr><td><code>web/</code></td><td>竞品调研、行业趋势、技术文档</td><td>Project Agent</td></tr>
+</table>
+<div class="rule"><strong>去重规则：</strong>同一封邮件可能出现在多个成员文件夹中（收/发双方）。Project Agent 保留第一份完整内容，其余替换为 placeholder，标注 <code>duplicate of {member}/filename.md#L42</code>。</div>
 </div>
 
-<!-- ===== DELIVERABLES ===== -->
-<div class="pillar">
-<div class="pillar-head">
-<div class="pillar-icon del">D</div>
-<div class="pillar-title">Deliverables</div>
-<div class="pillar-desc">产出 — 每个成员交付的文档和工件</div>
+<!-- ===== DETAIL: DELIVERABLES ===== -->
+<div class="detail">
+<div class="detail-head"><div class="detail-dot dot-del"></div><div class="detail-title">Deliverables</div><div class="detail-sub">产出 — 成员交付的文档和工件</div></div>
+<div class="detail-body">
+<p>按成员分文件夹。每个交付物附带 <code>_submission.md</code>（含修订历史），经 Owner review 后归档。</p>
+</div>
+<table class="detail-table">
+<tr><th>示例</th><th>内容</th></tr>
+<tr><td><code>yinyuan/delegate-meeting-mvp-prd.md</code></td><td>代参会 MVP PRD v3.3</td></tr>
+<tr><td><code>jianliu3/autonomous-join-architecture.md</code></td><td>AI 自主入会四层架构方案</td></tr>
+<tr><td><code>aiboliu/pitch-deck.pptx</code></td><td>CVP/EVP Pitch Deck</td></tr>
+</table>
 </div>
 
-<div class="folder">
-<div class="folder-head"><span class="folder-name">deliverables/{member}/</span><span class="folder-badge badge-del">按成员</span><span class="folder-desc">交付物 + _submission.md 修订历史</span></div>
-<div class="file-list">
-<div class="subfolder-label">yinyuan/</div>
-<div class="subfolder">
-<div class="file"><span class="file-icon">&#9654;</span><span class="file-name">delegate-meeting-mvp-prd.md</span><span class="file-example">代参会 MVP PRD v3.3（12 章）</span></div>
-<div class="file"><span class="file-icon">&#9654;</span><span class="file-name">competitive-analysis.md</span><span class="file-example">10+ 竞品 SWOT 分析</span></div>
-<div class="file"><span class="file-icon">&#9654;</span><span class="file-name">eval-metrics.md</span><span class="file-example">5 维度 x 32 指标评估体系</span></div>
+<!-- ===== DETAIL: LEARNINGS ===== -->
+<div class="detail">
+<div class="detail-head"><div class="detail-dot dot-lrn"></div><div class="detail-title">Learnings</div><div class="detail-sub">经验 — 执行和发现过程中的可复用教训</div></div>
+<div class="detail-body">
+<p>两种经验，分开存放。每个成员一个文件，采用 Zettelkasten 卡片式管理。</p>
 </div>
-<div class="subfolder-label">jianliu3/</div>
-<div class="subfolder">
-<div class="file"><span class="file-icon">&#9654;</span><span class="file-name">autonomous-join-architecture.md</span><span class="file-example">AI 自主入会四层架构方案</span></div>
-<div class="file"><span class="file-icon">&#9654;</span><span class="file-name">auto-install-plan.md</span><span class="file-example">Teams App A+C 组合安装策略</span></div>
-</div>
-<div class="subfolder-label">yuecongyang/</div>
-<div class="subfolder">
-<div class="file"><span class="file-icon">&#9654;</span><span class="file-name">skill-integration-plan.md</span><span class="file-example">6 组件、三模式 Skill 封装方案</span></div>
-</div>
-</div>
-</div>
+<table class="detail-table">
+<tr><th>文件</th><th>内容</th><th>回答什么</th><th>写入时机</th></tr>
+<tr><td><code>execution-{member}.md</code></td><td>E001, E002, ...</td><td>怎么做才对</td><td>被纠正时 / Daily Reflection</td></tr>
+<tr><td><code>discovery-{member}.md</code></td><td>D001, D002, ...</td><td>什么值得做</td><td>Daily Reflection (Part 2)</td></tr>
+</table>
+<div class="rule"><strong>Zettelkasten 规则：</strong>每条经验独立编号，包含：<strong>原则</strong>（一句话可复用规则）+ <strong>场景</strong>（怎么学到的）+ <strong>关联</strong>（相关的其他经验编号）。不预设分类，分类从关联中自然涌现。</div>
 </div>
 
-<!-- ===== LEARNINGS ===== -->
-<div class="pillar">
-<div class="pillar-head">
-<div class="pillar-icon lrn">L</div>
-<div class="pillar-title">Learnings</div>
-<div class="pillar-desc">经验 — 执行和发现过程中的可复用教训</div>
+<!-- ===== DETAIL: STATE ===== -->
+<div class="detail">
+<div class="detail-head"><div class="detail-dot dot-sta"></div><div class="detail-title">State</div><div class="detail-sub">当前状态 — 实时覆盖更新的活文档</div></div>
+<div class="detail-body">
+<p>回答"项目现在是什么情况"。这些文件会被定期覆盖更新，只保留最新版本。</p>
+</div>
+<table class="detail-table">
+<tr><th>文件</th><th>内容</th><th>更新频率</th></tr>
+<tr><td><code>PROJECT.md</code></td><td>项目定义：目标 / 团队 / 交付物 / 时间线</td><td>偶尔</td></tr>
+<tr><td><code>todo-list.md</code></td><td>候选任务池</td><td>每日（review 追加）</td></tr>
+<tr><td><code>dashboard.md</code></td><td>项目状态快照：KPI / 风险 / 进展</td><td>每小时（heartbeat 刷新）</td></tr>
+<tr><td><code>planning/</code></td><td>执行计划 / 关键路径 / 时间线</td><td>按需</td></tr>
+</table>
 </div>
 
-<div class="folder">
-<div class="folder-head"><span class="folder-name">learnings/execution-{member}.md</span><span class="folder-badge badge-lrn">Zettelkasten</span><span class="folder-desc">怎么做才对 — 执行方法论</span></div>
-<div class="file-list">
-<div class="file"><span class="file-icon">E001</span><span class="file-name">PRD 定义体验不定义实现</span><span class="file-example">"PRD 回答用户看到什么，不回答怎么实现"</span></div>
-<div class="file"><span class="file-icon">E005</span><span class="file-name">不确定就问不要猜</span><span class="file-example">"错误的交付物比问一个问题浪费更多时间"</span></div>
-<div class="file"><span class="file-icon">E007</span><span class="file-name">cron isolated session 不支持 spawn-yield</span><span class="file-example">"用 main agent sessions_spawn 间接触发"</span></div>
+<!-- ===== DETAIL: LOGS ===== -->
+<div class="detail">
+<div class="detail-head"><div class="detail-dot dot-log"></div><div class="detail-title">Logs</div><div class="detail-sub">历史记录 — 只追加、不修改</div></div>
+<div class="detail-body">
+<p>回答"过去发生了什么"。每个文件创建后不再修改，形成完整的项目运行轨迹。</p>
 </div>
-</div>
-
-<div class="folder">
-<div class="folder-head"><span class="folder-name">learnings/discovery-{member}.md</span><span class="folder-badge badge-lrn">Zettelkasten</span><span class="folder-desc">什么值得做 — Todo 发现质量</span></div>
-<div class="file-list">
-<div class="file"><span class="file-icon">D001</span><span class="file-name">会议纪要中的 todo 命中率最高</span><span class="file-example">"从会议决策中提取的 todo 90% 被采纳"</span></div>
-<div class="file"><span class="file-icon">D002</span><span class="file-name">Web 搜索的 todo 命中率低</span><span class="file-example">"竞品搜索产生的 todo 多为观察性，难以行动"</span></div>
-</div>
-<div class="note"><strong>Zettelkasten 规则：</strong>每条经验独立编号（E/D + 序号），包含：原则（一句话规则）+ 场景（怎么学到的）+ 关联（和哪些其他经验相关）。不预设分类，分类从关联中自然涌现。每个成员一个文件，Daily Reflection 自动追加。</div>
-</div>
-</div>
-
-<!-- ===== STATE ===== -->
-<div class="pillar">
-<div class="pillar-head">
-<div class="pillar-icon sta">T</div>
-<div class="pillar-title">State</div>
-<div class="pillar-desc">当前状态 — 会被覆盖更新的活文档</div>
-</div>
-
-<div class="folder">
-<div class="folder-head"><span class="folder-name">state/</span><span class="folder-badge badge-sta">实时</span><span class="folder-desc">项目当前的真实状态</span></div>
-<div class="file-list">
-<div class="file"><span class="file-icon">&#9654;</span><span class="file-name">PROJECT.md</span><span class="file-example">项目定义：目标 / 团队 / 交付物 / 时间线</span></div>
-<div class="file"><span class="file-icon">&#9654;</span><span class="file-name">todo-list.md</span><span class="file-example">候选任务池：24 条 todo，按优先级排列</span></div>
-<div class="file"><span class="file-icon">&#9654;</span><span class="file-name">dashboard.md</span><span class="file-example">项目状态快照：KPI / 风险 / 进展一览</span></div>
-<div class="file"><span class="file-icon">&#9654;</span><span class="file-name">planning/execution-plan.md</span><span class="file-example">关键路径 / 风险清单 / 阶段规划</span></div>
-</div>
-</div>
-</div>
-
-<!-- ===== LOGS ===== -->
-<div class="pillar">
-<div class="pillar-head">
-<div class="pillar-icon log">G</div>
-<div class="pillar-title">Logs</div>
-<div class="pillar-desc">历史记录 — 只追加、不修改</div>
-</div>
-
-<div class="folder">
-<div class="folder-head"><span class="folder-name">logs/</span><span class="folder-badge badge-log">只追加</span><span class="folder-desc">项目运行的完整轨迹</span></div>
-<div class="file-list">
-<div class="file"><span class="file-icon">&#9654;</span><span class="file-name">reviews/review-2026-06-15.md</span><span class="file-example">每日战略碰撞：5 个场景 / 3 个新发现 / 2 个更新</span></div>
-<div class="file"><span class="file-icon">&#9654;</span><span class="file-name">decisions/2026-06-12_prd-v3.md</span><span class="file-example">"PRD 从功能列表转为用户旅程视角" — Yana 决策</span></div>
-<div class="file"><span class="file-icon">&#9654;</span><span class="file-name">heartbeats/2026-06-15_09-08.md</span><span class="file-example">每小时巡检：11 任务 / 7 停滞 / 0 新风险</span></div>
-</div>
-</div>
-</div>
-
-<!-- ===== LEGEND ===== -->
-<div class="legend">
-<h3>Architecture Overview</h3>
-<div class="legend-grid">
-<div class="legend-item l-src"><div class="l-icon">S</div><div class="l-label">Sources</div><div class="l-desc">输入：邮件 / Teams / 日历 / 会议 / SharePoint / Web</div></div>
-<div class="legend-item l-del"><div class="l-icon">D</div><div class="l-label">Deliverables</div><div class="l-desc">产出：PRD / 方案 / 分析 / Deck</div></div>
-<div class="legend-item l-lrn"><div class="l-icon">L</div><div class="l-label">Learnings</div><div class="l-desc">经验：执行教训 + 发现质量</div></div>
-<div class="legend-item l-sta"><div class="l-icon">T</div><div class="l-label">State</div><div class="l-desc">现在：PROJECT / TODO / Dashboard</div></div>
-<div class="legend-item l-log"><div class="l-icon">G</div><div class="l-label">Logs</div><div class="l-desc">过去：Review / Decision / Heartbeat</div></div>
-</div>
+<table class="detail-table">
+<tr><th>子文件夹</th><th>内容</th><th>频率</th></tr>
+<tr><td><code>reviews/</code></td><td>每日战略碰撞日志：发现 / 新增 todo / 风险</td><td>每日</td></tr>
+<tr><td><code>decisions/</code></td><td>关键决策记录：谁 / 什么时候 / 决定了什么</td><td>按需</td></tr>
+<tr><td><code>heartbeats/</code></td><td>每小时巡检日志：任务状态 / 催办 / 升级</td><td>每小时</td></tr>
+</table>
 </div>
 
 <div class="foot">Project Knowledge Architecture v1.0 &middot; Concordia PMO Standard &middot; 2026-06-15</div>
