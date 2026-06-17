@@ -3,218 +3,205 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Teams Meeting 代参会 — 项目仪表盘</title>
+<title>Teams Meeting 代参会 — Project Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',sans-serif;background:#f0f2f5;color:#1a1a2e;line-height:1.6}
-.container{max-width:1100px;margin:0 auto;padding:24px 16px}
-.masthead{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);color:#fff;border-radius:12px;padding:36px 40px;margin-bottom:24px;position:relative;overflow:hidden}
-.masthead::after{content:'';position:absolute;top:-50%;right:-20%;width:400px;height:400px;background:radial-gradient(circle,rgba(196,163,90,0.08) 0%,transparent 70%);pointer-events:none}
-.masthead .label{font-size:10px;letter-spacing:3px;color:#c4a35a;text-transform:uppercase;font-weight:600;margin-bottom:6px}
-.masthead h1{font-size:28px;font-weight:800;margin-bottom:8px}
-.masthead .meta{font-size:12px;color:rgba(255,255,255,0.5);font-weight:400}
+body{font-family:'Inter',system-ui,sans-serif;background:#f8f9fb;color:#1a1a2e;line-height:1.6}
+.container{max-width:1120px;margin:0 auto;padding:24px 20px}
+.masthead{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);color:#fff;padding:48px 40px;border-radius:12px;margin-bottom:24px}
+.masthead .label{font-size:11px;letter-spacing:3px;color:#c4a35a;text-transform:uppercase;margin-bottom:8px}
+.masthead h1{font-size:32px;font-weight:800;margin-bottom:8px}
+.masthead .meta{font-size:13px;color:rgba(255,255,255,0.55)}
 .masthead .meta span{margin-right:16px}
-.alert-banner{background:#fff3cd;border-left:4px solid #e6a817;border-radius:8px;padding:16px 20px;margin-bottom:24px;display:flex;align-items:center;gap:12px}
-.alert-banner i{color:#e6a817;font-size:20px}
-.alert-banner .alert-text{font-size:14px;font-weight:500;color:#856404}
-.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:24px}
-.kpi-card{background:#fff;border-radius:10px;padding:20px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
-.kpi-card .value{font-size:32px;font-weight:800;line-height:1}
-.kpi-card .label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#6c757d;margin-top:6px;font-weight:600}
-.kpi-card.green .value{color:#198754}
-.kpi-card.amber .value{color:#e6a817}
-.kpi-card.red .value{color:#dc3545}
-.kpi-card.blue .value{color:#0d6efd}
-.progress-section{background:#fff;border-radius:10px;padding:24px;margin-bottom:24px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
-.progress-bar-outer{background:#e9ecef;border-radius:8px;height:28px;overflow:hidden;position:relative}
-.progress-bar-inner{background:linear-gradient(90deg,#198754,#20c997);height:100%;border-radius:8px;transition:width .5s;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700}
+.alert-banner{padding:16px 20px;border-radius:8px;margin-bottom:24px;font-size:14px;display:flex;align-items:flex-start;gap:12px}
+.alert-amber{background:#fffbeb;border:1px solid #f59e0b;color:#92400e}
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin-bottom:24px}
+.kpi-card{background:#fff;border-radius:10px;padding:24px 20px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.kpi-card .value{font-size:36px;font-weight:800}
+.kpi-card .label{font-size:11px;letter-spacing:1.5px;color:#6b7280;text-transform:uppercase;margin-top:4px}
+.kpi-card.green .value{color:#059669}
+.kpi-card.blue .value{color:#2563eb}
+.kpi-card.amber .value{color:#d97706}
+.kpi-card.dark .value{color:#1a1a2e}
+.progress-wrap{background:#fff;border-radius:10px;padding:24px;margin-bottom:24px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.progress-bar{background:#e5e7eb;border-radius:99px;height:18px;overflow:hidden;margin:12px 0}
+.progress-fill{background:linear-gradient(90deg,#059669,#10b981);height:100%;border-radius:99px;transition:width .6s}
 .section{background:#fff;border-radius:10px;padding:24px;margin-bottom:24px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
-.section h2{font-size:16px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px;color:#1a1a2e}
+.section h2{font-size:16px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
 .section h2 i{color:#c4a35a;font-size:14px}
 table.data{width:100%;border-collapse:collapse;font-size:13px}
-table.data th{text-align:left;padding:10px 12px;background:#f8f9fb;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#6c757d;border-bottom:2px solid #e9ecef}
-table.data td{padding:10px 12px;border-bottom:1px solid #f0f2f5;vertical-align:top}
-table.data tr:hover{background:#fafbfc}
-.badge{display:inline-block;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:600}
-.badge-done{background:#d1e7dd;color:#0f5132}
-.badge-progress{background:#cff4fc;color:#055160}
-.badge-stalled{background:#fff3cd;color:#856404}
-.badge-invited{background:#e2e3e5;color:#41464b}
-.badge-active{background:#d1e7dd;color:#0f5132}
-.badge-urgent{background:#f8d7da;color:#842029}
-.badge-high{background:#fff3cd;color:#856404}
-.phase-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
-.phase-card{background:#fff;border-radius:10px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,0.06);border-top:3px solid #c4a35a}
-.phase-card h3{font-size:14px;font-weight:700;margin-bottom:8px}
-.phase-card .phase-count{font-size:24px;font-weight:800;color:#1a1a2e}
-.phase-card .phase-label{font-size:12px;color:#6c757d}
-.questions-list{list-style:none;padding:0}
-.questions-list li{padding:10px 0;border-bottom:1px solid #f0f2f5;font-size:13px;display:flex;align-items:flex-start;gap:8px}
-.questions-list li i{color:#e6a817;margin-top:3px;flex-shrink:0}
-.links-section{display:flex;flex-wrap:wrap;gap:12px}
-.link-card{display:flex;align-items:center;gap:8px;padding:10px 16px;background:#f8f9fb;border-radius:8px;text-decoration:none;color:#1a1a2e;font-size:13px;font-weight:500;transition:background .2s}
-.link-card:hover{background:#e9ecef}
-.link-card i{color:#0d6efd}
-.footer{text-align:center;padding:32px 0 16px;color:#adb5bd;font-size:11px;letter-spacing:1px}
-@media(max-width:768px){.kpi-row{grid-template-columns:repeat(2,1fr)}.phase-cards{grid-template-columns:1fr}.masthead{padding:24px 20px}.masthead h1{font-size:22px}}
+table.data th{text-align:left;padding:10px 12px;background:#f8f9fb;font-weight:600;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#6b7280;border-bottom:2px solid #e5e7eb}
+table.data td{padding:10px 12px;border-bottom:1px solid #f3f4f6}
+table.data tr:hover td{background:#fafbfc}
+.badge{display:inline-block;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:600}
+.badge-done{background:#d1fae5;color:#065f46}
+.badge-progress{background:#dbeafe;color:#1e40af}
+.badge-invited{background:#fef3c7;color:#92400e}
+.badge-active{background:#d1fae5;color:#065f46}
+.badge-risk{background:#fef3c7;color:#92400e}
+.links-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.link-card{display:flex;align-items:center;gap:10px;padding:14px 16px;border:1px solid #e5e7eb;border-radius:8px;text-decoration:none;color:#1a1a2e;transition:border-color .2s}
+.link-card:hover{border-color:#c4a35a}
+.link-card i{color:#c4a35a;font-size:16px}
+.footer{text-align:center;padding:32px 0;font-size:12px;color:#9ca3af}
+@media(max-width:600px){.masthead{padding:28px 20px}.masthead h1{font-size:22px}.kpi-card .value{font-size:28px}.container{padding:12px}}
 </style>
 </head>
 <body>
 <div class="container">
 
 <div class="masthead">
-  <div class="label">Project Dashboard</div>
-  <h1>Teams Meeting 代参会</h1>
-  <div class="meta">
-    <span><i class="fa-regular fa-user"></i> Yana Yuan</span>
-    <span><i class="fa-regular fa-calendar"></i> 创建于 2026-06-10</span>
-    <span><i class="fa-regular fa-clock"></i> 更新于 2026-06-16 09:00 CST</span>
-  </div>
+<div class="label">Project Dashboard</div>
+<h1>Teams Meeting 代参会</h1>
+<div class="meta">
+<span><i class="fa-solid fa-user"></i> Yana Yuan</span>
+<span><i class="fa-solid fa-calendar"></i> 创建于 2026-06-10</span>
+<span><i class="fa-solid fa-flag"></i> Deadline: TBD</span>
+<span><i class="fa-solid fa-clock"></i> 更新于 2026-06-17 09:00 CST</span>
+</div>
 </div>
 
-<div class="alert-banner">
-  <i class="fa-solid fa-triangle-exclamation"></i>
-  <div class="alert-text">项目状态：需关注 — 12 个任务均处于"进行中"，无最近完成进展。3 个紧急开放问题待解决。</div>
+<div class="alert-banner alert-amber">
+<i class="fa-solid fa-triangle-exclamation" style="font-size:20px;margin-top:2px"></i>
+<div>
+<strong>项目状态: 有风险</strong><br>
+Dongyang Cui 承担 7 个进行中任务但成员状态仍为"已邀请"（未激活自动回复）；Zhang Jin 有 3 个 UX 设计任务处于进行中状态。需关注资源集中度和成员响应状态。
+</div>
 </div>
 
 <div class="kpi-row">
-  <div class="kpi-card"><div class="value">33</div><div class="label">总任务数</div></div>
-  <div class="kpi-card green"><div class="value">21</div><div class="label">已完成</div></div>
-  <div class="kpi-card amber"><div class="value">12</div><div class="label">进行中</div></div>
-  <div class="kpi-card red"><div class="value">0</div><div class="label">已逾期</div></div>
-  <div class="kpi-card blue"><div class="value">63.6%</div><div class="label">完成率</div></div>
+<div class="kpi-card dark"><div class="value">35</div><div class="label">总任务</div></div>
+<div class="kpi-card green"><div class="value">21</div><div class="label">已完成</div></div>
+<div class="kpi-card blue"><div class="value">14</div><div class="label">进行中</div></div>
+<div class="kpi-card amber"><div class="value">0</div><div class="label">逾期</div></div>
+<div class="kpi-card" style="background:linear-gradient(135deg,#1a1a2e,#16213e);color:#fff"><div class="value" style="color:#c4a35a">60%</div><div class="label" style="color:rgba(255,255,255,0.6)">完成率</div></div>
 </div>
 
-<div class="progress-section">
-  <h2 style="font-size:14px;font-weight:600;margin-bottom:12px"><i class="fa-solid fa-bars-progress" style="color:#c4a35a"></i> 总体进度</h2>
-  <div class="progress-bar-outer">
-    <div class="progress-bar-inner" style="width:63.6%">63.6%</div>
-  </div>
+<div class="progress-wrap">
+<h2 style="font-size:14px;font-weight:600;margin-bottom:0"><i class="fa-solid fa-chart-line" style="color:#c4a35a"></i> 项目进度</h2>
+<div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div>
+<div style="display:flex;justify-content:space-between;font-size:12px;color:#6b7280">
+<span>21 / 35 任务已完成</span>
+<span>60%</span>
+</div>
 </div>
 
-<div class="phase-cards">
-  <div class="phase-card">
-    <h3><i class="fa-solid fa-file-lines" style="color:#c4a35a"></i> 第一阶段：需求与设计</h3>
-    <div class="phase-count">12/12</div>
-    <div class="phase-label">PRD、竞品分析、架构方案</div>
-    <div style="margin-top:8px"><span class="badge badge-done">已完成</span></div>
-  </div>
-  <div class="phase-card">
-    <h3><i class="fa-solid fa-code" style="color:#c4a35a"></i> 第二阶段：研发与实现</h3>
-    <div class="phase-count">3/12</div>
-    <div class="phase-label">引擎开发、转录、异常处理</div>
-    <div style="margin-top:8px"><span class="badge badge-progress">进行中</span></div>
-  </div>
-  <div class="phase-card">
-    <h3><i class="fa-solid fa-rocket" style="color:#c4a35a"></i> 第三阶段：测试与发布</h3>
-    <div class="phase-count">6/9</div>
-    <div class="phase-label">Dogfood、演示、UX 设计</div>
-    <div style="margin-top:8px"><span class="badge badge-progress">进行中</span></div>
-  </div>
-</div>
-
+<!-- Team Progress -->
 <div class="section">
-  <h2><i class="fa-solid fa-users"></i> 团队进度</h2>
-  <table class="data">
-    <thead><tr><th>成员</th><th>角色</th><th>任务数</th><th>已完成</th><th>进行中</th><th>状态</th></tr></thead>
-    <tbody>
-      <tr><td>Yana Yuan</td><td>Owner</td><td>8</td><td>8</td><td>0</td><td><span class="badge badge-done">全部完成</span></td></tr>
-      <tr><td>Dongyang Cui</td><td>Member</td><td>6</td><td>0</td><td>6</td><td><span class="badge badge-invited">待接受</span></td></tr>
-      <tr><td>Zhiwei Gao</td><td>Member</td><td>5</td><td>5</td><td>0</td><td><span class="badge badge-invited">待接受</span></td></tr>
-      <tr><td>Yuecong Yang</td><td>Member</td><td>4</td><td>3</td><td>1</td><td><span class="badge badge-active">已激活</span></td></tr>
-      <tr><td>Jian Liu</td><td>Member</td><td>3</td><td>2</td><td>1</td><td><span class="badge badge-active">已激活</span></td></tr>
-      <tr><td>Jin Zhang</td><td>Member</td><td>3</td><td>0</td><td>3</td><td><span class="badge badge-active">已激活</span></td></tr>
-      <tr><td>Aibo Liu</td><td>Member</td><td>1</td><td>1</td><td>0</td><td><span class="badge badge-active">已激活</span></td></tr>
-    </tbody>
-  </table>
+<h2><i class="fa-solid fa-users"></i> 团队进度</h2>
+<table class="data">
+<thead><tr><th>成员</th><th>总任务</th><th>已完成</th><th>进行中</th><th>完成率</th><th>状态</th></tr></thead>
+<tbody>
+<tr><td><strong>Yana Yuan</strong></td><td>10</td><td>9</td><td>1</td><td>90%</td><td><span class="badge badge-active">自动回复</span></td></tr>
+<tr><td><strong>Zhiwei Gao</strong></td><td>6</td><td>6</td><td>0</td><td>100%</td><td><span class="badge badge-invited">已邀请</span></td></tr>
+<tr><td><strong>Dongyang Cui</strong></td><td>7</td><td>0</td><td>7</td><td>0%</td><td><span class="badge badge-invited">已邀请</span></td></tr>
+<tr><td><strong>Yuecong Yang</strong></td><td>4</td><td>3</td><td>1</td><td>75%</td><td><span class="badge badge-active">自动回复</span></td></tr>
+<tr><td><strong>Jian Liu</strong></td><td>4</td><td>2</td><td>2</td><td>50%</td><td><span class="badge badge-active">自动回复</span></td></tr>
+<tr><td><strong>Zhang Jin</strong></td><td>3</td><td>0</td><td>3</td><td>0%</td><td><span class="badge badge-active">自动回复</span></td></tr>
+<tr><td><strong>Aibo Liu</strong></td><td>1</td><td>1</td><td>0</td><td>100%</td><td><span class="badge badge-active">自动回复</span></td></tr>
+</tbody>
+</table>
 </div>
 
+<!-- Completed -->
 <div class="section">
-  <h2><i class="fa-solid fa-circle-check"></i> 已完成交付物 (21)</h2>
-  <table class="data">
-    <thead><tr><th>任务</th><th>负责人</th></tr></thead>
-    <tbody>
-      <tr><td>代参会MVP PRD产品需求文档</td><td>Yana Yuan</td></tr>
-      <tr><td>明确陪伴参会→代参会功能边界和升级路径</td><td>Yana Yuan</td></tr>
-      <tr><td>竞品差异化分析</td><td>Yana Yuan</td></tr>
-      <tr><td>Teams产品路线图情报收集</td><td>Yana Yuan</td></tr>
-      <tr><td>Eval Metrics体系建立</td><td>Yana Yuan</td></tr>
-      <tr><td>内部Dogfood测试计划</td><td>Yana Yuan</td></tr>
-      <tr><td>张琪Review Demo准备</td><td>Yana Yuan</td></tr>
-      <tr><td>团队内部发布Launch材料准备</td><td>Yana Yuan</td></tr>
-      <tr><td>团队内部发布执行和反馈收集</td><td>Yana Yuan</td></tr>
-      <tr><td>Review 代参会 MVP PRD v3.3</td><td>Yuecong Yang</td></tr>
-      <tr><td>Skill整合代参会skill封装</td><td>Yuecong Yang</td></tr>
-      <tr><td>竞品分析 teams-attendant 开源项目</td><td>Yuecong Yang</td></tr>
-      <tr><td>技术方案AI自主入会架构</td><td>Jian Liu</td></tr>
-      <tr><td>确认Teams meeting app自动安装方案</td><td>Jian Liu</td></tr>
-      <tr><td>制作代参会 Pitch Deck（面向 CVP/EVP）</td><td>Aibo Liu</td></tr>
-      <tr><td>Dogfood执行和Bug修复</td><td>Zhiwei Gao</td></tr>
-      <tr><td>Jing Zhang连接问题排查</td><td>Zhiwei Gao</td></tr>
-      <tr><td>退出策略优化和异常处理</td><td>Zhiwei Gao</td></tr>
-      <tr><td>研发会后摘要和Action Items自动提取</td><td>Zhiwei Gao</td></tr>
-      <tr><td>研发实时转录和speaker identification</td><td>Zhiwei Gao</td></tr>
-      <tr><td>整理陪伴参会提测反馈确认基线质量</td><td>Zhiwei Gao</td></tr>
-    </tbody>
-  </table>
+<h2><i class="fa-solid fa-circle-check"></i> 已完成交付 (21)</h2>
+<table class="data">
+<thead><tr><th>任务</th><th>负责人</th></tr></thead>
+<tbody>
+<tr><td>代参会 MVP PRD 产品需求文档</td><td>Yana Yuan</td></tr>
+<tr><td>竞品差异化分析</td><td>Yana Yuan</td></tr>
+<tr><td>内部 Dogfood 测试计划</td><td>Yana Yuan</td></tr>
+<tr><td>Eval Metrics 体系建立</td><td>Yana Yuan</td></tr>
+<tr><td>张琪 Review Demo 准备</td><td>Yana Yuan</td></tr>
+<tr><td>团队内部发布 Launch 材料准备</td><td>Yana Yuan</td></tr>
+<tr><td>团队内部发布执行和反馈收集</td><td>Yana Yuan</td></tr>
+<tr><td>Teams 产品路线图情报收集</td><td>Yana Yuan</td></tr>
+<tr><td>明确陪伴参会→代参会功能边界和升级路径</td><td>Yana Yuan</td></tr>
+<tr><td>Review 代参会 MVP PRD v3.3</td><td>Yuecong Yang</td></tr>
+<tr><td>Skill 整合代参会 skill 封装</td><td>Yuecong Yang</td></tr>
+<tr><td>竞品分析 teams-attendant 开源项目</td><td>Yuecong Yang</td></tr>
+<tr><td>确认 Teams meeting app 自动安装方案</td><td>Jian Liu</td></tr>
+<tr><td>技术方案 AI 自主入会架构</td><td>Jian Liu</td></tr>
+<tr><td>制作代参会 Pitch Deck（面向 CVP/EVP）</td><td>Aibo Liu</td></tr>
+<tr><td>Dogfood 执行和 Bug 修复</td><td>Zhiwei Gao</td></tr>
+<tr><td>Jing Zhang 连接问题排查</td><td>Zhiwei Gao</td></tr>
+<tr><td>退出策略优化和异常处理</td><td>Zhiwei Gao</td></tr>
+<tr><td>研发会后摘要和 Action Items 自动提取</td><td>Zhiwei Gao</td></tr>
+<tr><td>研发实时转录和 speaker identification</td><td>Zhiwei Gao</td></tr>
+<tr><td>整理陪伴参会提测反馈确认基线质量</td><td>Zhiwei Gao</td></tr>
+</tbody>
+</table>
 </div>
 
+<!-- In Progress -->
 <div class="section">
-  <h2><i class="fa-solid fa-triangle-exclamation"></i> 进行中任务 (12)</h2>
-  <table class="data">
-    <thead><tr><th>任务</th><th>负责人</th><th>优先级</th></tr></thead>
-    <tbody>
-      <tr><td>代参会功能开发（基于 PRD v3.3）</td><td>Jian Liu</td><td><span class="badge badge-urgent">核心</span></td></tr>
-      <tr><td>代参会引擎产品化开发</td><td>Dongyang Cui</td><td><span class="badge badge-urgent">核心</span></td></tr>
-      <tr><td>Dogfood执行和Bug修复</td><td>Dongyang Cui</td><td><span class="badge badge-high">高</span></td></tr>
-      <tr><td>研发实时转录和speaker identification</td><td>Dongyang Cui</td><td><span class="badge badge-high">高</span></td></tr>
-      <tr><td>研发会后摘要和Action Items自动提取</td><td>Dongyang Cui</td><td><span class="badge badge-high">高</span></td></tr>
-      <tr><td>退出策略优化和异常处理</td><td>Dongyang Cui</td><td><span class="badge badge-high">高</span></td></tr>
-      <tr><td>Jing Zhang连接问题排查</td><td>Dongyang Cui</td><td><span class="badge badge-high">高</span></td></tr>
-      <tr><td>整理陪伴参会提测反馈确认基线质量</td><td>Dongyang Cui</td><td><span class="badge badge-high">高</span></td></tr>
-      <tr><td>Review 代参会 MVP PRD v3.3（第二轮）</td><td>Yuecong Yang</td><td><span class="badge badge-high">高</span></td></tr>
-      <tr><td>AI 代参会身份卡头像设计</td><td>Jin Zhang</td><td><span class="badge badge-high">高</span></td></tr>
-      <tr><td>UX设计会中状态展示和会后报告</td><td>Jin Zhang</td><td><span class="badge badge-high">高</span></td></tr>
-      <tr><td>UX设计代参会发起入口</td><td>Jin Zhang</td><td><span class="badge badge-high">高</span></td></tr>
-    </tbody>
-  </table>
+<h2><i class="fa-solid fa-spinner"></i> 进行中任务 (14)</h2>
+<table class="data">
+<thead><tr><th>任务</th><th>负责人</th></tr></thead>
+<tbody>
+<tr><td>为 CVP 张琪准备代参会功能演示</td><td>Yana Yuan</td></tr>
+<tr><td>Review 代参会 MVP PRD v3.3（第二轮）</td><td>Yuecong Yang</td></tr>
+<tr><td>跟进陪伴参会提测 5 个待修复 bug</td><td>Jian Liu</td></tr>
+<tr><td>代参会功能开发（基于 PRD v3.3）</td><td>Jian Liu</td></tr>
+<tr><td>AI 代参会身份卡头像设计</td><td>Zhang Jin</td></tr>
+<tr><td>UX 设计会中状态展示和会后报告</td><td>Zhang Jin</td></tr>
+<tr><td>UX 设计代参会发起入口</td><td>Zhang Jin</td></tr>
+<tr><td>代参会引擎产品化开发</td><td>Dongyang Cui</td></tr>
+<tr><td>Dogfood 执行和 Bug 修复</td><td>Dongyang Cui</td></tr>
+<tr><td>Jing Zhang 连接问题排查</td><td>Dongyang Cui</td></tr>
+<tr><td>退出策略优化和异常处理</td><td>Dongyang Cui</td></tr>
+<tr><td>会后摘要和 Action Items 自动提取</td><td>Dongyang Cui</td></tr>
+<tr><td>实时转录和 speaker identification</td><td>Dongyang Cui</td></tr>
+<tr><td>整理陪伴参会提测反馈确认基线质量</td><td>Dongyang Cui</td></tr>
+</tbody>
+</table>
 </div>
 
+<!-- Open Questions -->
 <div class="section">
-  <h2><i class="fa-solid fa-circle-question"></i> 开放问题</h2>
-  <ul class="questions-list">
-    <li><i class="fa-solid fa-exclamation-circle"></i><div><strong>Q1</strong> — Teams meeting app 自动安装需求对齐会议（Dongyang Cui 发起），具体需求和结论尚不明确，需要确认会议产出和后续 action item。</div></li>
-    <li><i class="fa-solid fa-exclamation-circle"></i><div><strong>Q2</strong> — Zhiwei Gao 需要确认临时拉会/半途加入场景下能否自动添加 Teams app（Jian Liu 要求给结论）。</div></li>
-    <li><i class="fa-solid fa-exclamation-circle"></i><div><strong>Q3</strong> — Teams Bot Detection Policy（2026年6月生效）对当前 AI 自主入会架构的影响程度，是否需要切换到 browser-automation 方案。</div></li>
-  </ul>
+<h2><i class="fa-solid fa-circle-question"></i> 待解决问题</h2>
+<div style="font-size:14px">
+<p style="margin-bottom:10px"><strong>Q1</strong> — Teams meeting app 自动安装需求对齐会议（Dongyang Cui 发起），具体需求和结论尚不明确，需要确认会议产出和后续 action item。</p>
+<p style="margin-bottom:10px"><strong>Q2</strong> — Zhiwei Gao 需要确认临时拉会/半途加入场景下能否自动添加 Teams app（Jian Liu 要求给结论）。</p>
+<p style="margin-bottom:10px"><strong>Q3</strong> — Teams Bot Detection Policy（2026年6月生效）对当前 AI 自主入会架构的影响程度，是否需要切换到 browser-automation 方案。</p>
+</div>
 </div>
 
+<!-- Open Todos -->
 <div class="section">
-  <h2><i class="fa-solid fa-road"></i> 关键路径与风险</h2>
-  <table class="data">
-    <thead><tr><th>风险项</th><th>影响</th><th>紧迫度</th></tr></thead>
-    <tbody>
-      <tr style="background:#fff3cd"><td>Bot Detection Policy 已生效，AI 自主入会可能被阻断</td><td>核心架构风险</td><td><span class="badge badge-urgent">紧急</span></td></tr>
-      <tr style="background:#fff3cd"><td>Microsoft Interactive Agents (Sept 2026) 可能改变技术路线</td><td>战略方向</td><td><span class="badge badge-high">高</span></td></tr>
-      <tr><td>Dongyang Cui 6 个任务均未接受邀请</td><td>研发瓶颈</td><td><span class="badge badge-urgent">紧急</span></td></tr>
-      <tr><td>CVP Qi Zhang 演示准备（目标 6/18）</td><td>高层可见度</td><td><span class="badge badge-urgent">紧急</span></td></tr>
-    </tbody>
-  </table>
+<h2><i class="fa-solid fa-list-check"></i> 待办清单 (8 项, 含 1 deprecated)</h2>
+<table class="data">
+<thead><tr><th>编号</th><th>事项</th><th>负责人</th><th>优先级</th><th>截止</th></tr></thead>
+<tbody>
+<tr><td>#01</td><td>整理陪伴参会功能使用说明并推广</td><td>Yana Yuan</td><td><span class="badge badge-risk">high</span></td><td>TBD</td></tr>
+<tr><td>#02</td><td>与 Zhiwei 确认陪伴参会 skill 最新版本状态</td><td>Yana Yuan</td><td><span class="badge badge-risk">high</span></td><td>TBD</td></tr>
+<tr style="opacity:0.5"><td>#03</td><td><s>跟进 memory wiki 产品需求</s> (deprecated)</td><td>Yana Yuan</td><td>—</td><td>—</td></tr>
+<tr><td>#04</td><td>评估 Teams Bot Detection Policy 影响</td><td>Jian Liu</td><td><span class="badge" style="background:#fee2e2;color:#991b1b">urgent</span></td><td>06-18</td></tr>
+<tr><td>#05</td><td>竞品分析 teams-attendant 开源项目</td><td>Zhiwei Gao</td><td><span class="badge badge-risk">high</span></td><td>TBD</td></tr>
+<tr><td>#06</td><td>为 CVP 张琪准备代参会功能安装和演示</td><td>Yana Yuan</td><td><span class="badge" style="background:#fee2e2;color:#991b1b">urgent</span></td><td>06-18</td></tr>
+<tr><td>#07</td><td>确保代参会在 G Review 6-page 中有体现</td><td>Yana Yuan</td><td><span class="badge badge-risk">high</span></td><td>06-18</td></tr>
+<tr><td>#08</td><td>分析 Microsoft Interactive Agents 竞争影响</td><td>Jian Liu</td><td><span class="badge badge-risk">high</span></td><td>06-25</td></tr>
+</tbody>
+</table>
 </div>
 
+<!-- Quick Links -->
 <div class="section">
-  <h2><i class="fa-solid fa-link"></i> 快速链接</h2>
-  <div class="links-section">
-    <a class="link-card" href="https://teams.cloud.microsoft/l/channel/19%3A6lGtaxNi8jNnS-Vsn0Pv0q7a_Sl8SjuuApcuolBa1Kg1%40thread.tacv2/Teams%20Meeting%20%E4%BB%A3%E5%8F%82%E4%BC%9A?groupId=ae453e87-b139-4816-8711-4ffb613db153"><i class="fa-brands fa-microsoft"></i> Teams 频道</a>
-    <a class="link-card" href="https://microsoftapc.sharepoint.com/teams/TeamsMeeting"><i class="fa-solid fa-folder"></i> SharePoint</a>
-  </div>
+<h2><i class="fa-solid fa-link"></i> 快捷链接</h2>
+<div class="links-grid">
+<a class="link-card" href="https://microsoftapc.sharepoint.com/teams/TeamsMeeting/Shared%20Documents/%5BConcordia%5D%20Teams%20Meeting%20%E4%BB%A3%E5%8F%82%E4%BC%9A/Project%20Agent/todo-list.md"><i class="fa-solid fa-list-check"></i><span>Todo List</span></a>
+<a class="link-card" href="https://microsoftapc.sharepoint.com/teams/TeamsMeeting/Shared%20Documents/%5BConcordia%5D%20Teams%20Meeting%20%E4%BB%A3%E5%8F%82%E4%BC%9A/Project%20Agent/execution-plan.md"><i class="fa-solid fa-route"></i><span>Execution Plan</span></a>
+<a class="link-card" href="https://teams.cloud.microsoft/l/channel/19%3A6lGtaxNi8jNnS-Vsn0Pv0q7a_Sl8SjuuApcuolBa1Kg1%40thread.tacv2/Teams%20Meeting%20%E4%BB%A3%E5%8F%82%E4%BC%9A?groupId=ae453e87-b139-4816-8711-4ffb613db153"><i class="fa-brands fa-microsoft"></i><span>Teams Channel</span></a>
+<a class="link-card" href="https://microsoftapc.sharepoint.com/teams/TeamsMeeting"><i class="fa-solid fa-folder"></i><span>SharePoint</span></a>
+</div>
 </div>
 
 <div class="footer">
-  Teams Meeting 代参会 &middot; 更新于 2026-06-16 09:00 CST &middot; Concordia
+Teams Meeting 代参会 &nbsp;&middot;&nbsp; 更新于 2026-06-17 09:00 CST &nbsp;&middot;&nbsp; Concordia
 </div>
 
 </div>
