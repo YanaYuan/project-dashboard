@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mCnSi Project Collaboration Review</title>
+  <style>
+    :root {
+      --outlook-blue: #0f6cbd;
+      --outlook-dark: #0b3b6f;
+      --outlook-light: #e8f3ff;
+      --ink: #1f2937;
+      --muted: #5f6b7a;
+      --line: #d9e2ec;
+      --surface: #ffffff;
+      --bg: #f5f8fc;
+      --accent: #185abd;
+      --ok: #0f766e;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Inter", "Helvetica Neue", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.5;
+    }
+
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 24px 56px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #ffffff 0%, #f3f8ff 100%);
+      border: 1px solid var(--line);
+      border-left: 6px solid var(--outlook-blue);
+      border-radius: 14px;
+      padding: 34px 34px 30px;
+      box-shadow: 0 6px 20px rgba(15, 108, 189, 0.08);
+    }
+
+    .kicker {
+      display: inline-block;
+      background: var(--outlook-light);
+      color: var(--outlook-dark);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 38px;
+      line-height: 1.15;
+      letter-spacing: -0.4px;
+      color: #133b66;
+    }
+
+    .subtitle {
+      margin: 14px 0 0;
+      font-size: 19px;
+      color: #2d4158;
+      max-width: 920px;
+    }
+
+    .meta {
+      margin-top: 18px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    section {
+      margin-top: 22px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 24px;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 24px;
+      color: #1a3e68;
+      letter-spacing: -0.2px;
+    }
+
+    .lead {
+      margin: 0 0 16px;
+      color: #34465c;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px;
+      background: #fcfdff;
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      color: var(--outlook-dark);
+    }
+
+    .card p { margin: 0; color: #415469; font-size: 15px; }
+
+    .value-box {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 16px;
+    }
+
+    .quote {
+      background: #f1f7ff;
+      border: 1px solid #cfe4fb;
+      border-left: 4px solid var(--outlook-blue);
+      border-radius: 10px;
+      padding: 14px 16px;
+      color: #1f4269;
+      font-size: 15px;
+    }
+
+    .aha-item {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px;
+      background: #fff;
+      margin-bottom: 14px;
+    }
+
+    .aha-item:last-child { margin-bottom: 0; }
+
+    .aha-head {
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+      margin-bottom: 8px;
+    }
+
+    .aha-tag {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      background: #ecf5ff;
+      border-radius: 999px;
+      padding: 3px 9px;
+      letter-spacing: .2px;
+      white-space: nowrap;
+    }
+
+    .aha-title { font-size: 18px; font-weight: 700; color: #19426c; }
+
+    .placeholder {
+      margin-top: 10px;
+      background: #f7fbff;
+      border: 1.5px dashed #9abce0;
+      border-radius: 10px;
+      padding: 8px;
+      color: #4f6a86;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .placeholder img {
+      width: 100%;
+      max-height: 360px;
+      object-fit: contain;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid #d9e8f7;
+      display: block;
+    }
+
+    .placeholder .cap {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #5f6b7a;
+    }
+
+    .flow {
+      background: #f8fbff;
+      border: 1px solid #d7e8fb;
+      border-radius: 10px;
+      padding: 16px;
+      font-family: "Segoe UI", sans-serif;
+      color: #274c73;
+      overflow-x: auto;
+    }
+
+    .checklist li {
+      margin-bottom: 6px;
+      color: #2f475f;
+    }
+
+    .footer-note {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 960px) {
+      .grid-3 { grid-template-columns: 1fr; }
+      .value-box { grid-template-columns: 1fr; }
+      h1 { font-size: 31px; }
+      .subtitle { font-size: 17px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div class="kicker">Gaurav Review · mCnSi Collaboration</div>
+      <h1>mCnSi Collaboration:<br/>Workspace-Driven Project Intelligence at Team Scale</h1>
+      <p class="subtitle">
+        This review uses <b>Teams Meeting Delegate</b> as one proof case to show how mCnSi collaboration works in practice:
+        project-level intelligence, autopilot execution rhythm, and human-in-control governance—powered by a shared workspace.
+      </p>
+      <div class="meta">Scope: Multi-agent project collaboration strategy · Evidence case: Teams Meeting Delegate</div>
+    </header>
+
+    <section>
+      <h2>1) mCnSi Collaboration: What We Are Building</h2>
+      <p class="lead">mCnSi is a collaboration strategy for enterprise execution. The key shift is from task-local AI assistance to project-level shared intelligence and coordinated execution.</p>
+      <div class="grid-3">
+        <article class="card">
+          <h3>Project-Level Intelligence</h3>
+          <p>Agents operate with a shared project mind: goals, deliverables, success criteria, timeline, ownership, and historical decisions.</p>
+        </article>
+        <article class="card">
+          <h3>Autopilot</h3>
+          <p>Heartbeat-driven operation runs cross-day and cross-week, continuously discovering priorities, risks, and next actions.</p>
+        </article>
+        <article class="card">
+          <h3>Human in Control</h3>
+          <p>Owner sets direction and priorities; key deliverables require review; risk and exceptions are escalated by policy.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>2) Why Workspace Is the Lift Multiplier</h2>
+      <div class="value-box">
+        <div>
+          <p class="lead">Workspace turns isolated agent actions into a durable project learning system. It is where sources, deliverables, execution learnings, and state are continuously accumulated and reused.</p>
+          <ul class="checklist">
+            <li><b>Alignment lift:</b> all agents act against the same project truth.</li>
+            <li><b>Execution lift:</b> members produce outputs with richer context, fewer misses.</li>
+            <li><b>Compounding lift:</b> previous decisions and assets are actively reused in new tasks.</li>
+          </ul>
+        </div>
+        <div class="quote">
+          <b>Strategic framing:</b><br/>
+          “A frontier without an ecosystem is not stable.”<br/><br/>
+          Workspace is the ecosystem layer for mCnSi project collaboration—
+          enabling a stable, compounding learning loop with the enterprise.
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3) Aha Moments from the Delegate Meeting Case</h2>
+
+      <article class="aha-item">
+        <div class="aha-head">
+          <span class="aha-tag">Aha Moment #1</span>
+          <div class="aha-title">Proactive Task Discovery from Shared Project Context</div>
+        </div>
+        <p>
+          Project Agent identified that Delegate Meeting should include an evaluation track, based on prior leadership expectations observed in adjacent reviews,
+          even when the requirement was not explicitly assigned to this project. It generated the objective, value statement, and delegated execution.
+        </p>
+        <div class="placeholder">
+          <img src="aha1.png" alt="Aha Moment 1 evidence screenshot" />
+          <div class="cap">Aha #1 evidence — proactive task discovery from project-level context</div>
+        </div>
+      </article>
+
+      <article class="aha-item">
+        <div class="aha-head">
+          <span class="aha-tag">Aha Moment #2</span>
+          <div class="aha-title">Context-Rich Execution Quality</div>
+        </div>
+        <p>
+          During evaluation plan authoring, Member Agent reused relevant project context from workspace (prior discussions, constraints, expectations, and outputs),
+          resulting in an evaluation proposal better aligned with team standards and review expectations.
+        </p>
+        <div class="placeholder">
+          <img src="aha2.png" alt="Aha Moment 2 evidence screenshot" />
+          <div class="cap">Aha #2 evidence — workspace-informed execution quality</div>
+        </div>
+      </article>
+
+      <article class="aha-item">
+        <div class="aha-head">
+          <span class="aha-tag">Aha Moment #3</span>
+          <div class="aha-title">Project Compounding via Skill Reuse</div>
+        </div>
+        <p>
+          Agent autonomously recognized and reused the existing <b>Meeting Recap</b> capability from prior Companion Meeting work when designing Delegate Meeting space.
+          This demonstrates compounding intelligence: the more project memory in workspace, the stronger future judgments become.
+        </p>
+        <div class="placeholder">
+          <img src="aha3.png" alt="Aha Moment 3 evidence screenshot" />
+          <div class="cap">Aha #3 evidence — compounding intelligence via reusable capabilities</div>
+        </div>
+      </article>
+    </section>
+
+    <section>
+      <h2>4) End-to-End Learning Loop (mCnSi + Workspace)</h2>
+      <div class="flow">
+        Signal intake (mail/chat/meetings) → Workspace ingestion →
+        Project Agent planning & delegation → Member execution →
+        Human review & corrections → Learnings captured →
+        Reuse in next planning cycle → Better proactive decisions
+      </div>
+      <p class="footer-note">
+        Result: from one-off task completion to continuous project intelligence growth.
+      </p>
+    </section>
+
+  </div>
+</body>
+</html>
