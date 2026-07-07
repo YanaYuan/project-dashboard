@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Repo — 项目知识空间结构</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --card: #1a1a25;
+    --border: #2a2a3a;
+    --text: #e0e0e8;
+    --text-dim: #8888a0;
+    --accent-blue: #4a9eff;
+    --accent-purple: #8b5cf6;
+    --accent-green: #34d399;
+    --accent-amber: #f59e0b;
+    --accent-rose: #f43f5e;
+    --accent-cyan: #22d3ee;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.7; padding: 0;
+  }
+  .hero {
+    text-align: center; padding: 80px 24px 60px;
+    background: linear-gradient(180deg, #1a1a30 0%, var(--bg) 100%);
+    border-bottom: 1px solid var(--border);
+  }
+  .hero h1 {
+    font-size: 2.4rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 16px;
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero p { color: var(--text-dim); font-size: 1.05rem; max-width: 640px; margin: 0 auto; }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+  /* Tree */
+  .tree-section { margin: 60px 0; }
+  .tree-section h2 {
+    font-size: 1.4rem; font-weight: 600; margin-bottom: 24px; text-align: center;
+  }
+  .tree-box {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 32px; font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+    font-size: 0.82rem; line-height: 2; overflow-x: auto;
+  }
+  .tree-box .dir { color: var(--accent-blue); font-weight: 600; }
+  .tree-box .file { color: var(--text); }
+  .tree-box .desc { color: var(--text-dim); font-style: italic; }
+  .tree-box .new { color: var(--accent-green); }
+
+  /* Module cards */
+  .modules { margin: 60px 0; }
+  .modules h2 { font-size: 1.4rem; font-weight: 600; margin-bottom: 32px; text-align: center; }
+  .mod-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 28px; margin-bottom: 20px; transition: border-color 0.2s;
+  }
+  .mod-card:hover { border-color: #3a3a50; }
+  .mod-top { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+  .mod-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;
+  }
+  .mod-icon.mi-state { background: rgba(139,92,246,0.15); color: var(--accent-purple); }
+  .mod-icon.mi-sources { background: rgba(74,158,255,0.15); color: var(--accent-blue); }
+  .mod-icon.mi-drafts { background: rgba(245,158,11,0.15); color: var(--accent-amber); }
+  .mod-icon.mi-deliv { background: rgba(52,211,153,0.15); color: var(--accent-green); }
+  .mod-icon.mi-logs { background: rgba(34,211,238,0.15); color: var(--accent-cyan); }
+  .mod-icon.mi-learn { background: rgba(244,63,94,0.15); color: var(--accent-rose); }
+  .mod-title { font-size: 1.1rem; font-weight: 600; }
+  .mod-subtitle { color: var(--text-dim); font-size: 0.85rem; margin-top: 2px; }
+  .mod-body { color: var(--text); font-size: 0.92rem; margin-bottom: 14px; }
+  .mod-body p { margin-bottom: 8px; }
+  .mod-meta {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .meta-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 4px 12px; border-radius: 20px; font-size: 0.78rem;
+    background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--text-dim);
+  }
+  .meta-pill i { font-size: 0.72rem; }
+
+  /* Cognition detail */
+  .cog-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px; margin-top: 14px;
+  }
+  .cog-item {
+    background: rgba(139,92,246,0.06); border: 1px solid rgba(139,92,246,0.15);
+    border-radius: 8px; padding: 14px;
+  }
+  .cog-item h4 { font-size: 0.88rem; color: var(--accent-purple); margin-bottom: 4px; }
+  .cog-item p { font-size: 0.82rem; color: var(--text-dim); }
+
+  /* Flow */
+  .flow-section { margin: 60px 0; padding: 40px 0; border-top: 1px solid var(--border); }
+  .flow-section h2 { font-size: 1.4rem; font-weight: 600; margin-bottom: 32px; text-align: center; }
+  .flow-pipeline { display: flex; flex-direction: column; align-items: center; gap: 0; }
+  .flow-node { display: flex; align-items: center; gap: 12px; width: 100%; max-width: 620px; }
+  .flow-label { width: 100px; text-align: right; font-size: 0.82rem; color: var(--text-dim); flex-shrink: 0; }
+  .flow-box {
+    flex: 1; display: flex; align-items: center; gap: 10px;
+    padding: 12px 18px; border-radius: 10px; font-size: 0.88rem; font-weight: 500;
+  }
+  .flow-box i { font-size: 0.85rem; opacity: 0.8; }
+  .flow-box.fb-ext { background: rgba(136,136,160,0.08); border: 1px solid rgba(136,136,160,0.2); color: var(--text-dim); }
+  .flow-box.fb-blue { background: rgba(74,158,255,0.1); border: 1px solid rgba(74,158,255,0.25); color: var(--accent-blue); }
+  .flow-box.fb-purple { background: rgba(139,92,246,0.1); border: 1px solid rgba(139,92,246,0.25); color: var(--accent-purple); }
+  .flow-box.fb-green { background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.25); color: var(--accent-green); }
+  .flow-box.fb-amber { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.2); color: var(--accent-amber); }
+  .flow-box.fb-cyan { background: rgba(34,211,238,0.1); border: 1px solid rgba(34,211,238,0.25); color: var(--accent-cyan); }
+  .flow-box.fb-rose { background: rgba(244,63,94,0.1); border: 1px solid rgba(244,63,94,0.25); color: var(--accent-rose); }
+  .flow-connector { width: 2px; height: 20px; background: var(--border); margin-left: 112px; }
+  .flow-tag { font-size: 0.75rem; color: var(--text-dim); margin-left: auto; padding: 2px 10px; background: rgba(255,255,255,0.04); border-radius: 6px; }
+
+  /* Roles table */
+  .roles-section { margin: 60px 0; padding: 40px 0; border-top: 1px solid var(--border); }
+  .roles-section h2 { font-size: 1.4rem; font-weight: 600; margin-bottom: 24px; text-align: center; }
+  .roles-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  .roles-table th {
+    text-align: left; padding: 10px 14px; border-bottom: 2px solid var(--border);
+    color: var(--text-dim); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .roles-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+  .roles-table tr:last-child td { border-bottom: none; }
+  .roles-table .mod-name { font-weight: 600; color: var(--accent-blue); }
+
+  /* Principles */
+  .principles { margin: 60px 0; padding: 40px 0; border-top: 1px solid var(--border); }
+  .principles h2 { font-size: 1.4rem; font-weight: 600; margin-bottom: 24px; text-align: center; }
+  .principle-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+  .principle-item {
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px;
+  }
+  .principle-item h4 { font-size: 0.92rem; margin-bottom: 6px; }
+  .principle-item p { color: var(--text-dim); font-size: 0.84rem; }
+
+  .footer {
+    text-align: center; padding: 40px 24px; color: var(--text-dim);
+    font-size: 0.8rem; border-top: 1px solid var(--border); margin-top: 40px;
+  }
+  @media (max-width: 640px) {
+    .hero h1 { font-size: 1.6rem; }
+    .tree-box { font-size: 0.72rem; padding: 20px; }
+    .flow-node { flex-direction: column; align-items: flex-start; }
+    .flow-label { width: auto; text-align: left; }
+    .flow-connector { margin-left: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Project Repo</h1>
+  <p>每个 Concordia 项目的知识空间。不是被动的文件夹，而是有明确流转逻辑的系统——信息从外部进入，经过 AI 加工和人类审批，变成项目的共享认知，最终产出交付物。</p>
+</div>
+
+<div class="container">
+
+  <!-- ========== 目录结构 ========== -->
+  <div class="tree-section">
+    <h2>目录结构</h2>
+    <div class="tree-box">
+<span class="dir">Project repo/</span>
+│
+├── <span class="dir">state/</span>                          <span class="desc">项目的大脑</span>
+│   ├── <span class="file">PROJECT.md</span>                  <span class="desc">项目定义（目标/交付物/成功标准/deadline/团队）</span>
+│   ├── <span class="file">signal-mandate.md</span>           <span class="desc">信号指令（关注方向/信源/价值标准/升级阈值）</span>
+│   ├── <span class="file">dashboard.md</span>                <span class="desc">项目状态快照（heartbeat 刷新）</span>
+│   ├── <span class="dir">planning/</span>                   <span class="desc">执行计划 / 关键路径 / 时间线</span>
+│   └── <span class="dir">cognition/</span>                  <span class="desc">认知状态子系统</span>
+│       ├── <span class="file">shared-state.md</span>         <span class="desc">项目共识（经 DRI 确认的真相索引）</span>
+│       ├── <span class="dir">objects/</span>                <span class="desc">认知对象（candidate → accepted / rejected）</span>
+│       ├── <span class="dir">signals/</span>
+│       │   ├── <span class="file">candidates.md</span>       <span class="desc">候选信号（AI 发现的，待 DRI 判断）</span>
+│       │   └── <span class="dir">admitted/</span>           <span class="desc">已准入信号（支撑认知对象的证据）</span>
+│       ├── <span class="dir">stances/</span>                <span class="desc">成员立场（每人一个文件，inferred → aligned）</span>
+│       └── <span class="file">gaps.md</span>                 <span class="desc">认知差距（shared-state vs stances）</span>
+│
+├── <span class="dir">sources/</span>                        <span class="desc">项目的输入素材（经审批后入库）</span>
+│   ├── <span class="file">_index.md</span>                   <span class="desc">素材索引</span>
+│   ├── <span class="dir new">_pending/</span>                   <span class="desc">待 review 的收集报告</span>
+│   ├── <span class="dir">owner-global/</span>               <span class="desc">内部沟通（邮件 / Teams / 会议纪要）</span>
+│   │   └── <span class="dir">{member-alias}/</span>         <span class="desc">Member Agent 入库路径</span>
+│   ├── <span class="dir">sharepoint/</span>                 <span class="desc">SharePoint / OneDrive 文档摘要</span>
+│   └── <span class="dir">web/</span>                        <span class="desc">公开网络素材</span>
+│
+├── <span class="dir">drafts/</span>                         <span class="desc">AI 草稿区（等人 review 后搬到 deliverables）</span>
+│   └── <span class="dir">{member-alias}/</span>             <span class="desc">按成员分子文件夹</span>
+│
+├── <span class="dir">deliverables/</span>                   <span class="desc">正式交付物（经审批后归档）</span>
+│   ├── <span class="dir">agent-tasks/</span>                <span class="desc">Project Agent 派发的任务交付物</span>
+│   │   └── <span class="dir">done/</span>                   <span class="desc">已验收的任务</span>
+│   └── <span class="dir">tasks/</span>                      <span class="desc">成员主动提交的交付物</span>
+│
+├── <span class="dir">logs/</span>                           <span class="desc">自动化日志（只追加不修改）</span>
+│   ├── <span class="dir">heartbeats/</span>                 <span class="desc">每小时心跳日志</span>
+│   ├── <span class="dir">reviews/</span>                    <span class="desc">每日 review 决策记录</span>
+│   └── <span class="dir">decisions/</span>                  <span class="desc">重大决策日志</span>
+│
+└── <span class="dir">learnings/</span>                      <span class="desc">经验教训（每周反思后写入）</span>
+    └── <span class="dir">cards/</span>                      <span class="desc">Zettelkasten 卡片式经验记录</span>
+    </div>
+  </div>
+
+  <!-- ========== 六个模块 ========== -->
+  <div class="modules">
+    <h2>六个模块</h2>
+
+    <div class="mod-card">
+      <div class="mod-top">
+        <div class="mod-icon mi-state"><i class="fas fa-brain"></i></div>
+        <div>
+          <div class="mod-title">state/</div>
+          <div class="mod-subtitle">项目的大脑——认知状态、信号指令、成员立场</div>
+        </div>
+      </div>
+      <div class="mod-body">
+        <p>整个系统最核心的部分。PROJECT.md 是项目的宪法，signal-mandate.md 定义该关注什么，cognition/ 子系统追踪项目的共享认知和成员理解。</p>
+        <p>cognition/ 是 Concordia 最有防御性的层——平台能做摘要，但"知道谁的认知和项目真相不一致"是独有能力。</p>
+      </div>
+      <div class="cog-grid">
+        <div class="cog-item">
+          <h4><i class="fas fa-file-lines"></i> shared-state.md</h4>
+          <p>项目共识。经 DRI 确认的项目真相索引。"项目现在认为是真的东西。"</p>
+        </div>
+        <div class="cog-item">
+          <h4><i class="fas fa-cube"></i> objects/</h4>
+          <p>认知对象（目标/决策/风险/假设）。每个由 signal 支撑，经 DRI 确认。candidate → accepted</p>
+        </div>
+        <div class="cog-item">
+          <h4><i class="fas fa-signal"></i> signals/</h4>
+          <p>信号是证据，不是结论。AI 发现的候选信号经 DRI 判断后准入，成为认知对象的支撑。</p>
+        </div>
+        <div class="cog-item">
+          <h4><i class="fas fa-users"></i> stances/</h4>
+          <p>成员立场。每人一个文件，AI 推断或本人确认的对项目的理解。inferred → aligned</p>
+        </div>
+        <div class="cog-item">
+          <h4><i class="fas fa-arrows-left-right-to-line"></i> gaps.md</h4>
+          <p>认知差距。自动对比 shared-state 和每个 stance，列出谁的理解和项目真相不一致。</p>
+        </div>
+      </div>
+      <div class="mod-meta" style="margin-top: 14px;">
+        <span class="meta-pill"><i class="fas fa-pen"></i> Project Agent + DRI 校准</span>
+        <span class="meta-pill"><i class="fas fa-clock"></i> 实时更新</span>
+      </div>
+    </div>
+
+    <div class="mod-card">
+      <div class="mod-top">
+        <div class="mod-icon mi-sources"><i class="fas fa-download"></i></div>
+        <div>
+          <div class="mod-title">sources/</div>
+          <div class="mod-subtitle">项目的输入素材——经人工审批后才入库</div>
+        </div>
+      </div>
+      <div class="mod-body">
+        <p>所有进入项目的参考资料。重要规则：素材不会自动入库——source-collection 扫描后产出候选报告存到 <code>_pending/</code>，经 source-review 和用户确认后才写入正式目录。</p>
+        <p>按来源分三个子目录：内部沟通（owner-global）、SharePoint 文档、公开网络。Member Agent 入库到 <code>owner-global/{member-alias}/</code> 子文件夹。</p>
+      </div>
+      <div class="mod-meta">
+        <span class="meta-pill"><i class="fas fa-robot"></i> source-collection 产出</span>
+        <span class="meta-pill"><i class="fas fa-user-check"></i> source-review 审批</span>
+        <span class="meta-pill"><i class="fas fa-clock"></i> 每天 2 次</span>
+      </div>
+    </div>
+
+    <div class="mod-card">
+      <div class="mod-top">
+        <div class="mod-icon mi-drafts"><i class="fas fa-pen-ruler"></i></div>
+        <div>
+          <div class="mod-title">drafts/</div>
+          <div class="mod-subtitle">AI 草稿区——等人 review 后搬到 deliverables</div>
+        </div>
+      </div>
+      <div class="mod-body">
+        <p>AI 心跳自动产出的工作草稿暂存在这里。按成员分子文件夹。草稿不是正式交付物——需要人 review 批准后才搬到 deliverables/。</p>
+        <p>解决的问题：AI 不用等人来了才开始工作，先做完存草稿，人只需要审批成品。</p>
+      </div>
+      <div class="mod-meta">
+        <span class="meta-pill"><i class="fas fa-robot"></i> Heartbeat 自动产出</span>
+        <span class="meta-pill"><i class="fas fa-clock"></i> 每小时</span>
+      </div>
+    </div>
+
+    <div class="mod-card">
+      <div class="mod-top">
+        <div class="mod-icon mi-deliv"><i class="fas fa-box-archive"></i></div>
+        <div>
+          <div class="mod-title">deliverables/</div>
+          <div class="mod-subtitle">正式交付物——经人工审批后归档</div>
+        </div>
+      </div>
+      <div class="mod-body">
+        <p>经人工审批后的正式产出物。agent-tasks/ 存 Project Agent 派发的任务交付物（验收后移到 done/），tasks/ 存成员主动提交的交付物。</p>
+      </div>
+      <div class="mod-meta">
+        <span class="meta-pill"><i class="fas fa-user"></i> 成员提交</span>
+        <span class="meta-pill"><i class="fas fa-user-check"></i> DRI review</span>
+        <span class="meta-pill"><i class="fas fa-clock"></i> 按需</span>
+      </div>
+    </div>
+
+    <div class="mod-card">
+      <div class="mod-top">
+        <div class="mod-icon mi-logs"><i class="fas fa-scroll"></i></div>
+        <div>
+          <div class="mod-title">logs/</div>
+          <div class="mod-subtitle">自动化日志——只追加不修改</div>
+        </div>
+      </div>
+      <div class="mod-body">
+        <p>回答"过去发生了什么"。每个文件创建后不再修改，形成完整的项目运行轨迹。heartbeats/ 记录每小时巡检，reviews/ 记录每日 review 决策，decisions/ 记录重大决策。</p>
+      </div>
+      <div class="mod-meta">
+        <span class="meta-pill"><i class="fas fa-robot"></i> 自动写入</span>
+        <span class="meta-pill"><i class="fas fa-clock"></i> 每小时 / 每天</span>
+      </div>
+    </div>
+
+    <div class="mod-card">
+      <div class="mod-top">
+        <div class="mod-icon mi-learn"><i class="fas fa-lightbulb"></i></div>
+        <div>
+          <div class="mod-title">learnings/</div>
+          <div class="mod-subtitle">经验教训——每周反思后写入</div>
+        </div>
+      </div>
+      <div class="mod-body">
+        <p>项目执行过程中积累的可复用经验。采用 Zettelkasten 卡片式管理——每条经验独立编号，包含原则（一句话规则）+ 场景（怎么学到的）+ 关联（相关的其他经验）。</p>
+        <p>Agent 从心跳日志和 review 记录中找 pattern，和 DRI 确认后写入。一周的信息量够发现 pattern，太早沉淀容易写出"正确但无用"的经验。</p>
+      </div>
+      <div class="mod-meta">
+        <span class="meta-pill"><i class="fas fa-robot"></i> Agent 提炼</span>
+        <span class="meta-pill"><i class="fas fa-user-check"></i> DRI 确认</span>
+        <span class="meta-pill"><i class="fas fa-clock"></i> 每周</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 角色表 ========== -->
+  <div class="roles-section">
+    <h2>谁写什么</h2>
+    <table class="roles-table">
+      <thead>
+        <tr><th>模块</th><th>回答什么</th><th>谁写</th><th>更新频率</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="mod-name">state/</td><td>项目现在怎样、该关注什么、谁的理解不一致</td><td>Project Agent + DRI 校准</td><td>实时</td></tr>
+        <tr><td class="mod-name">sources/</td><td>项目参考了哪些外部信息</td><td>source-collection → source-review</td><td>每天 2 次</td></tr>
+        <tr><td class="mod-name">drafts/</td><td>AI 做了什么还没被批准</td><td>Heartbeat 自动产出</td><td>每小时</td></tr>
+        <tr><td class="mod-name">deliverables/</td><td>项目正式交付了什么</td><td>成员提交 → DRI review</td><td>按需</td></tr>
+        <tr><td class="mod-name">logs/</td><td>过去发生了什么</td><td>自动写入</td><td>每小时 / 每天</td></tr>
+        <tr><td class="mod-name">learnings/</td><td>项目学到了什么</td><td>Agent 提炼 → DRI 确认</td><td>每周</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ========== 信息流转 ========== -->
+  <div class="flow-section">
+    <h2>信息流转</h2>
+    <div class="flow-pipeline">
+      <div class="flow-node">
+        <div class="flow-label">外部信号</div>
+        <div class="flow-box fb-ext"><i class="fas fa-globe"></i> 邮件 / Teams / 会议 / SharePoint / Web</div>
+      </div>
+      <div class="flow-connector"></div>
+      <div class="flow-node">
+        <div class="flow-label">扫描</div>
+        <div class="flow-box fb-blue"><i class="fas fa-download"></i> Source Collection <span class="flow-tag">PMO + Member</span></div>
+      </div>
+      <div class="flow-connector"></div>
+      <div class="flow-node">
+        <div class="flow-label">待审</div>
+        <div class="flow-box fb-amber"><i class="fas fa-hourglass-half"></i> _pending/ <span class="flow-tag">候选报告</span></div>
+      </div>
+      <div class="flow-connector"></div>
+      <div class="flow-node">
+        <div class="flow-label">审批</div>
+        <div class="flow-box fb-blue"><i class="fas fa-check-double"></i> Source Review <span class="flow-tag">用户 approve</span></div>
+      </div>
+      <div class="flow-connector"></div>
+      <div class="flow-node">
+        <div class="flow-label">入库</div>
+        <div class="flow-box fb-amber"><i class="fas fa-folder-open"></i> sources/ <span class="flow-tag">正式素材</span></div>
+      </div>
+      <div class="flow-connector"></div>
+      <div class="flow-node">
+        <div class="flow-label">推断</div>
+        <div class="flow-box fb-purple"><i class="fas fa-scale-balanced"></i> Truth Gate <span class="flow-tag">DRI 校准</span></div>
+      </div>
+      <div class="flow-connector"></div>
+      <div class="flow-node">
+        <div class="flow-label">真相</div>
+        <div class="flow-box fb-purple"><i class="fas fa-brain"></i> cognition/ <span class="flow-tag">项目共识</span></div>
+      </div>
+      <div class="flow-connector"></div>
+      <div class="flow-node">
+        <div class="flow-label">对齐</div>
+        <div class="flow-box fb-green"><i class="fas fa-people-arrows"></i> Member Alignment <span class="flow-tag">成员确认</span></div>
+      </div>
+      <div class="flow-connector"></div>
+      <div class="flow-node">
+        <div class="flow-label">规划</div>
+        <div class="flow-box fb-blue"><i class="fas fa-diagram-project"></i> Planning / Task Review <span class="flow-tag">DRI 确认</span></div>
+      </div>
+      <div class="flow-connector"></div>
+      <div class="flow-node">
+        <div class="flow-label">执行</div>
+        <div class="flow-box fb-cyan"><i class="fas fa-heart-pulse"></i> Heartbeat <span class="flow-tag">催办 / 验收</span></div>
+      </div>
+      <div class="flow-connector"></div>
+      <div class="flow-node">
+        <div class="flow-label">交付</div>
+        <div class="flow-box fb-green"><i class="fas fa-box-archive"></i> deliverables/ <span class="flow-tag">正式产出</span></div>
+      </div>
+      <div class="flow-connector"></div>
+      <div class="flow-node">
+        <div class="flow-label">沉淀</div>
+        <div class="flow-box fb-rose"><i class="fas fa-lightbulb"></i> Weekly Learning <span class="flow-tag">DRI 确认</span></div>
+      </div>
+      <div class="flow-connector"></div>
+      <div class="flow-node">
+        <div class="flow-label">复用</div>
+        <div class="flow-box fb-rose"><i class="fas fa-book"></i> learnings/ <span class="flow-tag">可复用经验</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 设计原则 ========== -->
+  <div class="principles">
+    <h2>设计原则</h2>
+    <div class="principle-grid">
+      <div class="principle-item">
+        <h4><i class="fas fa-shield-halved" style="color:var(--accent-blue); margin-right:8px;"></i>收集不入库</h4>
+        <p>AI 扫描产出候选报告存到 _pending/，不自动写入 sources/。入库需要人类明确批准。</p>
+      </div>
+      <div class="principle-item">
+        <h4><i class="fas fa-brain" style="color:var(--accent-purple); margin-right:8px;"></i>AI 先亮模型</h4>
+        <p>认知对象预填 candidate，成员立场预填 inferred。人类是校准者不是空白作者。</p>
+      </div>
+      <div class="principle-item">
+        <h4><i class="fas fa-compress" style="color:var(--accent-green); margin-right:8px;"></i>扫描全面 呈现精炼</h4>
+        <p>7 个信源全覆盖，但给用户看的是按 topic 归类的认知判断，不是 raw signal dump。</p>
+      </div>
+      <div class="principle-item">
+        <h4><i class="fas fa-eye" style="color:var(--accent-amber); margin-right:8px;"></i>Signal 是证据 Object 是结论</h4>
+        <p>signals/ 存外部事件，objects/ 存项目认为是真的事。从证据到结论需要 DRI 确认。</p>
+      </div>
+      <div class="principle-item">
+        <h4><i class="fas fa-heart-pulse" style="color:var(--accent-rose); margin-right:8px;"></i>沉默不等于同意</h4>
+        <p>成员没回复认知校准问题，标记 unknown，不标 aligned。Agent 不能把推断静默变成项目真相。</p>
+      </div>
+      <div class="principle-item">
+        <h4><i class="fas fa-link" style="color:var(--accent-cyan); margin-right:8px;"></i>Planner 是任务唯一数据源</h4>
+        <p>不维护 todo-list.md 影子副本。Planner 任务是项目任务的 single source of truth。</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  Project Repo v2.0 &middot; Concordia PMO Standard &middot; 2026-07
+</div>
+
+</body>
+</html>
