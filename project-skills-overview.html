@@ -266,23 +266,62 @@
     text-align: center;
   }
 
-  .flow-container {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 32px;
-    font-family: 'SF Mono', 'Fira Code', monospace;
-    font-size: 0.82rem;
-    line-height: 1.8;
-    overflow-x: auto;
-    color: var(--text-dim);
+  .flow-pipeline {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
   }
 
-  .flow-container .flow-highlight { color: var(--accent-blue); font-weight: 600; }
-  .flow-container .flow-pmo { color: var(--accent-purple); font-weight: 600; }
-  .flow-container .flow-member { color: var(--accent-green); font-weight: 600; }
-  .flow-container .flow-arrow { color: var(--text-dim); }
-  .flow-container .flow-dim { color: #555568; }
+  .flow-node {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    max-width: 620px;
+  }
+
+  .flow-label {
+    width: 100px;
+    text-align: right;
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    flex-shrink: 0;
+  }
+
+  .flow-box {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 500;
+  }
+
+  .flow-box i { font-size: 0.85rem; opacity: 0.8; }
+
+  .flow-box.fb-collect { background: rgba(74, 158, 255, 0.1); border: 1px solid rgba(74, 158, 255, 0.25); color: var(--accent-blue); }
+  .flow-box.fb-pmo { background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.25); color: var(--accent-purple); }
+  .flow-box.fb-member { background: rgba(52, 211, 153, 0.1); border: 1px solid rgba(52, 211, 153, 0.25); color: var(--accent-green); }
+  .flow-box.fb-output { background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.2); color: var(--accent-amber); }
+
+  .flow-connector {
+    width: 2px;
+    height: 20px;
+    background: var(--border);
+    margin-left: 112px;
+  }
+
+  .flow-output {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    margin-left: auto;
+    padding: 3px 10px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 6px;
+  }
 
   /* Principles */
   .principles {
@@ -636,22 +675,79 @@
   <!-- ========== 信息流转 ========== -->
   <div class="flow-section">
     <h2>信息流转</h2>
-    <div class="flow-container">
-<span class="flow-dim">外部信号</span>  <span class="flow-arrow">&#8594;</span>  <span class="flow-highlight">Source Collection</span> (PMO + Member)
-    <span class="flow-arrow">&#8595;</span>
-<span class="flow-dim">候选列表</span>  <span class="flow-arrow">&#8594;</span>  <span class="flow-pmo">资料 Review</span> (DRI approve)
-    <span class="flow-arrow">&#8595;</span>
-<span class="flow-dim">入库素材</span>  <span class="flow-arrow">&#8594;</span>  <span class="flow-highlight">sources/</span>
-    <span class="flow-arrow">&#8595;</span>
-<span class="flow-dim">认知推断</span>  <span class="flow-arrow">&#8594;</span>  <span class="flow-pmo">Truth Gate</span> (DRI 校准)  <span class="flow-arrow">&#8594;</span>  <span class="flow-highlight">cognition/</span>
-    <span class="flow-arrow">&#8595;</span>
-<span class="flow-dim">认知差距</span>  <span class="flow-arrow">&#8594;</span>  <span class="flow-member">Member Alignment</span> (成员确认)  <span class="flow-arrow">&#8594;</span>  <span class="flow-highlight">stances/</span>
-    <span class="flow-arrow">&#8595;</span>
-<span class="flow-dim">任务规划</span>  <span class="flow-arrow">&#8594;</span>  <span class="flow-pmo">Planning / Task Review</span>  <span class="flow-arrow">&#8594;</span>  <span class="flow-highlight">Planner Tasks</span>
-    <span class="flow-arrow">&#8595;</span>
-<span class="flow-dim">任务执行</span>  <span class="flow-arrow">&#8594;</span>  <span class="flow-pmo">Heartbeat</span> (催办/验收)  <span class="flow-arrow">&#8594;</span>  <span class="flow-highlight">deliverables/</span>
-    <span class="flow-arrow">&#8595;</span>
-<span class="flow-dim">经验沉淀</span>  <span class="flow-arrow">&#8594;</span>  <span class="flow-pmo">Weekly Learning</span> (DRI 确认)  <span class="flow-arrow">&#8594;</span>  <span class="flow-highlight">learnings/</span>
+    <div class="flow-pipeline">
+
+      <div class="flow-node">
+        <div class="flow-label">外部信号</div>
+        <div class="flow-box fb-collect"><i class="fas fa-download"></i> Source Collection <span class="flow-output">PMO + Member</span></div>
+      </div>
+      <div class="flow-connector"></div>
+
+      <div class="flow-node">
+        <div class="flow-label">候选列表</div>
+        <div class="flow-box fb-pmo"><i class="fas fa-check-double"></i> 资料 Review <span class="flow-output">DRI approve</span></div>
+      </div>
+      <div class="flow-connector"></div>
+
+      <div class="flow-node">
+        <div class="flow-label">入库素材</div>
+        <div class="flow-box fb-output"><i class="fas fa-folder-open"></i> sources/</div>
+      </div>
+      <div class="flow-connector"></div>
+
+      <div class="flow-node">
+        <div class="flow-label">认知推断</div>
+        <div class="flow-box fb-pmo"><i class="fas fa-scale-balanced"></i> Truth Gate <span class="flow-output">DRI 校准</span></div>
+      </div>
+      <div class="flow-connector"></div>
+
+      <div class="flow-node">
+        <div class="flow-label">项目真相</div>
+        <div class="flow-box fb-output"><i class="fas fa-brain"></i> cognition/</div>
+      </div>
+      <div class="flow-connector"></div>
+
+      <div class="flow-node">
+        <div class="flow-label">认知差距</div>
+        <div class="flow-box fb-member"><i class="fas fa-people-arrows"></i> Member Alignment <span class="flow-output">成员确认</span></div>
+      </div>
+      <div class="flow-connector"></div>
+
+      <div class="flow-node">
+        <div class="flow-label">成员立场</div>
+        <div class="flow-box fb-output"><i class="fas fa-user-check"></i> stances/</div>
+      </div>
+      <div class="flow-connector"></div>
+
+      <div class="flow-node">
+        <div class="flow-label">任务规划</div>
+        <div class="flow-box fb-pmo"><i class="fas fa-diagram-project"></i> Planning / Task Review <span class="flow-output">DRI 确认</span></div>
+      </div>
+      <div class="flow-connector"></div>
+
+      <div class="flow-node">
+        <div class="flow-label">任务执行</div>
+        <div class="flow-box fb-collect"><i class="fas fa-heart-pulse"></i> Heartbeat <span class="flow-output">催办 / 验收</span></div>
+      </div>
+      <div class="flow-connector"></div>
+
+      <div class="flow-node">
+        <div class="flow-label">交付物</div>
+        <div class="flow-box fb-output"><i class="fas fa-box-archive"></i> deliverables/</div>
+      </div>
+      <div class="flow-connector"></div>
+
+      <div class="flow-node">
+        <div class="flow-label">经验沉淀</div>
+        <div class="flow-box fb-pmo"><i class="fas fa-lightbulb"></i> Weekly Learning <span class="flow-output">DRI 确认</span></div>
+      </div>
+      <div class="flow-connector"></div>
+
+      <div class="flow-node">
+        <div class="flow-label">复用知识</div>
+        <div class="flow-box fb-output"><i class="fas fa-book"></i> learnings/</div>
+      </div>
+
     </div>
   </div>
 
