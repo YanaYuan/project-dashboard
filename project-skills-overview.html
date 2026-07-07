@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Concordia Project Skills — 全景介绍</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --card: #1a1a25;
+    --border: #2a2a3a;
+    --text: #e0e0e8;
+    --text-dim: #8888a0;
+    --accent-blue: #4a9eff;
+    --accent-purple: #8b5cf6;
+    --accent-green: #34d399;
+    --accent-amber: #f59e0b;
+    --accent-rose: #f43f5e;
+    --accent-cyan: #22d3ee;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 0;
+  }
+
+  .hero {
+    text-align: center;
+    padding: 80px 24px 60px;
+    background: linear-gradient(180deg, #1a1a30 0%, var(--bg) 100%);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero h1 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero p {
+    color: var(--text-dim);
+    font-size: 1.1rem;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Phase sections */
+  .phase {
+    margin: 60px 0;
+  }
+
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .phase-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .phase-init .phase-icon { background: rgba(74, 158, 255, 0.15); color: var(--accent-blue); }
+  .phase-pmo .phase-icon { background: rgba(139, 92, 246, 0.15); color: var(--accent-purple); }
+  .phase-member .phase-icon { background: rgba(52, 211, 153, 0.15); color: var(--accent-green); }
+
+  .phase-header h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
+
+  .phase-header .phase-desc {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    margin-top: 2px;
+  }
+
+  /* Skill cards */
+  .skill-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+
+  .skill-card:hover {
+    border-color: #3a3a50;
+  }
+
+  .skill-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .skill-number {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .phase-init .skill-number { background: rgba(74, 158, 255, 0.2); color: var(--accent-blue); }
+  .phase-pmo .skill-number { background: rgba(139, 92, 246, 0.2); color: var(--accent-purple); }
+  .phase-member .skill-number { background: rgba(52, 211, 153, 0.2); color: var(--accent-green); }
+
+  .skill-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .skill-subtitle {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+  }
+
+  .skill-body {
+    color: var(--text);
+    font-size: 0.95rem;
+    margin-bottom: 16px;
+    padding-left: 52px;
+  }
+
+  .skill-body p {
+    margin-bottom: 10px;
+  }
+
+  .skill-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-left: 52px;
+  }
+
+  .meta-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+
+  .meta-tag i {
+    font-size: 0.75rem;
+  }
+
+  .meta-tag.trigger { color: var(--accent-amber); border-color: rgba(245, 158, 11, 0.3); }
+  .meta-tag.freq { color: var(--accent-cyan); border-color: rgba(34, 211, 238, 0.3); }
+  .meta-tag.output { color: var(--accent-green); border-color: rgba(52, 211, 153, 0.3); }
+  .meta-tag.interactive { color: var(--accent-rose); border-color: rgba(244, 63, 94, 0.3); }
+
+  /* Timeline */
+  .timeline-section {
+    margin: 60px 0;
+    padding: 40px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .timeline-section h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 32px;
+    text-align: center;
+  }
+
+  .timeline-grid {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 0;
+  }
+
+  .timeline-label {
+    padding: 16px 16px 16px 0;
+    text-align: right;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-dim);
+    border-right: 2px solid var(--border);
+    position: relative;
+  }
+
+  .timeline-label::after {
+    content: '';
+    position: absolute;
+    right: -5px;
+    top: 22px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-purple);
+  }
+
+  .timeline-items {
+    padding: 12px 0 12px 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .timeline-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 500;
+  }
+
+  .chip-init { background: rgba(74, 158, 255, 0.12); color: var(--accent-blue); }
+  .chip-pmo { background: rgba(139, 92, 246, 0.12); color: var(--accent-purple); }
+  .chip-member { background: rgba(52, 211, 153, 0.12); color: var(--accent-green); }
+
+  /* Flow diagram */
+  .flow-section {
+    margin: 60px 0;
+    padding: 40px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .flow-section h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 32px;
+    text-align: center;
+  }
+
+  .flow-container {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 0.82rem;
+    line-height: 1.8;
+    overflow-x: auto;
+    color: var(--text-dim);
+  }
+
+  .flow-container .flow-highlight { color: var(--accent-blue); font-weight: 600; }
+  .flow-container .flow-pmo { color: var(--accent-purple); font-weight: 600; }
+  .flow-container .flow-member { color: var(--accent-green); font-weight: 600; }
+  .flow-container .flow-arrow { color: var(--text-dim); }
+  .flow-container .flow-dim { color: #555568; }
+
+  /* Principles */
+  .principles {
+    margin: 60px 0;
+    padding: 40px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .principles h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .principle-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .principle-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .principle-item h4 {
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+  }
+
+  .principle-item p {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 40px 24px;
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+
+  @media (max-width: 640px) {
+    .hero h1 { font-size: 1.6rem; }
+    .skill-body, .skill-meta { padding-left: 0; }
+    .timeline-grid { grid-template-columns: 80px 1fr; }
+    .flow-container { font-size: 0.72rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Concordia Project Skills</h1>
+  <p>从项目启动到日常运行，9 个 Skill 构成完整的项目认知与执行循环。PMO Agent 管全局，Member Agent 管个人，DRI 做校准。</p>
+</div>
+
+<div class="container">
+
+  <!-- ========== 首次运行 ========== -->
+  <div class="phase phase-init">
+    <div class="phase-header">
+      <div class="phase-icon"><i class="fas fa-rocket"></i></div>
+      <div>
+        <h2>首次运行</h2>
+        <div class="phase-desc">项目启动时顺序执行一次，建立基础设施和初始认知</div>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-top">
+        <div class="skill-number">1</div>
+        <div>
+          <div class="skill-title">Project Init</div>
+          <div class="skill-subtitle">建项目 + 创建基础设施</div>
+        </div>
+      </div>
+      <div class="skill-body">
+        <p>和用户对话收集项目目标、交付物、成功标准、deadline、团队成员。确认后一键创建 Teams team + channel、Planner plan（Open / In Progress / Done）、SharePoint Project Repo（6 模块目录结构）、Project Agent + workspace。</p>
+        <p>对话从 Stage G（帮用户想清楚要做什么）开始，不直接问项目名——从目标反推名字更自然。</p>
+      </div>
+      <div class="skill-meta">
+        <span class="meta-tag trigger"><i class="fas fa-bolt"></i> 用户说"创建项目"</span>
+        <span class="meta-tag interactive"><i class="fas fa-comments"></i> 引导式对话</span>
+        <span class="meta-tag output"><i class="fas fa-folder-tree"></i> Teams + Planner + SharePoint + Agent</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-top">
+        <div class="skill-number">2</div>
+        <div>
+          <div class="skill-title">Signal Mandate</div>
+          <div class="skill-subtitle">定义"项目该关注什么"</div>
+        </div>
+      </div>
+      <div class="skill-body">
+        <p>8 个阶段的引导式对话，帮 DRI 定义项目的信息监控策略：关注方向、信源范围、价值标准、升级阈值、隐私边界、频率时效。</p>
+        <p>核心原则：不接受 TBD，每个维度必须有明确结论。AI 先提建议让 DRI 校准，不问空白问题。产出的 signal-mandate.md 是后续所有收集和扫描的行动纲领。</p>
+      </div>
+      <div class="skill-meta">
+        <span class="meta-tag trigger"><i class="fas fa-bolt"></i> Init 完成后触发</span>
+        <span class="meta-tag interactive"><i class="fas fa-comments"></i> 8 阶段对话</span>
+        <span class="meta-tag output"><i class="fas fa-file-lines"></i> signal-mandate.md</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-top">
+        <div class="skill-number">3</div>
+        <div>
+          <div class="skill-title">First Collection & Review</div>
+          <div class="skill-subtitle">首次全量收集 + 认知对齐 + 入库审批</div>
+        </div>
+      </div>
+      <div class="skill-body">
+        <p><strong>Phase 1 — 收集（自动）：</strong>8 个子 agent 并行扫描 Teams 私聊/群聊/会议群聊、邮件、会议纪要、日历、SharePoint（回溯 6 个月）、Web 公开搜索。每条候选信息带可点击链接、内容摘要、AI 推断。</p>
+        <p><strong>Phase 2 — 认知对齐（交互）：</strong>将多条信号合并为认知判断，逐个和 DRI 做 Truth Gate。确认后更新 cognition 层（objects / stances / gaps）。</p>
+        <p><strong>Phase 3 — 入库审批（交互）：</strong>按类别呈现候选素材，DRI 批量或逐条 approve 后写入 sources/。完成后引导用户进入任务规划。</p>
+      </div>
+      <div class="skill-meta">
+        <span class="meta-tag trigger"><i class="fas fa-bolt"></i> Signal Mandate 后触发</span>
+        <span class="meta-tag interactive"><i class="fas fa-comments"></i> Phase 2+3 需要 DRI</span>
+        <span class="meta-tag output"><i class="fas fa-brain"></i> cognition/ + sources/</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-top">
+        <div class="skill-number">4</div>
+        <div>
+          <div class="skill-title">Planning</div>
+          <div class="skill-subtitle">深度任务规划 + 建议分工</div>
+        </div>
+      </div>
+      <div class="skill-body">
+        <p>读 PROJECT.md + 已入库的 sources/ + cognition 状态，先做自我审计（知识够不够？逻辑完整吗？可行吗？），再拆解成依赖排序的任务计划。</p>
+        <p>产出包含：规划思路（为什么选这条路）、任务列表 + 建议 owner、关键路径、风险登记、证据缺口。方案推给 owner 确认，确认后由主 agent 建 Planner 任务并派发。</p>
+      </div>
+      <div class="skill-meta">
+        <span class="meta-tag trigger"><i class="fas fa-bolt"></i> First Collection 后引导触发</span>
+        <span class="meta-tag interactive"><i class="fas fa-check-circle"></i> Owner 确认后执行</span>
+        <span class="meta-tag output"><i class="fas fa-list-check"></i> 任务计划 + Planner 任务</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== PMO Agent 日常 ========== -->
+  <div class="phase phase-pmo">
+    <div class="phase-header">
+      <div class="phase-icon"><i class="fas fa-tower-broadcast"></i></div>
+      <div>
+        <h2>PMO Agent 日常</h2>
+        <div class="phase-desc">项目存续期间持续运行，维护项目认知和推进任务执行</div>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-top">
+        <div class="skill-number">5</div>
+        <div>
+          <div class="skill-title">日常 Source Collection</div>
+          <div class="skill-subtitle">增量信息收集</div>
+        </div>
+      </div>
+      <div class="skill-body">
+        <p>按 Signal Mandate 扫描所有信源，只看上次扫描以来的新内容。产出候选列表但不自动入库——等日常资料 Review 时和 DRI 一起处理。</p>
+        <p>如果发现命中升级阈值的信号（Signal Mandate 定义的"立刻通知"条件），立即推给 DRI，不等 Review。</p>
+      </div>
+      <div class="skill-meta">
+        <span class="meta-tag freq"><i class="fas fa-clock"></i> 每天 2 次</span>
+        <span class="meta-tag"><i class="fas fa-robot"></i> 自动执行</span>
+        <span class="meta-tag output"><i class="fas fa-list"></i> 候选信息列表</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-top">
+        <div class="skill-number">6</div>
+        <div>
+          <div class="skill-title">日常资料 Review</div>
+          <div class="skill-subtitle">认知对齐 + 素材入库</div>
+        </div>
+      </div>
+      <div class="skill-body">
+        <p>紧跟日常收集执行。和 DRI 对齐新发现的内容：更新认知对象（新的决策、风险、假设）、推断成员立场变化、计算认知差距。</p>
+        <p>DRI approve 后将新素材入库到 sources/。本质是 First Collection Phase 2+3 的增量版本。</p>
+      </div>
+      <div class="skill-meta">
+        <span class="meta-tag freq"><i class="fas fa-clock"></i> 每天 2 次（紧跟收集）</span>
+        <span class="meta-tag interactive"><i class="fas fa-comments"></i> 需要 DRI</span>
+        <span class="meta-tag output"><i class="fas fa-brain"></i> cognition/ + sources/</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-top">
+        <div class="skill-number">7</div>
+        <div>
+          <div class="skill-title">Project Heartbeat</div>
+          <div class="skill-subtitle">项目运行脉搏</div>
+        </div>
+      </div>
+      <div class="skill-body">
+        <p>检查所有任务状态：没有 owner 的任务建议分配，超期任务催办，已提交的交付物评估结果。同步 Planner 和 SharePoint 状态，写心跳日志。</p>
+        <p>这是纯执行层面的推进——不做信息收集，不做认知对齐，只管"任务有没有在往前走"。</p>
+      </div>
+      <div class="skill-meta">
+        <span class="meta-tag freq"><i class="fas fa-clock"></i> 每小时 1 次</span>
+        <span class="meta-tag"><i class="fas fa-robot"></i> 自动执行</span>
+        <span class="meta-tag output"><i class="fas fa-clipboard-check"></i> 催办 + 状态同步 + 日志</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-top">
+        <div class="skill-number">8</div>
+        <div>
+          <div class="skill-title">Task Review</div>
+          <div class="skill-subtitle">战略层面的任务审视</div>
+        </div>
+      </div>
+      <div class="skill-body">
+        <p>每天早上回顾全局：有没有漏掉重要任务没规划到项目中？有没有过期或不再相关的任务需要清理？有没有从信号中发现"应该做但没人提出"的事？</p>
+        <p>和 Heartbeat 的区别：Heartbeat 管"已有任务有没有在推进"，Task Review 管"该做的事有没有变成任务"。</p>
+      </div>
+      <div class="skill-meta">
+        <span class="meta-tag freq"><i class="fas fa-clock"></i> 每天早上 1 次</span>
+        <span class="meta-tag interactive"><i class="fas fa-comments"></i> 发现后推给 DRI</span>
+        <span class="meta-tag output"><i class="fas fa-plus-circle"></i> 新任务建议 + 清理</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-top">
+        <div class="skill-number">9</div>
+        <div>
+          <div class="skill-title">Weekly Learning</div>
+          <div class="skill-subtitle">每周反思经验沉淀</div>
+        </div>
+      </div>
+      <div class="skill-body">
+        <p>回顾本周的心跳日志、review 记录、认知对齐记录，找到值得沉淀的 pattern：执行型教训（"这件事下次该怎么做"）和发现型洞察（"原来这个领域有这个规律"）。</p>
+        <p>和 DRI 确认后写入 learnings/。一周的信息量够发现 pattern——太早沉淀容易写出"正确但无用"的经验。</p>
+      </div>
+      <div class="skill-meta">
+        <span class="meta-tag freq"><i class="fas fa-clock"></i> 每周 1 次（周五下午）</span>
+        <span class="meta-tag interactive"><i class="fas fa-comments"></i> 需要 DRI 确认</span>
+        <span class="meta-tag output"><i class="fas fa-lightbulb"></i> learnings/</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== Member Agent 日常 ========== -->
+  <div class="phase phase-member">
+    <div class="phase-header">
+      <div class="phase-icon"><i class="fas fa-user-gear"></i></div>
+      <div>
+        <h2>Member Agent 日常</h2>
+        <div class="phase-desc">每个项目成员的 Agent 独立运行，收集个人视角的信息并入库</div>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-top">
+        <div class="skill-number">10</div>
+        <div>
+          <div class="skill-title">Member Source Collection</div>
+          <div class="skill-subtitle">成员视角的增量信息收集</div>
+        </div>
+      </div>
+      <div class="skill-body">
+        <p>和 PMO 的日常收集类似，但从成员个人的视角出发。扫描该成员的 Teams 消息、邮件、会议纪要等，按 Signal Mandate 判断和项目的相关性，产出候选列表。</p>
+        <p>不同成员看到的信息不同——一封邮件可能只有收件人的 Agent 才能看到。成员收集补充了 PMO 的盲区。</p>
+      </div>
+      <div class="skill-meta">
+        <span class="meta-tag freq"><i class="fas fa-clock"></i> 每天 2 次</span>
+        <span class="meta-tag"><i class="fas fa-robot"></i> 自动执行</span>
+        <span class="meta-tag output"><i class="fas fa-list"></i> 候选信息列表</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-top">
+        <div class="skill-number">11</div>
+        <div>
+          <div class="skill-title">Member Review</div>
+          <div class="skill-subtitle">成员素材入库审批</div>
+        </div>
+      </div>
+      <div class="skill-body">
+        <p>紧跟成员收集执行。和成员确认哪些素材入库到项目的 sources/ 目录（按成员分子文件夹）。不做认知对齐——cognitive layer 由 PMO Agent 统一管理。</p>
+        <p>入库的素材对 Project Agent 和其他成员可见，Project Agent 负责去重和索引。同一信息出现在多个成员文件夹时，保留第一份完整内容，其余标注 duplicate。</p>
+      </div>
+      <div class="skill-meta">
+        <span class="meta-tag freq"><i class="fas fa-clock"></i> 每天 2 次（紧跟收集）</span>
+        <span class="meta-tag interactive"><i class="fas fa-comments"></i> 需要成员确认</span>
+        <span class="meta-tag output"><i class="fas fa-folder-open"></i> sources/{member}/</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 运行时间线 ========== -->
+  <div class="timeline-section">
+    <h2>运行时间线</h2>
+    <div class="timeline-grid">
+      <div class="timeline-label">项目启动</div>
+      <div class="timeline-items">
+        <span class="timeline-chip chip-init"><i class="fas fa-rocket"></i> Init</span>
+        <span class="flow-arrow" style="color:var(--text-dim); padding: 6px 4px;">&#8594;</span>
+        <span class="timeline-chip chip-init"><i class="fas fa-satellite-dish"></i> Signal Mandate</span>
+        <span class="flow-arrow" style="color:var(--text-dim); padding: 6px 4px;">&#8594;</span>
+        <span class="timeline-chip chip-init"><i class="fas fa-magnifying-glass"></i> First Collection</span>
+        <span class="flow-arrow" style="color:var(--text-dim); padding: 6px 4px;">&#8594;</span>
+        <span class="timeline-chip chip-init"><i class="fas fa-diagram-project"></i> Planning</span>
+      </div>
+
+      <div class="timeline-label">每小时</div>
+      <div class="timeline-items">
+        <span class="timeline-chip chip-pmo"><i class="fas fa-heartbeat"></i> Heartbeat</span>
+      </div>
+
+      <div class="timeline-label">每天 2 次</div>
+      <div class="timeline-items">
+        <span class="timeline-chip chip-pmo"><i class="fas fa-download"></i> PMO 收集</span>
+        <span class="flow-arrow" style="color:var(--text-dim); padding: 6px 4px;">&#8594;</span>
+        <span class="timeline-chip chip-pmo"><i class="fas fa-brain"></i> PMO Review</span>
+        <span style="padding: 6px 12px; color: var(--text-dim);">|</span>
+        <span class="timeline-chip chip-member"><i class="fas fa-download"></i> Member 收集</span>
+        <span class="flow-arrow" style="color:var(--text-dim); padding: 6px 4px;">&#8594;</span>
+        <span class="timeline-chip chip-member"><i class="fas fa-check"></i> Member Review</span>
+      </div>
+
+      <div class="timeline-label">每天早上</div>
+      <div class="timeline-items">
+        <span class="timeline-chip chip-pmo"><i class="fas fa-clipboard-list"></i> Task Review</span>
+      </div>
+
+      <div class="timeline-label">每周一次</div>
+      <div class="timeline-items">
+        <span class="timeline-chip chip-pmo"><i class="fas fa-lightbulb"></i> Weekly Learning</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 信息流转 ========== -->
+  <div class="flow-section">
+    <h2>信息流转</h2>
+    <div class="flow-container">
+<span class="flow-dim">外部信号</span>  <span class="flow-arrow">&#8594;</span>  <span class="flow-highlight">Source Collection</span> (PMO + Member)
+    <span class="flow-arrow">&#8595;</span>
+<span class="flow-dim">候选列表</span>  <span class="flow-arrow">&#8594;</span>  <span class="flow-pmo">资料 Review</span> (DRI approve)
+    <span class="flow-arrow">&#8595;</span>
+<span class="flow-dim">入库素材</span>  <span class="flow-arrow">&#8594;</span>  <span class="flow-highlight">sources/</span>
+    <span class="flow-arrow">&#8595;</span>
+<span class="flow-dim">认知推断</span>  <span class="flow-arrow">&#8594;</span>  <span class="flow-pmo">Truth Gate</span> (DRI 校准)  <span class="flow-arrow">&#8594;</span>  <span class="flow-highlight">cognition/</span>
+    <span class="flow-arrow">&#8595;</span>
+<span class="flow-dim">认知差距</span>  <span class="flow-arrow">&#8594;</span>  <span class="flow-member">Member Alignment</span> (成员确认)  <span class="flow-arrow">&#8594;</span>  <span class="flow-highlight">stances/</span>
+    <span class="flow-arrow">&#8595;</span>
+<span class="flow-dim">任务规划</span>  <span class="flow-arrow">&#8594;</span>  <span class="flow-pmo">Planning / Task Review</span>  <span class="flow-arrow">&#8594;</span>  <span class="flow-highlight">Planner Tasks</span>
+    <span class="flow-arrow">&#8595;</span>
+<span class="flow-dim">任务执行</span>  <span class="flow-arrow">&#8594;</span>  <span class="flow-pmo">Heartbeat</span> (催办/验收)  <span class="flow-arrow">&#8594;</span>  <span class="flow-highlight">deliverables/</span>
+    <span class="flow-arrow">&#8595;</span>
+<span class="flow-dim">经验沉淀</span>  <span class="flow-arrow">&#8594;</span>  <span class="flow-pmo">Weekly Learning</span> (DRI 确认)  <span class="flow-arrow">&#8594;</span>  <span class="flow-highlight">learnings/</span>
+    </div>
+  </div>
+
+  <!-- ========== 设计原则 ========== -->
+  <div class="principles">
+    <h2>设计原则</h2>
+    <div class="principle-grid">
+      <div class="principle-item">
+        <h4><i class="fas fa-shield-halved" style="color:var(--accent-blue); margin-right:8px;"></i>收集不入库</h4>
+        <p>AI 扫描产出候选列表，但不自动写入 sources/。入库需要人类明确批准——这是隐私和相关性的门控。</p>
+      </div>
+      <div class="principle-item">
+        <h4><i class="fas fa-brain" style="color:var(--accent-purple); margin-right:8px;"></i>AI 先亮模型</h4>
+        <p>认知对象预填 candidate，成员立场预填 inferred。人类是校准者不是空白作者——AI 先提判断再让人确认。</p>
+      </div>
+      <div class="principle-item">
+        <h4><i class="fas fa-compress" style="color:var(--accent-green); margin-right:8px;"></i>扫描全面 呈现精炼</h4>
+        <p>8 个信源全覆盖，但给用户看的是合并后的认知判断，不是 raw signal dump。</p>
+      </div>
+      <div class="principle-item">
+        <h4><i class="fas fa-eye" style="color:var(--accent-amber); margin-right:8px;"></i>沉默不等于同意</h4>
+        <p>成员没回复认知校准问题，标记 unknown，不标 aligned。Agent 不能把推断静默变成项目真相。</p>
+      </div>
+      <div class="principle-item">
+        <h4><i class="fas fa-heart-pulse" style="color:var(--accent-rose); margin-right:8px;"></i>推进不需要人</h4>
+        <p>Heartbeat 自动催办、验收、同步状态。不是每件事都要等 DRI——执行层面 agent 自主推进。</p>
+      </div>
+      <div class="principle-item">
+        <h4><i class="fas fa-link" style="color:var(--accent-cyan); margin-right:8px;"></i>Signal 是证据 Object 是结论</h4>
+        <p>signals/ 存外部事件（邮件、会议、新闻），objects/ 存项目认为是真的事。从证据到结论需要 DRI 确认。</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  Concordia Project Skills v2.0 &middot; PMO + Member Agent Architecture &middot; 2026-07
+</div>
+
+</body>
+</html>
