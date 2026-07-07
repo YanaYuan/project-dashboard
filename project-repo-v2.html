@@ -45,13 +45,25 @@
   }
   .tree-box {
     background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-    padding: 32px; font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
-    font-size: 0.82rem; line-height: 2; overflow-x: auto;
+    padding: 28px 32px; overflow-x: auto;
   }
-  .tree-box .dir { color: var(--accent-blue); font-weight: 600; }
-  .tree-box .file { color: var(--text); }
-  .tree-box .desc { color: var(--text-dim); font-style: italic; }
-  .tree-box .new { color: var(--accent-green); }
+  .tree-row {
+    display: flex; align-items: baseline; gap: 8px; line-height: 2;
+  }
+  .tree-indent {
+    flex-shrink: 0; color: var(--border); font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+    font-size: 0.82rem; white-space: pre; user-select: none;
+  }
+  .tree-name {
+    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+    font-size: 0.82rem; white-space: nowrap;
+  }
+  .tree-name.is-dir { color: var(--accent-blue); font-weight: 600; }
+  .tree-name.is-file { color: var(--text); }
+  .tree-name.is-new { color: var(--accent-green); font-weight: 600; }
+  .tree-desc {
+    color: var(--text-dim); font-size: 0.78rem; font-style: italic; white-space: nowrap;
+  }
 
   /* Module cards */
   .modules { margin: 60px 0; }
@@ -167,45 +179,44 @@
   <div class="tree-section">
     <h2>目录结构</h2>
     <div class="tree-box">
-<span class="dir">Project repo/</span>
-│
-├── <span class="dir">state/</span>                          <span class="desc">项目的大脑</span>
-│   ├── <span class="file">PROJECT.md</span>                  <span class="desc">项目定义（目标/交付物/成功标准/deadline/团队）</span>
-│   ├── <span class="file">signal-mandate.md</span>           <span class="desc">信号指令（关注方向/信源/价值标准/升级阈值）</span>
-│   ├── <span class="file">dashboard.md</span>                <span class="desc">项目状态快照（heartbeat 刷新）</span>
-│   ├── <span class="dir">planning/</span>                   <span class="desc">执行计划 / 关键路径 / 时间线</span>
-│   └── <span class="dir">cognition/</span>                  <span class="desc">认知状态子系统</span>
-│       ├── <span class="file">shared-state.md</span>         <span class="desc">项目共识（经 DRI 确认的真相索引）</span>
-│       ├── <span class="dir">objects/</span>                <span class="desc">认知对象（candidate → accepted / rejected）</span>
-│       ├── <span class="dir">signals/</span>
-│       │   ├── <span class="file">candidates.md</span>       <span class="desc">候选信号（AI 发现的，待 DRI 判断）</span>
-│       │   └── <span class="dir">admitted/</span>           <span class="desc">已准入信号（支撑认知对象的证据）</span>
-│       ├── <span class="dir">stances/</span>                <span class="desc">成员立场（每人一个文件，inferred → aligned）</span>
-│       └── <span class="file">gaps.md</span>                 <span class="desc">认知差距（shared-state vs stances）</span>
-│
-├── <span class="dir">sources/</span>                        <span class="desc">项目的输入素材（经审批后入库）</span>
-│   ├── <span class="file">_index.md</span>                   <span class="desc">素材索引</span>
-│   ├── <span class="dir new">_pending/</span>                   <span class="desc">待 review 的收集报告</span>
-│   ├── <span class="dir">owner-global/</span>               <span class="desc">内部沟通（邮件 / Teams / 会议纪要）</span>
-│   │   └── <span class="dir">{member-alias}/</span>         <span class="desc">Member Agent 入库路径</span>
-│   ├── <span class="dir">sharepoint/</span>                 <span class="desc">SharePoint / OneDrive 文档摘要</span>
-│   └── <span class="dir">web/</span>                        <span class="desc">公开网络素材</span>
-│
-├── <span class="dir">drafts/</span>                         <span class="desc">AI 草稿区（等人 review 后搬到 deliverables）</span>
-│   └── <span class="dir">{member-alias}/</span>             <span class="desc">按成员分子文件夹</span>
-│
-├── <span class="dir">deliverables/</span>                   <span class="desc">正式交付物（经审批后归档）</span>
-│   ├── <span class="dir">agent-tasks/</span>                <span class="desc">Project Agent 派发的任务交付物</span>
-│   │   └── <span class="dir">done/</span>                   <span class="desc">已验收的任务</span>
-│   └── <span class="dir">tasks/</span>                      <span class="desc">成员主动提交的交付物</span>
-│
-├── <span class="dir">logs/</span>                           <span class="desc">自动化日志（只追加不修改）</span>
-│   ├── <span class="dir">heartbeats/</span>                 <span class="desc">每小时心跳日志</span>
-│   ├── <span class="dir">reviews/</span>                    <span class="desc">每日 review 决策记录</span>
-│   └── <span class="dir">decisions/</span>                  <span class="desc">重大决策日志</span>
-│
-└── <span class="dir">learnings/</span>                      <span class="desc">经验教训（每周反思后写入）</span>
-    └── <span class="dir">cards/</span>                      <span class="desc">Zettelkasten 卡片式经验记录</span>
+      <div class="tree-row"><span class="tree-indent"></span><span class="tree-name is-dir">Project repo/</span></div>
+      <div class="tree-row"><span class="tree-indent">├── </span><span class="tree-name is-dir">state/</span><span class="tree-desc">项目的大脑</span></div>
+      <div class="tree-row"><span class="tree-indent">│   ├── </span><span class="tree-name is-file">PROJECT.md</span><span class="tree-desc">项目定义（目标/交付物/成功标准/deadline/团队）</span></div>
+      <div class="tree-row"><span class="tree-indent">│   ├── </span><span class="tree-name is-file">signal-mandate.md</span><span class="tree-desc">信号指令（关注方向/信源/价值标准/升级阈值）</span></div>
+      <div class="tree-row"><span class="tree-indent">│   ├── </span><span class="tree-name is-file">dashboard.md</span><span class="tree-desc">项目状态快照（heartbeat 刷新）</span></div>
+      <div class="tree-row"><span class="tree-indent">│   ├── </span><span class="tree-name is-dir">planning/</span><span class="tree-desc">执行计划 / 关键路径 / 时间线</span></div>
+      <div class="tree-row"><span class="tree-indent">│   └── </span><span class="tree-name is-dir">cognition/</span><span class="tree-desc">认知状态子系统</span></div>
+      <div class="tree-row"><span class="tree-indent">│       ├── </span><span class="tree-name is-file">shared-state.md</span><span class="tree-desc">项目共识（经 DRI 确认的真相索引）</span></div>
+      <div class="tree-row"><span class="tree-indent">│       ├── </span><span class="tree-name is-dir">objects/</span><span class="tree-desc">认知对象（candidate → accepted / rejected）</span></div>
+      <div class="tree-row"><span class="tree-indent">│       ├── </span><span class="tree-name is-dir">signals/</span><span class="tree-desc"></span></div>
+      <div class="tree-row"><span class="tree-indent">│       │   ├── </span><span class="tree-name is-file">candidates.md</span><span class="tree-desc">候选信号（AI 发现的，待 DRI 判断）</span></div>
+      <div class="tree-row"><span class="tree-indent">│       │   └── </span><span class="tree-name is-dir">admitted/</span><span class="tree-desc">已准入信号（支撑认知对象的证据）</span></div>
+      <div class="tree-row"><span class="tree-indent">│       ├── </span><span class="tree-name is-dir">stances/</span><span class="tree-desc">成员立场（每人一个文件，inferred → aligned）</span></div>
+      <div class="tree-row"><span class="tree-indent">│       └── </span><span class="tree-name is-file">gaps.md</span><span class="tree-desc">认知差距（shared-state vs stances）</span></div>
+      <div class="tree-row"><span class="tree-indent">│</span></div>
+      <div class="tree-row"><span class="tree-indent">├── </span><span class="tree-name is-dir">sources/</span><span class="tree-desc">项目的输入素材（经审批后入库）</span></div>
+      <div class="tree-row"><span class="tree-indent">│   ├── </span><span class="tree-name is-file">_index.md</span><span class="tree-desc">素材索引</span></div>
+      <div class="tree-row"><span class="tree-indent">│   ├── </span><span class="tree-name is-new">_pending/</span><span class="tree-desc">待 review 的收集报告</span></div>
+      <div class="tree-row"><span class="tree-indent">│   ├── </span><span class="tree-name is-dir">owner-global/</span><span class="tree-desc">内部沟通（邮件 / Teams / 会议纪要）</span></div>
+      <div class="tree-row"><span class="tree-indent">│   │   └── </span><span class="tree-name is-dir">{member-alias}/</span><span class="tree-desc">Member Agent 入库路径</span></div>
+      <div class="tree-row"><span class="tree-indent">│   ├── </span><span class="tree-name is-dir">sharepoint/</span><span class="tree-desc">SharePoint / OneDrive 文档摘要</span></div>
+      <div class="tree-row"><span class="tree-indent">│   └── </span><span class="tree-name is-dir">web/</span><span class="tree-desc">公开网络素材</span></div>
+      <div class="tree-row"><span class="tree-indent">│</span></div>
+      <div class="tree-row"><span class="tree-indent">├── </span><span class="tree-name is-dir">drafts/</span><span class="tree-desc">AI 草稿区（等人 review 后搬到 deliverables）</span></div>
+      <div class="tree-row"><span class="tree-indent">│   └── </span><span class="tree-name is-dir">{member-alias}/</span><span class="tree-desc">按成员分子文件夹</span></div>
+      <div class="tree-row"><span class="tree-indent">│</span></div>
+      <div class="tree-row"><span class="tree-indent">├── </span><span class="tree-name is-dir">deliverables/</span><span class="tree-desc">正式交付物（经审批后归档）</span></div>
+      <div class="tree-row"><span class="tree-indent">│   ├── </span><span class="tree-name is-dir">agent-tasks/</span><span class="tree-desc">Project Agent 派发的任务交付物</span></div>
+      <div class="tree-row"><span class="tree-indent">│   │   └── </span><span class="tree-name is-dir">done/</span><span class="tree-desc">已验收的任务</span></div>
+      <div class="tree-row"><span class="tree-indent">│   └── </span><span class="tree-name is-dir">tasks/</span><span class="tree-desc">成员主动提交的交付物</span></div>
+      <div class="tree-row"><span class="tree-indent">│</span></div>
+      <div class="tree-row"><span class="tree-indent">├── </span><span class="tree-name is-dir">logs/</span><span class="tree-desc">自动化日志（只追加不修改）</span></div>
+      <div class="tree-row"><span class="tree-indent">│   ├── </span><span class="tree-name is-dir">heartbeats/</span><span class="tree-desc">每小时心跳日志</span></div>
+      <div class="tree-row"><span class="tree-indent">│   ├── </span><span class="tree-name is-dir">reviews/</span><span class="tree-desc">每日 review 决策记录</span></div>
+      <div class="tree-row"><span class="tree-indent">│   └── </span><span class="tree-name is-dir">decisions/</span><span class="tree-desc">重大决策日志</span></div>
+      <div class="tree-row"><span class="tree-indent">│</span></div>
+      <div class="tree-row"><span class="tree-indent">└── </span><span class="tree-name is-dir">learnings/</span><span class="tree-desc">经验教训（每周反思后写入）</span></div>
+      <div class="tree-row"><span class="tree-indent">    └── </span><span class="tree-name is-dir">cards/</span><span class="tree-desc">Zettelkasten 卡片式经验记录</span></div>
     </div>
   </div>
 
